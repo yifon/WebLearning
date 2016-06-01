@@ -31,3 +31,31 @@
     color: white;
     font: 100%/1 sans-serif;
 }
+.shadow2{
+    width: 100px;
+    height: 100px;
+    background: tan;
+    border-radius: 2px;
+    box-shadow: 0 0 0 6px #655;
+}
+.horizontal-stripes{
+    margin:40px;
+    width: 100px;
+    height: 500px;
+    background: linear-gradient(#fb3 33.3%,#58a 0,#58a 66.6%,yellowgreen 0);
+    background-size: 100% 45px;
+}
+.vertical-stripes{
+    margin-top: 30px;
+    width: 100px;
+    height: 500px;
+    background: linear-gradient(to right, #fb3 50%, #58a 0);
+    background-size: 30px 100%;
+}
+.diagonal-stripes{
+    margin-top: 30px;
+    width: 100px;
+    height: 500px;
+    background: linear-gradient(45deg, #fb3 50%, #58a 0);
+    background-size: 30px 100%;
+}
