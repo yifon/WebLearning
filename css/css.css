@@ -56,6 +56,14 @@
     margin-top: 30px;
     width: 100px;
     height: 500px;
-    background: linear-gradient(45deg, #fb3 50%, #58a 0);
-    background-size: 30px 100%;
+    background: linear-gradient(45deg, #fb3 25%, #58a 0,#58a 50%,#fb3 0, #fb3 75%, #58a 0);
+    background-size: 42.4px 42.4px;
+    /*background: repeating-linear-gradient(45deg,#fb3,#fb3 15px,#58a 0,#58a 30px);*/
+}
+.diagonal-stripes-60deg{
+    margin:auto;
+    width: 200px;
+    height: 400px;
+    background:repeating-linear-gradient(45deg, #fb3 0,#fb3 25%,#58a 0,#58a 50%);
+    background-size:42.4px 42.4px;
 }
