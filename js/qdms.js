@@ -33,3 +33,20 @@ function testStr(str){
     else
         return false;
 }
+
+//constructor vs prototype
+
+function Person(name)
+{
+   this.name=name;
+   this.showMe=function()
+        {
+           alert(this.name);
+        }
+};
+
+var one=new Person('js');
+
+console.log(one.prototype)//undefined
+console.log(typeof Person.prototype);//object
+console.log(Person.prototype.constructor);//function Person(name) {...};
