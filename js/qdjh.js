@@ -129,3 +129,71 @@ for (i = 0; i < list.length; i++) {
         list[i].style.backgroundColor = "yellow";
     }
 }
+
+//65.请编写代码扩展JavaScript的string对象，让其拥有一个新的方法killpoint()来删除字符串中的所有英文句号“.”，请用尽量少的代码实现。
+
+String.prototype.killpoint = function() {
+    return this.replace(/\./g, '');
+}
+
+//66.对string对象进行扩展，使其具有删除前后空格的方法
+String.prototype.bothtrim = function() {
+    return this.replace(/(^\s*)|(\s*$)/g, "");
+}
+
+//67
+//获取字符数组
+String.prototype.toCharArray = function() {
+    return this.split("");
+}
+
+//获取n个相同的字符串
+String.prototype.repeat = function(num) {
+    var tempArr = [];
+    for (var i = 0; i < num; i++) {
+        tempArr.push(this);
+    }
+    return tempArr.join("");
+}
+
+//字符串逆序 （数组逆序有reverse方法）
+String.prototype.reverse = function() {
+    return this.split("").reverse().join("");
+}
+
+//测试是否是数字
+String.prototype.isNumeric = function() {
+    var tempFloat = parseFloat(this);
+    if (isNaN(tempFloat))
+        return false;
+    return tempFloat == this;
+}
+
+//测试是否是整数
+String.prototype.isInt=function(){
+    if(this=="NaN")
+        return false;
+    return this==parseInt(this);
+}
+
+//合并多个空白为一个空白
+String.prototype.oneSpace=function(){
+    //* 匹配前面元字符0次或多次;+ 匹配前面元字符1次或多次;? 匹配前面元字符0次或1次
+    //此处应该用+，表示至少有一个空白
+    return this.replace(/\s+/g,' ');
+}
+
+//保留数字
+String.prototype.leftNum=function(){
+    return this.replace(/[^\d]+/g,"");
+}
+
+//保留字母
+String.prototype.leftChar=function(){
+    return this.replace(/[^a-zA-Z]+/g,"");
+}
+
+//保留中文
+String.prototype.leftChinese=function(){
+    return this.
+}
