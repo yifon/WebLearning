@@ -170,30 +170,101 @@ String.prototype.isNumeric = function() {
 }
 
 //测试是否是整数
-String.prototype.isInt=function(){
-    if(this=="NaN")
+String.prototype.isInt = function() {
+    if (this == "NaN")
         return false;
-    return this==parseInt(this);
+    return this == parseInt(this);
 }
 
 //合并多个空白为一个空白
-String.prototype.oneSpace=function(){
+String.prototype.oneSpace = function() {
     //* 匹配前面元字符0次或多次;+ 匹配前面元字符1次或多次;? 匹配前面元字符0次或1次
     //此处应该用+，表示至少有一个空白
-    return this.replace(/\s+/g,' ');
+    return this.replace(/\s+/g, ' ');
 }
 
 //保留数字
-String.prototype.leftNum=function(){
-    return this.replace(/[^\d]+/g,"");
+String.prototype.leftNum = function() {
+    return this.replace(/[^\d]+/g, "");
 }
 
 //保留字母
-String.prototype.leftChar=function(){
-    return this.replace(/[^a-zA-Z]+/g,"");
+String.prototype.leftChar = function() {
+    return this.replace(/[^a-zA-Z]+/g, "");
 }
 
 //保留中文
-String.prototype.leftChinese=function(){
-    return this.
+String.prototype.getCn = function() {
+    return this.replace(/[^\u4e00-\u9fa5\uf900-\ufa2d]/g, "");
 }
+
+//得到字节长度，[^\x00-\xff]匹配双子节字符，一般就像汉字
+String.prototype.getBinLen = function() {
+    return this.replace(/[^\x00-\xff]/g, "--").length;
+}
+
+//从左截取指定长度到字符串
+String.prototype.left = function(n) {
+    return this.slice(0, n);
+}
+
+//从右截取指定长度到字符串
+//0,1,2,3,4,5
+String.prototype.right = function(n) {
+    return this.slice(this.length - n);
+}
+
+//21页html编码，unicode转化
+
+//请用JavaScript实现获取5个0-99之间不相同的随机数
+function getRandomArr() {
+    var randomArr = new Array();
+    for (var i = 0; i < 5; i++) {
+        var temp = Math.floor(Math.random() * 100);
+        if (randomArr.indexOf(temp)) {
+            randomArr.push(temp);
+        }
+    }
+    return randomArr;
+}
+
+//求两数最大公约数，Highest Common Factor(HCF)
+function hcf(number1, number2) {
+    for (var i = Math.min(number1, number2); i > 0; i--) {
+        if (number1 % i == 0 && number2 % i == 0)
+            return i;
+    }
+}
+
+//获取一个1-50的随机不重复数组
+function randomNum() {
+    var arr1=[];
+    var number = 50;
+    for (var i = 1; i <= number; i++) {
+        arr1.push(i); //先把1-50有序地放入数组
+    }
+    var arr2=[];
+    for (var j = number; j > 0; j--) {
+        //Math.random是为了获取剩余未放入arr2的元素个数,[0,50)
+        //Math.floor是向下取整的，所以index返回[0,49]
+        var index = Math.floor(Math.random() * j);
+        //arr1.splice(index,1)代表从arr1数组中删除index这一项，并返回被删的元素，同时arr1会被删除该项
+        arr2.push(arr1.splice(index, 1));
+    }
+    return arr2;
+}
+
+//请编写尽可能简洁的javascript代码，找到在第一个数组array1中出现，而在第二个数组array2中没有出现的数字
+//indexOf() 方法可返回某个指定的字符串值在字符串中首次出现的位置。
+//i: 1,23,45
+//ii: 5,6,7,22,24,46
+function getUniqueNum(array1,array2){
+    var str=array1.join("-");//1-23-45
+    var result=[];
+    for (var i = array2.length - 1; i >= 0; i--) {
+        if(str.indexOf(array2[i])==-1)
+            result.push(array2[i]);
+    }
+    return result;
+}
+
