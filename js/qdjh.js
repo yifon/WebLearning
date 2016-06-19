@@ -238,12 +238,12 @@ function hcf(number1, number2) {
 
 //获取一个1-50的随机不重复数组
 function randomNum() {
-    var arr1=[];
+    var arr1 = [];
     var number = 50;
     for (var i = 1; i <= number; i++) {
         arr1.push(i); //先把1-50有序地放入数组
     }
-    var arr2=[];
+    var arr2 = [];
     for (var j = number; j > 0; j--) {
         //Math.random是为了获取剩余未放入arr2的元素个数,[0,50)
         //Math.floor是向下取整的，所以index返回[0,49]
@@ -258,13 +258,128 @@ function randomNum() {
 //indexOf() 方法可返回某个指定的字符串值在字符串中首次出现的位置。
 //i: 1,23,45
 //ii: 5,6,7,22,24,46
-function getUniqueNum(array1,array2){
-    var str=array1.join("-");//1-23-45
-    var result=[];
-    for (var i = array2.length - 1; i >= 0; i--) {
-        if(str.indexOf(array2[i])==-1)
-            result.push(array2[i]);
+function getUniqueNum(array1, array2) {
+    var str = array2.join("-"); //5-6-7-22-24-46
+    var result = [];
+    for (var i = 0; i < array1.length - 1; i++) {
+        if (str.indexOf(array1[i]) == -1)
+            result.push(array1[i]);
     }
     return result;
 }
 
+//编写函数，用于过滤一个数组内重复的元素，并用这些元素重构一个新数组，新数组内也不能有重复元素
+//var arrNum=[1,4,1,1,3,3,4,6,7,8,3,7,0,11,22,22];
+//[5,4,1,1,3,3,4,6,7,8,3,7,0,11,22,23,23,23,25,35,4,5]
+function rmRepeat(arrNum) {
+    var str = "," + arrNum.join(',') + ","; //首尾加","，防止首尾元素控制不到
+    var newArr = [];
+    for (var i = 0; i < arrNum.length; i++) {
+        //",1,"这样的分割，防止",11,"这样的元素也被"arrNum[i]==1"剔除了
+        if (str.indexOf("," + arrNum[i] + ",") != -1) {
+            newArr[newArr.length] = arrNum[i];
+        }
+        while (str.indexOf("," + arrNum[i] + ",") != -1) {
+            str = str.replace("," + arrNum[i] + ",", ","); //遍历str，删除其中跟arrNum[i]项相同的项
+        }
+    }
+    return newArr; //newArr只放了arrNum中不同项
+    //结果应为[5,4,1,3,6,7,8,0,11,22,23,25,35]
+}
+
+//现有一个数组(元素为数字，并且有可能重复)，请给Array.prototype增加一个方法（方法名自取），该方法能去掉数组中全部最大和最小的数字
+Array.prototype.rmMaxMin = function() {
+    var min = Math.min.apply(null, this); //查找最小数字
+    var max = Math.max.apply(null, this); //查找最大数字
+    for (var i = 0; i < this.length; i++) {
+        if (min == this[i] || max == this[i]) {
+            this.splice(i, 1);
+        }
+    }
+    return this;
+}
+
+//在如下数组的第二个元素后插入一个元素3
+var arr = [1, 2, 4, 5, 6];
+arr.splice(1, 0, 3);
+
+//将数组["a","b"],["c","d"]合并，并且删除第二个元素
+var arr1 = ["a", "b"];
+var arr2 = ["c", "d"];
+var str = arr1.join("-") + "-" + arr2.join("-"); //a-b-c-d
+var mergerArr = str.split("-");
+mergerArr.splice(1, 1);
+
+//请写出如下JavaScript代码片段的运行结果
+var my_arr = [];
+for (var i = 0; i <= 5; i++) {
+    my_arr.push(i * (i + 1));
+}
+var val = 0;
+while (val = my_arr.pop()) {
+    console.log(val + " ");
+}
+
+//请写一个函数removeVoid(arr),删除该数组中值为“null,undefined”的项，返回原数组。
+//removeVoid([null,1,"334","null","undefined",undefined])
+function removeVoid(arr) {
+    for (var i = 0; i < arr.length; i++) {
+        if (!arr[i] || arr[i] == "" || typeof(arr[i]) == "undefined") {
+            arr.splice(i, 1);
+        }
+    }
+    return arr;
+}
+
+//105.数组pop(),push(),shift(),unshift()  －长点（push，unshift）的是长度，短点的是值
+/*
+pop():从集合中把最后一个元素删除，并返回这个元素的值;
+push():在集合中添加元素，并返回新的长度;
+unshift():在集合开头添加一个或多个元素，并返回新的长度;
+shift():从集合中把第一个元素删除，并返回这个元素的值
+*/
+
+//109.请分别描述JavaScript中prototype,constructor,this,arguement的含义
+/*
+prototype:prototype的行为类似于c++中的静态域，将一个属性添加微prototype的属性，这个属性将被该类型创建的所有实例所共享，但是这种共享是只读懂。换句话说，对象在读取某个属性时，总是先检查自身域懂属性表，如果有这个属性，则会返回这个属性，否则就会读取prototype域，返回prototype域上的属性。另外，JavaScript允许prototype域引用任何类型的对象。因此，如果对prototype域懂读取依然没有找到这个属性，则JavaScript将递归地查找prototype域所指向对象的prototype域，直到这个对象的prototype域为它本身或者出现循环为止；
+
+constructor:即构造函数，在对象创建或者实例化时被调用的方法。通常使用该方法来初始化数据成员和所需资源。构造器constructor不能被继承，因此不能重写overriding,但可以被重载overloading。对象的constructor属性返回创建该对象的函数的引用。
+
+this:在JavaScript中，this通常指向的是正在执行的函数本身，或者是志向该函数所属的对象（运行时）。当我们在页面中定义函数doSomething()时，它当owner是页面，或者是JavaScript中的window对象（或global对象）。对于一个onclick属性，则为它所属的HTML元素所拥有，this应该指向该HTML元素。
+
+argument：所有的函数都有属于自己的一个arguments对象，它包括了函数所要调用的参数。它不是一个数组，如果用typeof arguements，那么返回的是object。虽然我们可以用调用数据的方法来调用arguments。比如length、index方法。
+*/
+
+//110.写一个函数，参数为一个元素，返回指定元素的第一个子元素，要求兼容IE6/7/8,FireFox,Safari,Chrome，函数越简单越好。
+function getFirst(el){
+    var nodes=el.children;//获取元素下所有的子节点
+    return  nodes.length!=0?nodes[0]:null;
+}
+
+//js的预编译，变量提升
+var b=1;
+function c(){
+    console.log(b);
+    if(!b){
+        var b=2;
+    }
+    console.log(b);
+}
+c();//undefined    2
+
+//拓展，变量提升
+(function(){
+    a = 5;//由于下边的var a=10;导致变量提升，a预编译，是局部变量
+    console.log(window.a);//无声明此全局变量，故是undefined
+    var a = 10;
+    console.log(a);
+})(); //undefined   10
+
+//下面JavaScript代码的运算结果是2还是undefined?请阐述原因。
+function show(){
+    var b=1;
+    a=++b;//此处的a相当于全局变量，并被赋值为2
+    return a;
+}
+show();
+console.log(a);//2
