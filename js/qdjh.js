@@ -351,35 +351,59 @@ argument：所有的函数都有属于自己的一个arguments对象，它包括
 */
 
 //110.写一个函数，参数为一个元素，返回指定元素的第一个子元素，要求兼容IE6/7/8,FireFox,Safari,Chrome，函数越简单越好。
-function getFirst(el){
-    var nodes=el.children;//获取元素下所有的子节点
-    return  nodes.length!=0?nodes[0]:null;
+function getFirst(el) {
+    var nodes = el.children; //获取元素下所有的子节点
+    return nodes.length != 0 ? nodes[0] : null;
 }
 
 //js的预编译，变量提升
-var b=1;
-function c(){
+var b = 1;
+
+function c() {
     console.log(b);
-    if(!b){
-        var b=2;
+    if (!b) {
+        var b = 2;
     }
     console.log(b);
 }
-c();//undefined    2
+c(); //undefined    2
 
 //拓展，变量提升
-(function(){
-    a = 5;//由于下边的var a=10;导致变量提升，a预编译，是局部变量
-    console.log(window.a);//无声明此全局变量，故是undefined
+(function() {
+    a = 5; //由于下边的var a=10;导致变量提升，a预编译，是局部变量
+    console.log(window.a); //无声明此全局变量，故是undefined
     var a = 10;
     console.log(a);
 })(); //undefined   10
 
 //下面JavaScript代码的运算结果是2还是undefined?请阐述原因。
-function show(){
-    var b=1;
-    a=++b;//此处的a相当于全局变量，并被赋值为2
-    return a;
+function show() {
+    var b = 1;
+    a = ++b;
+    //return a;
 }
 show();
-console.log(a);//2
+console.log(a); //2
+
+//117.请写一个函数closest(element,className),传入DOM对象及CSS名称，或者标签名称，查找到离它自身最近到父节点
+function closest(element, className) {
+    var parent = null;
+    if (element) {
+        if (element.className == className)
+            parent = element.parentNode;
+    }
+    return parent;
+}
+
+//118.请写一个函数getParameters()来获取浏览器地址栏url全部参数，并返回一个JSON串。
+function getParameters(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&])*(&|$)");
+    var str = window.location.search.substr(1).match(reg);
+    console.log(window.location.href);
+    console.log(window.location.search);
+    console.log(window.location.search.substr(1));
+    console.log(window.location.search.substr(1).match(reg));
+    if (str != null)
+        return unescape(str[2]);
+    else return null;
+}
