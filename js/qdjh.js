@@ -404,6 +404,34 @@ function getParameters(name) {
     console.log(window.location.search.substr(1));
     console.log(window.location.search.substr(1).match(reg));
     if (str != null)
-        return unescape(str[2]);
+        return decodeURI(str[2]);
     else return null;
+}
+
+//119.请写一个函数来验证电子邮件到格式是否正确。
+function checkEmail(mail) {
+    var reg = new RegExp("^[a-zA-Z0-9_.]+@[a-zA-Z0-9_]+.[a-zA-Z0-9_]+$");
+    if (mail.match(reg))
+        return true;
+    else
+        return false;
+}
+
+//已知对象var obj={....},但对象的属性未知，如何对该对象的属性进行遍历？
+function allProperties(obj) {
+    //用来保存所有的属性名称和值
+    var props = "";
+    //开始遍历
+    for (var p in obj) {
+        if (obj[p] == "function") {
+            obj[p]();
+        } else {
+            //p为属性值，obj[p]为对应属性的值
+            props += p + "=" + obj[p]＋
+            "\t";
+
+        }
+    }
+    //最后显示所有的属性
+    alert(props);
 }
