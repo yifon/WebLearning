@@ -435,3 +435,34 @@ function allProperties(obj) {
     //最后显示所有的属性
     alert(props);
 }
+
+//127. 请使用JavaScript语言创建一个对象来代表一个学生，学生主要有以下属性：
+//姓名Jeriy(字符串类型)／年龄22（整型）／三个朋友（Li,Chen,Zhang,数组）/会踢足球（类型为方法，弹出'football'字符串即可），并调用Jeriy踢足球（弹出football字符）
+function xs(name, age, friend) {
+    this.name = name;
+    this.age = age;
+    this.friend = friend;
+}
+xs.prototype.play = function() {
+    alert('football');
+}
+var s = new xs("Jeriy", 22, ["Li", "Chen", "Zhang"]);
+s.play();
+
+//129.编写一个函数，去掉数组的重复元素
+//[1,1,1,2,3,4,2,5,3,4,1]
+//indexOf() 方法可返回某个指定的字符串值在字符串中首次出现的位置。
+function unique(arr) {
+    var temp = new Array(); //存放唯一数的数组
+    var str = "," + arr.join(",") + ","; //",1,1,1,2,3,4,2,5,3,4,1,"
+    for (var i = arr.length - 1; i >= 0; i--) {
+        if (str.indexOf("," + arr[i] + ",") != -1) {
+            //找到arr[i]在str中存在后，push进数组，同时删除str中相应的值
+            temp.push(arr[i]);
+            //注意此处不添加右边逗号，防止出现“,2,2,”这种情况，new RegExp(replaceStr,'g')只会匹配到左边或者右边那个',2,'，导致有残留，若用while循环遍历则可用加右逗号的形式来做匹配
+            var replaceStr = "," + arr[i];
+            str = str.replace(new RegExp(replaceStr, 'g'), ",");
+        }
+    }
+    return temp;
+}
