@@ -466,3 +466,88 @@ function unique(arr) {
     }
     return temp;
 }
+
+//130.如何创建一个对象
+/*
+可以利用JavaScript的语法特征，以类的思想来创建对象
+（1）原始方法，代码如下：
+这种方式的问题是如果需要多次创建对象，那么需要重复代码多次，不利于代码的复用
+*/
+var obj=new Object();
+obj.name="Koji";
+obj.age=21;
+obj.showName=function(){
+    alert(this.name);
+}
+obj.showAge=function(){
+    alert(this.age);
+}
+obj.showName();
+obj.showAge();
+
+/*
+（2）工厂方法，这种方法提高了代码重用率
+*/
+function createObj(){
+    var obj=new Object();
+    obj.name="Koji";
+    obj.age=21;
+    obj.showName=function(){
+        alert(this.name);
+    }
+    obj.showAge=function(){
+        alert(this.age);
+    }
+}
+var obj1=createObj();
+var obj2=createObj();
+obj1.showName();
+obj2.showAge();
+
+/*
+还可以改变工厂方法，传入参数赋值.
+但此方式虽然可以提高代码的重用率，但和面相对象中类的概念相比，有一个很大的缺陷。面相对象强调对象的属性私有，但对象的方法是共享的。而下述方法的工厂方法中创建对象时，要为每个对象创建各自私有的方法。同时，由于每个对象都创建相同的方法，所以很浪费内存。
+*/
+function createObj(name,age){
+    var obj=new Object();
+    obj.name=name;
+    obj.age=age;
+    obj.showName=function(){
+        alert(this.name);
+    }
+    obj.showAge=function(){
+        alert(this.age);
+    }
+    return obj;
+}
+var obj1=createObj("Koji",22);
+var obj2=createObj("Luo",21);
+obj1.showName();
+obj1.showAge();
+obj2.showName();
+obj2.showAge();
+
+//改进代码：
+/*
+下面通过定义几个函数对象，解决了不同对象持有函数对象的私有问题。现在所有对象的方法都持有上面两个函数的引用。但这么一来，对象的函数又和对象相互独立了，这和面向对象中特定方法属于特定类的思想不符合。
+*/
+function createObj(name,age){
+    var obj=new Object();
+    obj.name=name;
+    obj.age=age;
+    obj.showName=showName;
+    obj.showAge=showAge;
+    return obj;
+}
+function showName(){
+    alert(this.name);
+}
+function showAge(){
+    alert(this.age);
+}
+var obj1=createObj("Koji",22);
+var obj2=createObj("Luo",21);
+obj1.showName();
+obj1.showAge();
+obj2.showName();
+obj2.showAge();
