@@ -551,3 +551,111 @@ obj1.showName();
 obj1.showAge();
 obj2.showName();
 obj2.showAge();
+
+/*
+(3)构造函数方式，定义一个构造函数，用来生成对应的对象，可以类比java中的构造函数
+*/
+function Person(name,age){
+    this.name=name;
+    this.age=age;
+    this.showName=function(){
+        alert(this.name);
+    }
+    this.showAge=function(){
+        alert(this.age);
+    }
+    var obj1=new Person("Koji",22);
+    var obj2=new Person("Luo",21);
+    obj1.showName();
+    obj1.showAge();
+    obj2.showName();
+    obj2.showAge();
+}
+
+/*
+（4）原型方法
+*/
+function Person(){//定义了一个空构造函数，且不能传递参数
+    //将所有的属性的方法都赋予给prototype属性
+    Person.prototype.name="Koji";
+    Person.prototype.age=22;
+    Person.prototype.showName=function(){
+        alert(this.name);
+    }
+    Person.prototype.showAge=function(){
+        alert(this.age);
+    }
+    var obj1=new Person();
+    var obj2=new Person();
+    obj1.showName();
+    obj1.showAge();
+    obj2.showName();
+    obj2.showAge();
+}
+/*
+当生成Person对象时，prototype的属性都赋值给了新的对象。那么属性和方法是共享的。首先，该方法的问题是构造函数不能传递参数，每个新生成的对象都有默认值。其次，方法共享没有任何问题。但是，当属性是可改变状态的属性时，属性共享就有问题了。
+*/
+function Person(){)//定义了一个空构造函数，且不能传递参数
+    Person.prototype.age=22;
+    Person.prototype.array=new Array("Koji","Luo");
+    Person.prototype.showAge=function(){
+        alert(this.age);
+    }
+    Person.prototype.showArray=function(){
+        alert(this.array);
+    }
+    var obj1=new Person();
+    var obj2=new Person();
+    obj1.array.push("Kyo");
+    obj1.showArray();//Koji,Luo,Kyo
+    obj2.showArray();//Koji,Luo,Kyo
+
+/*
+（5）混合的构造函数／原型方式
+属性私有后，改变各自的属性不会影响别的对象。同时，方法也是由各个对象共享的。在语义上符合面向对象编程的要求。
+*/
+function Person(name,age){
+    this.name=name;
+    this.age=age;
+    this.array=new Array("Koji","Luo");
+}
+Person.prototype.showName=function(){
+    alert(this.name);
+}
+Person.prototype.showArray=function(){
+    alert(this.name);
+}
+var obj1=new Person("Koji",22);
+var obj2=new Person("Luo",21);
+obj1.array.push("Kyo");
+obj1.showArray();//Koji,Luo,Kyo
+obj1.showName();//Koji
+obj2.showArray();//Koji,Luo
+obj2.showName();//Luo
+
+/*
+(6)动态原型方法
+*/
+function Person(name,age){
+    this.name=name;
+    this.age=age;
+    this.array=new Array("Koji","Luo");
+    if(typeof Person._initialized=="undefined"){
+        Person.prototype.showName=function(){
+            alert(this.name);
+        }
+        Person.prototype.showArray=function(){
+            alert(this.array);
+        }
+        Person._initialized=true;//设置为true，不必再为prototype添加方法
+    }
+}
+var obj1=new Person("Koji",22);
+var obj2=new Person("Luo",21);
+obj1.array.push("Kyo");
+obj1.showArray();//Koji,Luo,Kyo
+obj1.showName();//Koji
+obj2.showArray();//Koji,Luo
+obj2.showName();//Luo
+
+
