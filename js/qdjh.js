@@ -473,13 +473,13 @@ function unique(arr) {
 （1）原始方法，代码如下：
 这种方式的问题是如果需要多次创建对象，那么需要重复代码多次，不利于代码的复用
 */
-var obj=new Object();
-obj.name="Koji";
-obj.age=21;
-obj.showName=function(){
+var obj = new Object();
+obj.name = "Koji";
+obj.age = 21;
+obj.showName = function() {
     alert(this.name);
 }
-obj.showAge=function(){
+obj.showAge = function() {
     alert(this.age);
 }
 obj.showName();
@@ -488,19 +488,19 @@ obj.showAge();
 /*
 （2）工厂方法，这种方法提高了代码重用率
 */
-function createObj(){
-    var obj=new Object();
-    obj.name="Koji";
-    obj.age=21;
-    obj.showName=function(){
+function createObj() {
+    var obj = new Object();
+    obj.name = "Koji";
+    obj.age = 21;
+    obj.showName = function() {
         alert(this.name);
     }
-    obj.showAge=function(){
+    obj.showAge = function() {
         alert(this.age);
     }
 }
-var obj1=createObj();
-var obj2=createObj();
+var obj1 = createObj();
+var obj2 = createObj();
 obj1.showName();
 obj2.showAge();
 
@@ -508,20 +508,20 @@ obj2.showAge();
 还可以改变工厂方法，传入参数赋值.
 但此方式虽然可以提高代码的重用率，但和面相对象中类的概念相比，有一个很大的缺陷。面相对象强调对象的属性私有，但对象的方法是共享的。而下述方法的工厂方法中创建对象时，要为每个对象创建各自私有的方法。同时，由于每个对象都创建相同的方法，所以很浪费内存。
 */
-function createObj(name,age){
-    var obj=new Object();
-    obj.name=name;
-    obj.age=age;
-    obj.showName=function(){
+function createObj(name, age) {
+    var obj = new Object();
+    obj.name = name;
+    obj.age = age;
+    obj.showName = function() {
         alert(this.name);
     }
-    obj.showAge=function(){
+    obj.showAge = function() {
         alert(this.age);
     }
     return obj;
 }
-var obj1=createObj("Koji",22);
-var obj2=createObj("Luo",21);
+var obj1 = createObj("Koji", 22);
+var obj2 = createObj("Luo", 21);
 obj1.showName();
 obj1.showAge();
 obj2.showName();
@@ -531,22 +531,24 @@ obj2.showAge();
 /*
 下面通过定义几个函数对象，解决了不同对象持有函数对象的私有问题。现在所有对象的方法都持有上面两个函数的引用。但这么一来，对象的函数又和对象相互独立了，这和面向对象中特定方法属于特定类的思想不符合。
 */
-function createObj(name,age){
-    var obj=new Object();
-    obj.name=name;
-    obj.age=age;
-    obj.showName=showName;
-    obj.showAge=showAge;
+function createObj(name, age) {
+    var obj = new Object();
+    obj.name = name;
+    obj.age = age;
+    obj.showName = showName;
+    obj.showAge = showAge;
     return obj;
 }
-function showName(){
+
+function showName() {
     alert(this.name);
 }
-function showAge(){
+
+function showAge() {
     alert(this.age);
 }
-var obj1=createObj("Koji",22);
-var obj2=createObj("Luo",21);
+var obj1 = createObj("Koji", 22);
+var obj2 = createObj("Luo", 21);
 obj1.showName();
 obj1.showAge();
 obj2.showName();
@@ -555,17 +557,17 @@ obj2.showAge();
 /*
 (3)构造函数方式，定义一个构造函数，用来生成对应的对象，可以类比java中的构造函数
 */
-function Person(name,age){
-    this.name=name;
-    this.age=age;
-    this.showName=function(){
+function Person(name, age) {
+    this.name = name;
+    this.age = age;
+    this.showName = function() {
         alert(this.name);
     }
-    this.showAge=function(){
+    this.showAge = function() {
         alert(this.age);
     }
-    var obj1=new Person("Koji",22);
-    var obj2=new Person("Luo",21);
+    var obj1 = new Person("Koji", 22);
+    var obj2 = new Person("Luo", 21);
     obj1.showName();
     obj1.showAge();
     obj2.showName();
@@ -575,18 +577,18 @@ function Person(name,age){
 /*
 （4）原型方法
 */
-function Person(){//定义了一个空构造函数，且不能传递参数
+function Person() { //定义了一个空构造函数，且不能传递参数
     //将所有的属性的方法都赋予给prototype属性
-    Person.prototype.name="Koji";
-    Person.prototype.age=22;
-    Person.prototype.showName=function(){
+    Person.prototype.name = "Koji";
+    Person.prototype.age = 22;
+    Person.prototype.showName = function() {
         alert(this.name);
     }
-    Person.prototype.showAge=function(){
+    Person.prototype.showAge = function() {
         alert(this.age);
     }
-    var obj1=new Person();
-    var obj2=new Person();
+    var obj1 = new Person();
+    var obj2 = new Person();
     obj1.showName();
     obj1.showAge();
     obj2.showName();
@@ -595,67 +597,76 @@ function Person(){//定义了一个空构造函数，且不能传递参数
 /*
 当生成Person对象时，prototype的属性都赋值给了新的对象。那么属性和方法是共享的。首先，该方法的问题是构造函数不能传递参数，每个新生成的对象都有默认值。其次，方法共享没有任何问题。但是，当属性是可改变状态的属性时，属性共享就有问题了。
 */
-function Person(){)//定义了一个空构造函数，且不能传递参数
-    Person.prototype.age=22;
-    Person.prototype.array=new Array("Koji","Luo");
-    Person.prototype.showAge=function(){
-        alert(this.age);
-    }
-    Person.prototype.showArray=function(){
-        alert(this.array);
-    }
-    var obj1=new Person();
-    var obj2=new Person();
-    obj1.array.push("Kyo");
-    obj1.showArray();//Koji,Luo,Kyo
-    obj2.showArray();//Koji,Luo,Kyo
+function Person() {) //定义了一个空构造函数，且不能传递参数
+Person.prototype.age = 22;
+Person.prototype.array = new Array("Koji", "Luo");
+Person.prototype.showAge = function() {
+    alert(this.age);
+}
+Person.prototype.showArray = function() {
+    alert(this.array);
+}
+var obj1 = new Person();
+var obj2 = new Person();
+obj1.array.push("Kyo");
+obj1.showArray(); //Koji,Luo,Kyo
+obj2.showArray(); //Koji,Luo,Kyo
 
 /*
 （5）混合的构造函数／原型方式
 属性私有后，改变各自的属性不会影响别的对象。同时，方法也是由各个对象共享的。在语义上符合面向对象编程的要求。
 */
-function Person(name,age){
-    this.name=name;
-    this.age=age;
-    this.array=new Array("Koji","Luo");
+function Person(name, age) {
+    this.name = name;
+    this.age = age;
+    this.array = new Array("Koji", "Luo");
 }
-Person.prototype.showName=function(){
+Person.prototype.showName = function() {
     alert(this.name);
 }
-Person.prototype.showArray=function(){
+Person.prototype.showArray = function() {
     alert(this.name);
 }
-var obj1=new Person("Koji",22);
-var obj2=new Person("Luo",21);
+var obj1 = new Person("Koji", 22);
+var obj2 = new Person("Luo", 21);
 obj1.array.push("Kyo");
-obj1.showArray();//Koji,Luo,Kyo
-obj1.showName();//Koji
-obj2.showArray();//Koji,Luo
-obj2.showName();//Luo
+obj1.showArray(); //Koji,Luo,Kyo
+obj1.showName(); //Koji
+obj2.showArray(); //Koji,Luo
+obj2.showName(); //Luo
 
 /*
 (6)动态原型方法
 */
-function Person(name,age){
-    this.name=name;
-    this.age=age;
-    this.array=new Array("Koji","Luo");
-    if(typeof Person._initialized=="undefined"){
-        Person.prototype.showName=function(){
+function Person(name, age) {
+    this.name = name;
+    this.age = age;
+    this.array = new Array("Koji", "Luo");
+    if (typeof Person._initialized == "undefined") {
+        Person.prototype.showName = function() {
             alert(this.name);
         }
-        Person.prototype.showArray=function(){
+        Person.prototype.showArray = function() {
             alert(this.array);
         }
-        Person._initialized=true;//设置为true，不必再为prototype添加方法
+        Person._initialized = true; //设置为true，不必再为prototype添加方法
     }
 }
-var obj1=new Person("Koji",22);
-var obj2=new Person("Luo",21);
+var obj1 = new Person("Koji", 22);
+var obj2 = new Person("Luo", 21);
 obj1.array.push("Kyo");
-obj1.showArray();//Koji,Luo,Kyo
-obj1.showName();//Koji
-obj2.showArray();//Koji,Luo
-obj2.showName();//Luo
+obj1.showArray(); //Koji,Luo,Kyo
+obj1.showName(); //Koji
+obj2.showArray(); //Koji,Luo
+obj2.showName(); //Luo
 
-
+//代码运行后，多久提示一次
+setInterval(function(){
+    setTimeout(function(){
+        alert('say!');
+    },5000)
+},1000);
+/*
+进入页面6秒后弹出“say!”，之后1秒弹出一次“say！”。
+先碰到setInterval间歇定时器1秒后执行，再碰到setTimeout延时定时器5秒后执行。可想而知，第一次在6秒后弹出，setTimeout()从载入后延迟指定的时间去执行一个表达式或者函数，仅执行一次。setTimeout()只执行code一次，1秒弹出一次。如果需要多次调用，需使用setInterval()或者让code自身再次调用setTimeout().
+/
