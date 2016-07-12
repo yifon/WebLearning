@@ -669,4 +669,48 @@ setInterval(function(){
 /*
 进入页面6秒后弹出“say!”，之后1秒弹出一次“say！”。
 先碰到setInterval间歇定时器1秒后执行，再碰到setTimeout延时定时器5秒后执行。可想而知，第一次在6秒后弹出，setTimeout()从载入后延迟指定的时间去执行一个表达式或者函数，仅执行一次。setTimeout()只执行code一次，1秒弹出一次。如果需要多次调用，需使用setInterval()或者让code自身再次调用setTimeout().
-/
+*/
+
+setTimeout(alert("June"),10000);
+
+/*
+下面三个alert的执行顺序是怎样的？结果是什么？
+*/
+function test(){
+    var a=1;
+    setTimeout(function(){
+        alert(a);
+        a=3;
+    },1000);
+    a=2;
+    setTimeout(function(){
+        alert(a);
+        a=4;
+    },3000);
+}
+test();
+alert(0);
+//0 2 3
+//setTimeout是一个异步延迟函数，先弹出0是很明显的
+
+//按照格式xxxx年xx月xx日xx时xx分xx秒动态显示时间，要求不满10的在前面补0.
+function displayTime(){
+    with(new Date()){
+        var t=function(a){
+            return a<10?"0"+a:a;
+        }
+        console.log(getFullYear()+"年"+t(getMonth()+1)+"月"+t(getDate())+"日"+t(getHours())+"时"+t(getMinutes())+"分"+t(getSeconds())+"秒");
+    }
+}
+displayTime();
+
+//输出明天的日期
+function GetDateStr(addDayCount){
+    var dd=new Date();
+    dd.setDate(dd.getDate()+addDayCount);
+    var y=dd.getFullYear();
+    var m=dd.getMonth()+1;
+    var d=dd.getDate();
+    return y+"-"+m+"-"+d;
+}
+GetDateStr(1);
