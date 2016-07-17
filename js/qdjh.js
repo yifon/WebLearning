@@ -661,32 +661,32 @@ obj2.showArray(); //Koji,Luo
 obj2.showName(); //Luo
 
 //代码运行后，多久提示一次
-setInterval(function(){
-    setTimeout(function(){
+setInterval(function() {
+    setTimeout(function() {
         alert('say!');
-    },5000)
-},1000);
+    }, 5000)
+}, 1000);
 /*
 进入页面6秒后弹出“say!”，之后1秒弹出一次“say！”。
 先碰到setInterval间歇定时器1秒后执行，再碰到setTimeout延时定时器5秒后执行。可想而知，第一次在6秒后弹出，setTimeout()从载入后延迟指定的时间去执行一个表达式或者函数，仅执行一次。setTimeout()只执行code一次，1秒弹出一次。如果需要多次调用，需使用setInterval()或者让code自身再次调用setTimeout().
 */
 
-setTimeout(alert("June"),10000);
+setTimeout(alert("June"), 10000);
 
 /*
 下面三个alert的执行顺序是怎样的？结果是什么？
 */
-function test(){
-    var a=1;
-    setTimeout(function(){
+function test() {
+    var a = 1;
+    setTimeout(function() {
         alert(a);
-        a=3;
-    },1000);
-    a=2;
-    setTimeout(function(){
+        a = 3;
+    }, 1000);
+    a = 2;
+    setTimeout(function() {
         alert(a);
-        a=4;
-    },3000);
+        a = 4;
+    }, 3000);
 }
 test();
 alert(0);
@@ -694,23 +694,83 @@ alert(0);
 //setTimeout是一个异步延迟函数，先弹出0是很明显的
 
 //按照格式xxxx年xx月xx日xx时xx分xx秒动态显示时间，要求不满10的在前面补0.
-function displayTime(){
-    with(new Date()){
-        var t=function(a){
-            return a<10?"0"+a:a;
+function displayTime() {
+    with(new Date()) {
+        var t = function(a) {
+            return a < 10 ? "0" + a : a;
         }
-        console.log(getFullYear()+"年"+t(getMonth()+1)+"月"+t(getDate())+"日"+t(getHours())+"时"+t(getMinutes())+"分"+t(getSeconds())+"秒");
+        console.log(getFullYear() + "年" + t(getMonth() + 1) + "月" + t(getDate()) + "日" + t(getHours()) + "时" + t(getMinutes()) + "分" + t(getSeconds()) + "秒");
     }
 }
 displayTime();
 
 //输出明天的日期
-function GetDateStr(addDayCount){
-    var dd=new Date();
-    dd.setDate(dd.getDate()+addDayCount);
-    var y=dd.getFullYear();
-    var m=dd.getMonth()+1;
-    var d=dd.getDate();
-    return y+"-"+m+"-"+d;
+function GetDateStr(addDayCount) {
+    var dd = new Date();
+    dd.setDate(dd.getDate() + addDayCount);
+    var y = dd.getFullYear();
+    var m = dd.getMonth() + 1;
+    var d = dd.getDate();
+    return y + "-" + m + "-" + d;
 }
 GetDateStr(1);
+
+//this和a是什么？
+(function(a, b) {
+    console.log(this);
+    console.log(typeof a);
+    return b;
+}).apply(0, [0, 4, 1, 3]);
+
+/*
+IE和Firefox事件对象怎么处理兼容性？
+*/
+//1.window.event[兼容处理]添加对event的判断，根据浏览器的不同来得到正确的event。
+function et() {
+    var evt = evt ? evt : (window.event ? window.event : null);
+    console.log(evt);
+}
+et();
+
+//2.键盘值的取得。IE和Firefox获取键盘值的方法不同，可以理解为，Firefox下的event.which与IE下的event.keyCode相当。
+document.onkeydown = function(evt) {
+    //兼容IE和Firefox获得keyBoardEvent对象
+    evt = (evt) ? evt : ((window.event) ? window.event : "");
+    //兼容IE和Firefox获得keyBoardEvent对象的键值
+    var key = evt.keyCode ? evt.keyCode : evt.which;
+    if (evt.ctrlKey && (key == 13 || key == 10)) {
+        同时按下ctrl + enter组合键
+        console.log("hi");
+    }
+    console.log(key);
+}
+
+//3.[事件源的获取]在使用事件委屈时，通过事件源获取来判断事件到底来自哪个元素，但是，在IE下，event对象有srcElement属性，却没有target属性；在Firefox下，event对象有target属性，却没有srcElement属性。
+ele=function(evt){
+    evt=evt||window.event;
+    return (obj=event.srcElement?event.srcElement:event.target;);
+}
+
+//4.[事件监听]在事件监听处理方面，IE提供了attachEvent和detachEvent两个接口，而Firefox提供的是addEventListener和removeEventListener.在ff下，事件处理函数中的this指向被监听元素本身，而在IE下则不然，可使用回调函数call，让当前上下文指向监听的元素。
+function addEvent(elem,eventName,handler){
+    if(elem.attachEvent){
+        elem.attachEvent("on"+eventName,function(){
+            handler.call(elem);//这里使用回调函数call(),让this指向elem
+        })
+    }
+    else if(elem.addEventListener){
+        elem.addEventListener(eventName,handler,false);
+    }
+}
+function removeEvent(elem,eventName,handler){
+    if(elem.detachEvent){
+        elem.detachEvent("on"+eventName,function(){
+            handler.call(elem);
+        })
+    }
+    else if(elem.removeEventListener){
+        elem.removeEventListener(eventName,handler,false);
+    }
+}
+
+//5.[鼠标位置]在IE下，even对象有x,y属性，但是没有pageX,pageY属性，在Firefox下，even对象有pageX,pageY属性，但是没有x,y属性。

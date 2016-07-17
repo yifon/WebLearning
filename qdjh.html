@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<p><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -46,5 +46,18 @@
 }
 console.log(document.getElementById("newsList").childNodes.length);// 会计算空行
     getFirst(document.getElementById("newsList"));
+    document.onkeydown=function(evt){
+    //兼容IE和Firefox获得keyBoardEvent对象
+   evt=(evt)?evt:((window.event)?window.event:"");
+    //兼容IE和Firefox获得keyBoardEvent对象的键值
+    var key=evt.keyCode?evt.keyCode:evt.which;
+    if(evt.ctrlKey&&(key==13||key==10)){
+        同时按下ctrl+enter组合键
+        console.log("hi");
+    }
+    console.log(key);
+}
+//document.onkeydown=myKeyPress(event);
     </script>
 </html>
+</p>
