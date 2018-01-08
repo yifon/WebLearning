@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1,minimum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="bootstrap-3.3.7/dist/css/bootstrap.min.css">
+    <script src="jquery/jquery-3.2.1.min.js"></script>
+    <script src="bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
+    <title>Bootstrap快速入门</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .test1 {
+            width: 300px;
+            height: 200px;
+            background: red;
+        }
+
+        @media screen and (max-width:900px) and (min-width:300px) {
+            .test {
+                width: 100%;
+                height: 100px;
+                background: blue;
+            }
+        }
+
+        .test2 {
+            height: 300px;
+            background: red;
+        }
+
+        /* 改变字体图标颜色和大小 */
+
+        .glyphicon-asterisk {
+            font-size: 30px;
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <!--控件组 start
+    将文本输入框和文字或者小icon组合在一起显示
+    -->
+    <div class="input-group">
+        <span class="input-group-addon">$</span>
+        <input type="text" name="" id="" class="form-control">
+    </div>
+    <!--控件组 end-->
+    <!--下拉菜单 start
+    .dropdown:下拉框组件
+    .dropdown-toggle:切换样式
+    .caret:下拉按钮
+    .dropdown-menu:下拉菜单
+    data-toggle="dropdown" :绑定按钮的下拉事件效果
+    -->
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">这是按钮
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <a href="">百度</a>
+            </li>
+            <li>
+                <a href="">阿里</a>
+            </li>
+            <li>
+                <a href="">腾讯</a>
+            </li>
+        </ul>
+    </div>
+    <!--下拉菜单 end-->
+    <!--字体图标 start-->
+    <span class="glyphicon glyphicon-asterisk"></span>
+    <span class="glyphicon glyphicon-envelope"></span>
+    <button class="btn btn-default">
+        <span class="glyphicon glyphicon-star"></span>
+    </button>
+    <!--字体图标 end-->
+    <!--单位 start
+        px:相对于屏幕分辨率的单位，大小无法跟随屏幕放大缩小
+        em:会继承父级元素的字体大小
+        rem:会继承根元素的字体大小
+    -->
+    <!--单位 end-->
+    <!--响应式布局 start-->
+    <div class="test1"></div>
+    <!--响应式布局 end-->
+    <!--栅格布局 start
+        12列，槽宽30px(每列左右均有15px)
+        .col-lg- : >=1200px大屏幕 大桌面显示器；.container最大宽度1170px；最大列宽～97px
+        .col-md- : >=992px中等屏幕 桌面显示器；.container最大宽度970px；最大列宽～81px
+        .col-sm- : >=768px小屏幕 平板；.container最大宽度750px；最大列宽～62px
+        .col-xs- : <768px超小屏幕 手机；总是水平排列；.container最大宽度自动；最大列宽自动
+        .col-lg-offset- :当屏幕>=1200时，将.col-lg-3 (四分之一宽度)元素向右偏移3个列的宽度(四分之一宽度)
+    -->
+    <div class="test2 col-lg-3 col-md-4 col-sm-6 col-xs-12 col-lg-offset-3"></div>
+    <!--栅格布局 end-->
+
+    <!--按钮 start-->
+    <button class="btn">按钮(无背景色)</button>
+    <button class="btn btn-default">按钮(灰色，默认)</button>
+    <button class="btn btn-success">按钮(绿色，成功)</button>
+    <button class="btn btn-primary">按钮(蓝色，首选项)</button>
+    <button class="btn btn-info">按钮(浅蓝色，信息)</button>
+    <button class="btn btn-warning">按钮(黄色，警告)</button>
+    <button class="btn btn-danger">按钮(红色，危险)</button>
+    <button class="btn btn-link">按钮(链接效果)</button>
+    <button class="btn btn-lg">按钮(变大)</button>
+    <button class="btn btn-sm">按钮(变小)</button>
+    <button class="btn active">按钮(点击状态)</button>
+    <button class="btn btn-block">按钮(全屏)</button>
+    <button class="btn" disabled="disabled">按钮(禁用状态)</button>
+    <a href="" class="btn btn-danger">a标签组成的按钮</a>
+    <!--按钮 end-->
+    <!--标题 start-->
+    <h1>标题一
+        <small>小标题</small>
+    </h1>
+    <h2>标题二</h2>
+    <h3>标题三</h3>
+    <h4>标题四</h4>
+    <h5>标题五</h5>
+    <h6>标题六</h6>
+    <span class="h1">标题一</span>
+    <span class="h2">标题二</span>
+    <span class="h3">标题三</span>
+    <span class="h4">标题四</span>
+    <span class="h5">标题五</span>
+    <span class="h6">标题六</span>
+    <p>
+        <mark>慕课网</mark>是
+        <del>垂直的</del>
+        <ins>互联网</ins>IT技能
+        <strong>免费</strong>
+        <u>学习</u>
+        <small>网站</small>。</p>
+    <p class="text-left">慕课网</p>
+    <p class="text-center">慕课网</p>
+    <p class="text-right">慕课网</p>
+    <p class="text-lowercase">HELLO!</p>
+    <p class="text-uppercase">hello!</p>
+    <p class="text-capitalize">hello!</p>
+    <!--标题 end-->
+    <!--表格 start-->
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>标题一</th>
+                <th>标题二</th>
+                <th>标题三</th>
+                <th>标题四</th>
+                <th>标题五</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>内容一</td>
+                <td>内容二</td>
+                <td>内容三</td>
+                <td>内容四</td>
+                <td>内容五</td>
+            </tr>
+            <tr class="active">
+                <td>内容一</td>
+                <td>内容二</td>
+                <td>内容三</td>
+                <td>内容四</td>
+                <td>内容五</td>
+            </tr>
+            <tr class="success">
+                <td>内容一</td>
+                <td>内容二</td>
+                <td>内容三</td>
+                <td>内容四</td>
+                <td>内容五</td>
+            </tr>
+            <tr class="info">
+                <td>内容一</td>
+                <td>内容二</td>
+                <td>内容三</td>
+                <td>内容四</td>
+                <td>内容五</td>
+            </tr>
+            <tr class="warning">
+                <td>内容一</td>
+                <td>内容二</td>
+                <td>内容三</td>
+                <td>内容四</td>
+                <td>内容五</td>
+            </tr>
+            <tr class="danger">
+                <td>内容一</td>
+                <td>内容二</td>
+                <td>内容三</td>
+                <td>内容四</td>
+                <td>内容五</td>
+            </tr>
+        </tbody>
+    </table>
+    <!--表格 end-->
+    <!--表单 start-->
+    <form action="" class="form-inline">
+        <div class="form-group">
+            <label for="">下拉列表：</label>
+            <select name="" id="" class="form-control">
+                <option value="">北京</option>
+                <option value="">北京</option>
+                <option value="">北京</option>
+                <option value="">北京</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="">文本框：</label>
+            <textarea class="form-control " name="" id="" cols="30" rows="10"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="">输入框：</label>
+            <input type="text" class="form-control" placeholder="这是一个输入框">
+        </div>
+        <div class="form-group">
+            <label for="">输入框(变大)：</label>
+            <input type="text" class="form-control input-lg" placeholder="这是一个输入框">
+        </div>
+        <div class="form-group">
+            <label for="">输入框(变小)：</label>
+            <input type="text" class="form-control input-sm" placeholder="这是一个输入框">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="">仅供屏幕阅读器读出，不显示：</label>
+            <input type="text" class="form-control" placeholder="这是一个输入框">
+        </div>
+        <!--has-success改变表单的校验状态，在label标签中添加control-label属性后，label标签就变成了可控制的标签，可以通过不同的属性值来控制当前控件的状态。-->
+        <div class="form-group has-success">
+            <label class="control-label" for="">改变提示信息的颜色和校验边框的颜色(绿色)：</label>
+            <input type="text" class="form-control" placeholder="这是一个输入框">
+        </div>
+        <div class="form-group has-warning">
+            <label for="">改变表单的校验状态，改变校验边框的颜色（黄色）：</label>
+            <input type="text" class="form-control" placeholder="这是一个输入框">
+        </div>
+        <div class="form-group has-error">
+            <label class="control-label" for="">添加一个报错信息（红色）：</label>
+            <input type="text" class="form-control" placeholder="这是一个输入框">
+        </div>
+    </form>
+    <!--表单 end-->
+</body>
+
+</html>
