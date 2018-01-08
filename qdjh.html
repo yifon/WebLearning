@@ -1,0 +1,63 @@
+<p><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>前端面试江湖</title>
+</head>
+<body>
+
+
+
+    <div>这世界，真的有好多人比你先实现了梦想</div>
+    <ul>
+        <li>前端</li>
+        <li>英语</li>
+        <li>粤语</li>
+    </ul>
+    <!-- 34 -->
+    <span id="outer">12<span id="inner">text</span></span>
+    <div id="inner_outer">
+        innerHTML: <p></p>
+        outerHTML: <p></p>
+    </div>
+
+    <!-- 42 -->
+    <div id="newsList">
+
+
+
+        <p class="a">1</p>
+        <p class="b">2</p>
+        <p class="c">3</p>
+    </div>
+    <!-- 49 -->
+    <ul>
+        <li class="text">12344</li>
+        <li class="di">dkf</li>
+        <li class="text3">fdfalfl</li>
+    </ul>
+</body>
+    <script>
+    function getFirst(elem){
+    for(var i=0,e;e=elem.childNodes[i++];){
+        if(e.nodeType==1)
+            console.log(e);
+    }
+}
+console.log(document.getElementById("newsList").childNodes.length);// 会计算空行
+    getFirst(document.getElementById("newsList"));
+    document.onkeydown=function(evt){
+    //兼容IE和Firefox获得keyBoardEvent对象
+   evt=(evt)?evt:((window.event)?window.event:"");
+    //兼容IE和Firefox获得keyBoardEvent对象的键值
+    var key=evt.keyCode?evt.keyCode:evt.which;
+    if(evt.ctrlKey&&(key==13||key==10)){
+        同时按下ctrl+enter组合键
+        console.log("hi");
+    }
+    console.log(key);
+}
+//document.onkeydown=myKeyPress(event);
+    </script>
+</html>
+</p>
