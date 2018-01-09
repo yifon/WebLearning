@@ -44,6 +44,154 @@
 </head>
 
 <body>
+    <!--弹窗 start
+    data-toggle指以什么事件触发，常用的如modal,popover,tooltips等，data-target指事件的目标，一起使用就是代表data-target所指的元素以data-toggle指定的形式显示
+    -->
+    <!--按钮层 start-->
+    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">弹窗</button>
+    <!--按钮层 end-->
+    <button class="btn btn-danger" data-toggle="modal" data-target="#danger">测试</button>
+    <div class="modal fade" id="danger">测试内容</div>
+    <!--Modal弹窗窗口 start
+    .close: 设置模态窗口关闭按钮的样式
+    data-dismiss: 用于关闭模态窗口
+    -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                        <span class="sr-only">关闭弹窗</span>
+                    </button>
+                    <h4 class="modal-title" id="myModallabel">标题</h4>
+                </div>
+                <div class="modal-body">慕课网</div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal弹窗窗口 end-->
+    <!--弹窗  end-->
+    <!--面板 start
+        .panel: 代表面板
+        .panel-body: 代表面板内容
+        .panel-footer: 代表面板的注脚
+    -->
+    <div class="panel panel-default panel-success">
+        <div class="panel-heading">
+            弹出层
+        </div>
+        <div class="panel-body">
+            面板的具体内容
+        </div>
+        <div class="panel-footer">
+            注脚
+        </div>
+    </div>
+    <!--面板 end-->
+    <!--列表 start
+        .list-group: 代表列表组
+        .badge: 代表状态数
+        .active: 选中
+    -->
+    <ul class="list-group">
+        <li class="list-group-item active">这是一个列表
+            <span class="badge">14</span>
+        </li>
+        <li class="list-group-item disabled">这是一个列表
+            <span class="badge">14</span>
+        </li>
+        <li class="list-group-item list-group-item-danger">这是一个列表
+            <span class="badge">14</span>
+        </li>
+    </ul>
+    <!--列表 end-->
+    <!--进度条 start
+    .progress : 表示进度条
+    通过状态类改变进度条的颜色
+    .progress-bar-striped : 使得进度条颜色渐变
+    -->
+    <div class="progress">
+        <div class="progress-bar progress-bar-success progress-bar-striped" style="width:50%;">
+            50%
+        </div>
+    </div>
+    <!--进度条 end-->
+    <!--分页 start
+    .pagination : 在父元素中添加表示分页
+    .pager : 放置在翻页区域
+    .previous : 把链接向左对齐
+    .next : 把链接向右对齐
+    .pagination-lg : 变大
+    .pagination-sm : 变小
+    -->
+    <nav>
+        <ul class="pager">
+            <li class="previous">
+                <a href="">向左</a>
+            </li>
+            <li class="next">
+                <a href="">向右</a>
+            </li>
+        </ul>
+        <ul class="pagination pagination-sm">
+            <li class="active">
+                <a href="http://www.imooc.com">1</a>
+            </li>
+            <li>
+                <a href="http://www.imooc.com">2</a>
+            </li>
+            <li>
+                <a href="http://www.imooc.com">3</a>
+            </li>
+        </ul>
+    </nav>
+    <!--分页 end-->
+    <!--导航 start
+    .nav : 无序列表
+    .nav-tabs : 创建一个标签式的导航菜单
+    .active : 默认选中
+    .nav-pills : 基本的胶囊式导航菜单
+    .nav-stacked : 垂直堆叠效果
+    -->
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="http://www.imooc.com">慕课网</a>
+        </li>
+        <li>
+            <a href="http://www.imooc.com">慕课网</a>
+        </li>
+        <li>
+            <a href="http://www.imooc.com">慕课网</a>
+        </li>
+    </ul>
+    <ul class="nav nav-pills">
+        <li class="active">
+            <a href="http://www.imooc.com">慕课网</a>
+        </li>
+        <li>
+            <a href="http://www.imooc.com">慕课网</a>
+        </li>
+        <li>
+            <a href="http://www.imooc.com">慕课网</a>
+        </li>
+    </ul>
+    <ul class="nav nav-pills nav-stacked">
+        <li class="active">
+            <a href="http://www.imooc.com">慕课网</a>
+        </li>
+        <li>
+            <a href="http://www.imooc.com">慕课网</a>
+        </li>
+        <li>
+            <a href="http://www.imooc.com">慕课网</a>
+        </li>
+    </ul>
+    <!--导航 end-->
     <!--控件组 start
     将文本输入框和文字或者小icon组合在一起显示
     -->
