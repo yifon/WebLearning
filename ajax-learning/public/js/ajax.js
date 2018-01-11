@@ -1,6 +1,6 @@
-var request = new XMLHttpRequest();
-request.open("GET", "get.php", true);
-request.send();
+// var request = new XMLHttpRequest();
+// request.open("GET", "get.php", true);
+// request.send();
 /**
  * ＝＝readyState属性：
  * 0:请求未初始化，open还没有调用
@@ -15,11 +15,11 @@ request.send();
  * getAllResponseHeader():获取所有的响应报头
  * getResponseHeader():查询响应中的某个字段的值
  */
-request.onreadystatechange = function () {
-    if (request.readyState === 4 && request.status === 200) {
+// request.onreadystatechange = function () {
+//     if (request.readyState === 4 && request.status === 200) {
 
-    }
-}
+//     }
+// }
 /**
  * jQuery.ajax([settings])
  * type:类型，"POST"或 "GET",默认为"GET"
@@ -34,7 +34,7 @@ $(document).ready(function () {
     $("#search").click(function () {
         $.ajax({
             type: "GET",
-            url: "",
+            url: "/search?number="+$("#keyword").val(),
             dataType: "jsonp",
             jsonp:"callback",//参数名为callback
             success: function (data) {
@@ -49,10 +49,13 @@ $(document).ready(function () {
             }
         })
     })
+ //由于staffId是唯一的，所以如果创建的时候若发现staffId已经在数据库中创建过，则应该在点击create按钮的时候提醒，并且将create按钮禁用，直到修改staffId可用为止；
+ //相似的，如果update的时候发现staffId并不存在，则应该在点击update按钮的时候提醒，并且将update按钮禁用，直到修改staffId可用为止
+
     $("#save").click(function () {
         $.ajax({
             type: "POST",
-            url: "",
+            url: "/create",
             dataType: "json",
             data: {
                 name: $("#staffName").val(),
