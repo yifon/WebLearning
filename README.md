@@ -17,13 +17,13 @@ localhost:3000/staff
 
 改造：
 
-## 1.语言：
+### 1.语言：
 前端页面渲染和交互采用jade,bootstrap,jquery,ajax;服务器端采用node.js;数据库使用mongodb;同时使用grunt自动编译
 
-## 2.参考：
+### 2.参考：
 整个结构可以参考我另一个项目 https://github.com/yifon/nodejs-learning/tree/master/movie ，staff这个项目是在理解了Scott老师结构的基础上套用改造的。
 
-## 3.功能：
+### 3.功能：
 员工编号staffId是唯一的。
 #### 查询:
 若staffId存在，则提供员工信息。若不存在则提醒。
