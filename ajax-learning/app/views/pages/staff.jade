@@ -1,0 +1,30 @@
+extends ../layout 
+block content
+    .form-group.form-inline.col-md-4.col-md-offset-4
+        h3 员工查询:
+        label(for="keyword") 请输入员工编号:
+        input#keyword.form-control(type="text" placeholder="请输入员工编号")
+        button.btn.btn-default#search
+            span.glyphicon.glyphicon-search
+        #searchResult
+    .col-md-4.col-md-offset-4
+        h3 员工创建/修改:
+        .form-group.form-inline
+            label(for="staffId") 请输入员工编号：
+            input#staffId.form-control(type="text" placeholder="请输入员工编号")
+        .form-group.form-inline
+            label(for="staffName") 请输入员工姓名：
+            input#staffName.form-control(type="text" placeholder="请输入员工姓名")
+        .form-group.form-inline
+            label(for="staffSex") 请选择员工性别：
+            select#staffSex
+                option.active 女
+                option 男
+        .form-group.form-inline
+            label(for="staffJob") 请输入员工职位：
+            input#staffJob.form-control(type="text" placeholder="请输入员工职位")
+        button.btn.btn-success#create(style="margin-right:30px;") 创建
+        button.btn.btn-success#update 修改
+        #createResult
+    script(src="/js/staff.js")
+
