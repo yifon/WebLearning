@@ -24,20 +24,20 @@ localhost:3000/staff
 
 ## 3.功能：
 员工编号staffId是唯一的。
-### 查询:
+#### 查询:
 若staffId存在，则提供员工信息。若不存在则提醒。
 
-### 创建:
-若staffId存在，若不可以创建。若不存在则可以创建
+#### 创建:
+若staffId存在，则不可以创建。若不存在则可以创建
 
 ![image](https://github.com/yifon/WebLearning/blob/master/ajax-learning/public/images/2.png) ![image](https://github.com/yifon/WebLearning/blob/master/ajax-learning/public/images/4.png)
 
-### 修改:
-若staffId不存在，若不可以修改。若存在则可以修改
+#### 修改:
+若staffId不存在，则不可以修改。若存在则可以修改
 
 ![image](https://github.com/yifon/WebLearning/blob/master/ajax-learning/public/images/3.png)
 
-### 响应／服务器等报错的提醒：
+#### 响应／服务器等报错的提醒：
 ![image](https://github.com/yifon/WebLearning/blob/master/ajax-learning/public/images/1.png)
 
 ..(待续)
