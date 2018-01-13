@@ -1,4 +1,4 @@
-//传入mongoose的建模工具模块
+    //传入mongoose的建模工具模块
 var mongoose = require('mongoose');
 var StaffSchema = new mongoose.Schema({
     staffId: String,

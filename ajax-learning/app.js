@@ -23,4 +23,12 @@ app.use(bodyParser.urlencoded({ extended: true }));//返回的对象为任意类
 
 require('./config/routes')(app);//引用路由文件
 
-console.log('staff information page started successfully on port ' + port);
+/**
+ * proxy代理，实现在本地加载服务器文件 http://www.imooc.com/data/fruit_part.html 
+ */
+var proxy = require('http-proxy-middleware');//引入代理中间件
+var dataProxy = proxy('/data', { target: "http://www.imooc.com/", changeOrigin: true });//将服务器代理到http://www.imooc.com上，本地服务器为localhost:3000
+app.use('/data/*', dataProxy);//data子目录下的都是用代理
+
+
+console.log('Sever started successfully on port ' + port);
