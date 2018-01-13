@@ -51,4 +51,12 @@ localhost:3000/fruit
 
 实现结果：
 ![image](https://github.com/yifon/WebLearning/blob/master/ajax-learning/public/images/fruit.png)
+
+localhost:3000/sport
+-----------
+案例https://www.imooc.com/code/13468
+跨域使用使用getJSON()方法异步加载JSON格式数据http://www.imooc.com/data/sport.json 的问题
+
+实现结果：
+![image](https://github.com/yifon/WebLearning/blob/master/ajax-learning/public/images/sport.png)
 ..(待续)

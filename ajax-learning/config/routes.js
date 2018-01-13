@@ -1,6 +1,7 @@
 //拿到控制层的入口文件
 var Staff=require('../app/controllers/staff');
 var Fruit=require('../app/controllers/fruit');
+var Sport=require('../app/controllers/sport');
 
 module.exports=function(app){
     
@@ -14,4 +15,5 @@ module.exports=function(app){
 
     //跨域代理
    app.get('/fruit',Fruit.index);
+   app.get('/sport',Sport.index);
 }

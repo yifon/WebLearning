@@ -1,7 +1,6 @@
 $(function () {
     $("#load").bind("click", function () {
         var $this = $(this);
-        console.log(1);
         //在本地直接load慕课网的资源是会有跨域拦截的，所以下述方式获取不了
         // $("#fruitList").load("http://www.imooc.com/data/fruit_part.html",function(){
 
