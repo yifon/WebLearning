@@ -2,6 +2,9 @@
 var Staff=require('../app/controllers/staff');
 var Fruit=require('../app/controllers/fruit');
 var Sport=require('../app/controllers/sport');
+var Sport_f=require('../app/controllers/sport_f');
+var Info_f=require('../app/controllers/info_f');
+var Check_f=require('../app/controllers/check_f');
 
 module.exports=function(app){
     
@@ -16,4 +19,7 @@ module.exports=function(app){
     //跨域代理
    app.get('/fruit',Fruit.index);
    app.get('/sport',Sport.index);
+   app.get('/sport_f',Sport_f.index);
+   app.get('/info_f',Info_f.index);
+   app.get('/check_f',Check_f.index);
 }

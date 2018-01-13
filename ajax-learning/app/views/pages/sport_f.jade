@@ -1,0 +1,11 @@
+//- jQuery基础（五）-Ajax应用与常用插件
+//- 1-3使用getScript()方法异步加载并执行js文件
+extends ../layout 
+block content
+    .col-md-3.col-md-offset-3
+        .form-group.form-inline
+            label(for="") 我最喜欢的运动：
+            button.btn.btn-success#load 加载
+        ul#sportList
+    script(src="/js/sport_f.js")
+    

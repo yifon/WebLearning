@@ -55,8 +55,32 @@ localhost:3000/fruit
 localhost:3000/sport
 -----------
 案例https://www.imooc.com/code/13468
+
 跨域使用使用getJSON()方法异步加载JSON格式数据http://www.imooc.com/data/sport.json 的问题
 
 实现结果：
 ![image](https://github.com/yifon/WebLearning/blob/master/ajax-learning/public/images/sport.png)
+
+localhost:3000/sport_f
+-----------
+案例https://www.imooc.com/code/13470
+
+跨域使用getScript()方法加载并执行指定服务器路径http://www.imooc.com/data/sport_f.js 的JavaScript格式文件，根据条件，将数据内容显示在页面中的问题。
+
+localhost:3000/info_f
+-----------
+案例https://www.imooc.com/code/13471
+
+跨域使用$.get()方法向服务器成功请求数据后，在回调函数中通过data参数传回请求的数据
+
+localhost:3000/check_f
+-----------
+案例https://www.imooc.com/code/13472
+
+使用$.post()方法向服务器发送数据
+
+碰到一个问题，也就是同时使用bodyParser.json()和bodyParser.urlencode()会导致响应504。具体原因还不清楚，等待各大论坛解答。
+
+https://segmentfault.com/q/1010000012831152
+
 ..(待续)

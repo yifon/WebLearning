@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));//返回的对象为任意类
 require('./config/routes')(app);//引用路由文件
 
 /**
- * proxy代理，实现在本地加载服务器文件 http://www.imooc.com/data/fruit_part.html 
+ * proxy代理
  */
 var proxy = require('http-proxy-middleware');//引入代理中间件
 var dataProxy = proxy('/data', { target: "http://www.imooc.com/", changeOrigin: true });//将服务器代理到http://www.imooc.com上，本地服务器为localhost:3000
