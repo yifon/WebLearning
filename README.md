@@ -50,5 +50,5 @@ localhost:3000/fruit
 代码只需要看fruit相关的即可。
 
 实现结果：
-[image](https://github.com/yifon/WebLearning/blob/master/ajax-learning/public/images/fruit.png)
+![image](https://github.com/yifon/WebLearning/blob/master/ajax-learning/public/images/fruit.png)
 ..(待续)
