@@ -17,17 +17,17 @@ app.use(express.static(path.join(__dirname, 'public')))//静态资源的获取�
 app.set('views', './app/views/pages');//设置视图的根目录
 app.set('view engine', 'jade');//设置默认的模版引擎
 
-
-
 /**
  * proxy代理
  */
 var proxy = require('http-proxy-middleware');//引入代理中间件
 var dataProxy = proxy('/data', { target: "http://www.imooc.com/", changeOrigin: true });//将服务器代理到http://www.imooc.com上，本地服务器为localhost:3000
 app.use('/data/*', dataProxy);//data子目录下的都是用代理
-console.log("dataProxy->next");
 
-var bodyParser = require('body-parser');//解析请求的消息体
+/**
+ * 解析请求的消息体
+ */
+var bodyParser = require('body-parser');
 app.use(bodyParser.json());//返回一个只解析json的中间件，最后保存的数据都放在req.body对象上
 app.use(bodyParser.urlencoded({ extended: true }));//返回的对象为任意类型
 

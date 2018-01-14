@@ -7,7 +7,7 @@ $(function () {
         //借助本地的代理服务器去获取目标服务器的资源
         //方式1
         $("#fruitList").load("http://localhost:3000/data/fruit_part.html", function () {
-            $this.attr("disabled", "true");
+            // $this.attr("disabled", "true");
         })
 
         //方式2

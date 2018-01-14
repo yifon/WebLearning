@@ -5,9 +5,21 @@ $(function () {
         // $.getScript("http://www.imooc.com/data/sport_f.js",function(){
 
         //借助本地的代理服务器去获取目标服务器的资源
-        //方式1
+        //方式1,用.getScript()
         $.getScript("http://localhost:3000/data/sport_f.js", function (data) {
             $this.attr("disabled", "true");
         })
+        //方式2，用.ajax()
+        // $.ajax({
+        //     type: "get",
+        //     dataType: "script",
+        //     url: "http://localhost:3000/data/sport_f.js",
+        //     success: function () {
+        //         $this.attr("disabled", "true");
+        //     },
+        //     error: function (data) {
+        //         console.log(data);
+        //     }
+        // })
     })
 })
