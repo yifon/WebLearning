@@ -79,8 +79,11 @@ localhost:3000/check_f
 
 使用$.post()方法向服务器发送数据
 
-碰到一个问题，也就是同时使用bodyParser.json()和bodyParser.urlencode()会导致响应504。具体原因还不清楚，等待各大论坛解答。
+碰到一个问题，也就是同时使用bodyParser.json()和bodyParser.urlencode()会导致响应504。
+
+原因已经自己分析了，参考我的问题描述和分析：
 
 https://segmentfault.com/q/1010000012831152
+
 
 ..(待续)
