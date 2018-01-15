@@ -1,6 +1,6 @@
 //- jQuery基础（五）-Ajax应用与常用插件
 //- 1-4$.get()方法，请求服务器中http://www.imooc.com/data/info_f.php文件中的数据
-extends ../layout 
+include ../includes/info 
 block content
     .col-md-3.col-md-offset-3
         .form-group.form-inline
@@ -11,5 +11,114 @@ block content
         
     .col-md-3.col-md-offset-3
         ul#stuList 学生列表
+    
+    form.col-md-3.col-md-offset-3#form
+        .form-group.form-inline
+            label(for="") 表单验证插件：
+            button.btn.btn-success#verify 提交
+        .form-group.form-inline
+            label(for="email") 邮箱：
+            input(type="text" name="email").form-control#email
+        .form-group.form-inline
+            label(for="age") 年龄：
+            input(type="text" name="age").form-control#age
+    .col-md-3.col-md-offset-3
+        #verifyResult
+
+    form.col-md-3.col-md-offset-3#personalForm
+        .form-group.form-inline
+            label(for="") 个人信息页：
+            input(type="submit" value="提交").btn.btn-success#submitInfo
+        .form-group.form-inline
+            label(for="user") 用户名：
+            input(type="text" name="user").form-control#user
+            label(for="chksave") 是否保存用户名：
+            input(type="checkbox" name="chksave").form-control#chksave
+        .form-group.form-inline
+            label(for="nick") 昵称：
+            input(type="text" name="nick").form-control#nick
+    .col-md-3.col-md-offset-3
+        #infoResult
+    
+    #divtest
+        .title
+            span.fl 我的相册
+        .content
+            .divPics
+                ul.form-group.form-inline
+                    li
+                        a(href="http://img.mukewang.com/52e489f20001ecfc04480275.jpg" title="第1篇风景图片")
+                            img(src="http://img.mukewang.com/52e489f20001ecfc04480275.jpg" alt="")
+                    li
+                        a(href="http://img.mukewang.com/52e48a1e0001eec804480275.jpg" title="第2篇风景图片")
+                            img(src="http://img.mukewang.com/52e48a1e0001eec804480275.jpg" alt="")
+                    li
+                        a(href="http://img.mukewang.com/52e48a4c00015ad204480275.jpg" title="第3篇风景图片")
+                            img(src="http://img.mukewang.com/52e48a4c00015ad204480275.jpg" alt="")        
+        .title
+            span.fl 图片放大镜
+        .content
+            a#jqzoom(href="http://img.mukewang.com/52e4aec90001924d06800599.jpg" title="小兔子乖乖")
+                img(src="http://img.mukewang.com/52e4aee700012df702130212.jpg" alt="")
+       
+        .title
+            span.fl 搜索插件
+        .content(style="margin-bottom:150px")
+            span.fl 用户名：
+            input#txtSearch(name="txtSearch")
+            .tip
+
+        .title
+            span.fl 点击右键
+        .content(style="margin-bottom:150px")
+            input#btnSubmit(type="button",value="提交")
+            .tip1
+        .contextMenu#sysMenu
+            ul
+                li#li1 保存
+                    img(src="http://img.mukewang.com/52e4b34b0001bb6d00160016.jpg", alt="", srcset="") 
+                li#li2 退出
+                    img(src="http://img.mukewang.com/52e4b3680001424900160016.jpg", alt="", srcset="")
+
+        .title
+            span.fl 对象级别的插件
+        .content(style="margin-bottom:150px")
+            ul#ul
+                li
+                    span 橘子
+                    span 水果
+                li
+                    span 芹菜
+                    span 蔬菜
+                li
+                    span 香蕉
+                    span 水果
+
+        .title
+            span.fl 自定义类级别插件
+            span.fr
+                input#btnCount(type="button",value="计算")
+        .content(style="margin-bottom:150px") 两数相减：
+            input#Text1.txt(type="text")
+            | -
+            input#Text2.txt(type="text")
+            | =
+            input#Text3.txt(type="text")
+        
+        #divtest1(style="margin-bottom:150px")
+            #x.drag(style="width:50px;height:50px;background-color:black") 沿x轴拖拽
+            #y.drag(style="width:50px;height:50px;background-color:#ccc")  沿y轴拖拽
+
+        #divtest2(style="margin-bottom:150px")
+            .box
+                .title.form-control.productTitle  产品区
+                .drag2
+                    div.form-control.product 苹果
+            .box
+                .title.form-control.recycle 回收站
+                .cart
+                    #tip3 还没有产品
+
+    link(rel="stylesheet", href="/css/info.css")
     script(src="/js/info_f.js")
     
