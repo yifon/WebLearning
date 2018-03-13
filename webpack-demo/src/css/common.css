@@ -1,0 +1,16 @@
+@import './flex.css';
+html, body {
+    padding: 0;
+    margin: 0;
+    background-color: royalblue;
+}
+
+ul, li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.flex-div {
+    display: flex;
+}
