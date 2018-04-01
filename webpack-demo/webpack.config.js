@@ -1,4 +1,5 @@
 var htmlWepackPlugin = require('html-webpack-plugin');
+const UglifyPlugin = require('uglifyjs-webpack-plugin');
 var minify = require('html-minifier');
 var path = require('path');
 module.exports = {
@@ -26,6 +27,11 @@ module.exports = {
                 query: {
                     presets: ['env']
                 }
+            },
+            {
+                test: /\.jsx?/,//支持js和jsx
+                include: [path.resolve(__dirname, 'src')],//src目录下的才需要经过babel-loader处理
+                loader: 'babel-loader'
             },
             {
                 test: /\.css$/,
@@ -72,7 +78,8 @@ module.exports = {
             inject: 'body',//指定嵌入在body还是head标签里
             title: "Webpack App"
         }),
-        require("autoprefixer")
+        require("autoprefixer"),
+        new UglifyPlugin()
     ]
 
 }

@@ -1,0 +1,6 @@
+// "test": "echo \"Error: no test specified\" && exit 1",
+// "webpack": "webpack --config webpack.config.js --colors"
+
+可以使用webpack-dev-server在本地开启一个简单的静态服务来进行开发
+npm install webpack-cli -D
+npm install --save webpack-dev-server

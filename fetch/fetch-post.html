@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>fetch-post</title>
+</head>
+
+<body>
+    用户:
+    <input type="text" name="" id="user">
+    <br> 密码:
+    <input type="text" name="" id="pass">
+    <br>
+    <button class="login">登陆</button>
+    <script>
+        document.querySelector(".login")["onclick"] = x => {
+            fetch(`http://localhost:2133/loginPost`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'//传字符串
+                },
+                body: `user=${user.value}&pass=${pass.value}`
+            }).then((res) => {
+                res.json(() => {
+
+                }).then(() => {
+                    // console.log(res);
+                    if (res.ok) {
+                        document.body.style.background = "red";
+                    } else {
+                        document.body.style.background = "green";
+                    }
+                }).catch(() => {
+                    console.log("服务器异常");
+                })
+            })
+        }
+    </script>
+</body>
+
+</html>

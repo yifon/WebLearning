@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>test</title>
+</head>
+
+<body>
+    <div id="FDK1" onclick="onItemSelected(1)">查询</div>
+    <div id="FDK2" onclick="onItemSelected(2)">取款</div>
+    <div id="FDK3" onclick="onItemSelected(3)">转帐</div>
+    <script>
+        function onItemSelected(fdkPosition) {
+            console.log("hi")
+            switch (fdkPosition) {
+                case 1:
+                case 2:
+                case 3:
+                    console.log("fdkPosition:" + fdkPosition);
+                    break;
+                default:
+                    break;
+            }
+        }
+        window.onload = function () {
+            var txnId = localStorage.getItem("txnId");
+            if (txnId) {
+                document.getElementById(txnId).click();
+            }
+        }
+    </script>
+</body>
+
+</html>

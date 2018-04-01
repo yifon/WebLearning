@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>fetch-post2</title>
+</head>
+
+<body>
+    头像:
+    <input type="file" name="" id="picture">
+    <br> 用户:
+    <input type="text" name="" id="user">
+    <br> 密码:
+    <input type="text" name="" id="pass">
+    <br>
+    <button class="login">登陆</button>
+    <script>
+        document.querySelector(".login")["onclick"] = x => {
+
+            var fd = new FormData();
+            fd.append("pic", picture.files[0]);
+
+            fetch("http://localhost:2133/addPic", {
+                method: "POST",
+                body: fd
+            }).then((res) => {
+                res.json(() => {
+
+                }).then((res) => {
+                    var {ok} = res;
+                    if (ok) {
+                        let { dataUrl } = res;
+                        console.log(dataUrl);
+                    } else {
+                        console.log("失败");
+                    }
+
+                }).catch(() => {
+                    console.log("服务器异常");
+                })
+            })
+        }
+    </script>
+</body>
+
+</html>
