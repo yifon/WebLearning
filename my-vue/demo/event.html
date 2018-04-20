@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue事件处理</title>
+    <script src="js/vue.min.js"></script>
+</head>
+
+<body>
+    <!-- 滚动事件的默认行为 (即滚动行为) 将会立即触发 -->
+    <!-- 而不会等待 `onScroll` 完成  -->
+    <!-- 这其中包含 `event.preventDefault()` 的情况 -->
+    <div id="example-5" v-on:scroll.passive="onScroll" style="width: 300px;height: 300px;border: 4px solid red;overflow: scroll;">
+        sou la xi xi xi xi la xi la sou 吹着前奏望着天空 我想起花瓣试着掉落 为你翘课的那一天 花落的那一天 教室的那一间 我怎么看不见 消失的下雨天 我好想再淋一遍 没想到失去的勇气我还留着 好想再问一遍 你会等待还是离开
+        刮风这天我试过握着你手 但偏偏雨渐渐大到我看你不见 还要多久我才能在你身边 还要多久我才能够在你身边 等到放晴的那天也许我会比较好一点 等到放晴那天也许我会比较好一点 从前从前有个人爱你很久 但偏偏风渐渐把距离吹得好远 偏偏风渐渐把距离吹得好远
+        但偏偏雨渐渐把距离吹得好远 好不容易又能再多爱一天 但故事的最后你好像还是说了拜拜 但故事的最后你好像还是说了 sou la xi xi xi xi la xi la sou 吹着前奏望着天空 我想起花瓣试着掉落 为你翘课的那一天
+        花落的那一天 教室的那一间 我怎么看不见 消失的下雨天 我好想再淋一遍 没想到失去的勇气我还留着 好想再问一遍 你会等待还是离开 刮风这天我试过握着你手 但偏偏雨渐渐大到我看你不见 还要多久我才能在你身边 还要多久我才能够在你身边
+        等到放晴的那天也许我会比较好一点 等到放晴那天也许我会比较好一点 从前从前有个人爱你很久 但偏偏风渐渐把距离吹得好远 偏偏风渐渐把距离吹得好远 但偏偏雨渐渐把距离吹得好远 好不容易又能再多爱一天 但故事的最后你好像还是说了拜拜
+        但故事的最后你好像还是说了 sou la xi xi xi xi la xi la sou 吹着前奏望着天空 我想起花瓣试着掉落 为你翘课的那一天 花落的那一天 教室的那一间 我怎么看不见 消失的下雨天 我好想再淋一遍 没想到失去的勇气我还留着
+        好想再问一遍 你会等待还是离开 刮风这天我试过握着你手 但偏偏雨渐渐大到我看你不见 还要多久我才能在你身边 还要多久我才能够在你身边 等到放晴的那天也许我会比较好一点 等到放晴那天也许我会比较好一点 从前从前有个人爱你很久 但偏偏风渐渐把距离吹得好远
+        偏偏风渐渐把距离吹得好远 但偏偏雨渐渐把距离吹得好远 好不容易又能再多爱一天 但故事的最后你好像还是说了拜拜 但故事的最后你好像还是说了 sou la xi xi xi xi la xi la sou 吹着前奏望着天空 我想起花瓣试着掉落
+        为你翘课的那一天 花落的那一天 教室的那一间 我怎么看不见 消失的下雨天 我好想再淋一遍 没想到失去的勇气我还留着 好想再问一遍 你会等待还是离开 刮风这天我试过握着你手 但偏偏雨渐渐大到我看你不见 还要多久我才能在你身边 还要多久我才能够在你身边
+        等到放晴的那天也许我会比较好一点 等到放晴那天也许我会比较好一点 从前从前有个人爱你很久 但偏偏风渐渐把距离吹得好远 偏偏风渐渐把距离吹得好远 但偏偏雨渐渐把距离吹得好远 好不容易又能再多爱一天 但故事的最后你好像还是说了拜拜
+        但故事的最后你好像还是说了
+    </div>
+
+    <p>滚动
+        <span id="demo">0</span> 次。</p>
+
+    <div id="example-1">
+        <button v-on:click="counter+=1">Add 1</button>
+        <p>按钮被点击{{counter}}次</p>
+    </div>
+    <div id="example-2">
+        <button v-on:click="greet">
+            Greet
+        </button>
+    </div>
+    <div id="example-3" style="border:1px solid #eee">
+        <button v-on:click="say('hi')">Say hi</button>
+        <button v-on:click="say('what')">Say what</button>
+    </div>
+    <div id="example-4">
+        <pre>
+        事件修饰符 
+        .stop
+        .prevent 
+        .capture
+        .self 
+        .once 
+        </pre>
+        <div id="parent" style="border: 3px solid red; width: 400px" v-on:click="doParent">
+            <a v-on:click.stop="doChild1">事件1，阻止了冒泡</a>
+            <br>
+            <a v-on:click="doChild2">事件2,不阻止冒泡</a>
+            <br>
+            <form v-on:submit.prevent="onSubmit">
+                <button>事件3，提交事件不再重载页面</button>
+            </form>
+            <br>
+            <form v-on:submit="onSubmit">
+                <button>事件4，提交事件重载页面</button>
+            </form>
+            <br>
+            <a v-on:click.stop.prevent="doThat">串联修饰符.stop.prevent</a>
+            <br>
+            <form v-on:submit:prevent>只有修饰符</form>
+            <br>
+            <div v-on:click.capture="external" style="border: 2px solid green;width:200px;height: 200px;">
+                添加事件监听器时使用事件捕获模式,即元素自身触发的事件先在此处处理，然后才交给内部元素进行处理
+                <div style="border: 1px solid black;width: 100px;height: 100px" v-on:click="internal">
+                    内部元素
+                </div>
+            </div>
+            <div v-on:click.self="external" style="border: 2px solid green;width:200px;height: 200px;">
+                只当event.target是当前元素自身时触发处理函数。即事件不是由内部元素触发的
+                <div style="border: 1px solid black;width: 100px;height: 100px" v-on:click="internal">
+                    内部元素
+                </div>
+            </div>
+            <div>
+                <a v-on:click.once="clickOnce">点击事件只会触发一次</a>
+            </div>
+        </div>
+    </div>
+    <div id="example-6">
+        <pre>
+            按键修饰符: 在监听键盘事件时，我们经常需要检查常见的键值。Vue 允许为 v-on 在监听键盘事件时添加按键修饰符：
+            keyup.13:enter键
+            记住所有的 keyCode 比较困难，所以 Vue 为最常用的按键提供了别名：
+            全部的按键别名：
+            .enter
+            .tab
+            .delete (捕获“删除”和“退格”键)
+            .esc
+            .space
+            .up
+            .down
+            .left
+            .right
+            可以通过全局 config.keyCodes 对象自定义按键修饰符别名：
+        </pre>
+        <p>
+            keyup 结果:
+            <span id="result" style="color: red"></span>
+        </p>
+        <input v-on:keyup.13="submit1" placeholder="keyup.13">
+        <input v-on:keyup.enter="submit" placeholder="keyup.enter">
+        <input v-on:keyup.esc="submit1" placeholder="keyup.esc">
+        <input v-on:keyup.space="submit" placeholder="keyup.space">
+        <input v-on:keyup.up="submit1" placeholder="keyup.up">
+        <input v-on:keyup.down="submit" placeholder="keyup.down">
+        <input v-on:keyup.left="submit1" placeholder="keyup.left">
+        <input v-on:keyup.right="submit" placeholder="keyup.right">
+        <input v-on:keyup.delete="submit1" placeholder="keyup.delete">
+        <p>
+            可以使用 `v-on:keyup.f1`:
+        </p>
+        <input v-on:keyup.f1="submit" placeholder="keyup.f1">
+
+        <!-- Alt + C -->
+        <input @keyup.alt.67="clear" placeholder="alt+c">
+
+        <!-- alt + Click -->
+        <div @click.alt="doSomething" style="border: 1px solid green;height: 80px;">alt+click: Do something</div>
+
+        <!-- 即使 Alt 或 Shift 被一同按下时也会触发 -->
+        <button @click.alt="doSomething">alt+click,满足两者被按下即可触发</button>
+
+        <!-- 有且只有 Alt 被按下的时候才触发 -->
+        <button @click.alt.exact="doSomething">alt+click，若同时按了其它热键，则不触发</button>
+
+        <!-- 没有任何系统修饰符被按下的时候才触发 -->
+        <button @click.exact="doSomething">click,若同时按了其它热键，则不触发</button>
+    </div>
+
+    <script>
+        Vue.config.keyCodes.f1 = 112;
+        // for (var i = 0; i < 90000; i++) {
+        //     console.log(i);
+        // }
+
+        let example1 = new Vue({
+            el: "#example-1",
+            data: {
+                counter: 0
+            }
+        });
+        let example2 = new Vue({
+            el: "#example-2",
+            data: {
+                name: "June"
+            },
+            //在methods对象中定义方法
+            methods: {
+                greet: function (event) {
+                    console.log("Hello " + this.name + "!");
+                    if (event) {
+                        console.log(event.target.name);
+                    }
+                }
+            }
+        })
+        example2.greet();
+
+        let example3 = new Vue({
+            el: "#example-3",
+            methods: {
+                say: function (message) {
+                    console.log(message);
+                }
+            }
+        })
+
+        //阻止事件的传播
+        let example4 = new Vue({
+            el: "#example-4",
+            data: {
+
+            },
+            methods: {
+                doParent: () => {
+                    console.log("父元素打印了"); //默认行为
+                },
+                doChild1: () => {
+                    console.log("事件1，阻止了冒泡"); //阻止了冒泡，所以不会打印父元素
+                },
+                doChild2: () => {
+                    console.log("事件2,不阻止冒泡"); //默认行为
+                },
+                onSubmit: () => {
+                    console.log("默认行为");
+                },
+                doThat: () => {
+                    console.log("创联修饰符，阻止冒泡和默认行为");
+                },
+                external: () => {
+                    console.log("外部");
+                },
+                internal: () => {
+                    console.log("内部");
+                },
+                clickOnce: () => {
+                    console.log("点击事件只会触发一次");
+                },
+            }
+        })
+
+        var x = 0;
+        let example5 = new Vue({
+            el: "#example-5",
+            data: {
+            },
+            methods: {
+                onScroll: () => {
+                    // for (var i = 0; i < 10000; i++) {
+                    //     console.log(i);
+                    // }
+                    document.getElementById("demo").innerHTML = x += 1;
+                }
+            }
+        });
+
+        let example6 = new Vue({
+            el: "#example-6",
+            methods: {
+                submit: () => {
+                    document.getElementById("result").innerHTML = "Hi, this is the keyup result";
+                },
+                submit1: () => {
+                    document.getElementById("result").innerHTML = "Ha ha ha";
+                },
+                clear: () => {
+                    console.log("clear");
+                },
+                doSomething: () => {
+                    console.log("doSomething");
+                }
+            }
+        })
+
+
+    </script>
+</body>
+
+</html>

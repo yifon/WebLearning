@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue computed属性和watcher</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="example">
+        对于所有复杂逻辑，都应该使用computed属性
+        <p>初始message是:"{{message}}"</p>
+        <p>计算后的翻转message是:"{{reversedMessage}}"</p>
+        <p>现在时间:{{now}}</p>
+    </div>
+    <div id="demo">{{fullName}}</div>
+
+    <script>
+        let vm1 = new Vue({
+            el: "#example",
+            data: {
+                message: "Hello"
+            },
+            computed: {
+                //一个computed属性的getter函数
+                reversedMessage: function () {
+                    //this指向vm实例
+                    return this.message.split('').reverse().join('');//字符串逆向输出
+                },
+                now: function () {
+                    return Date.now();
+                }
+            }
+        });
+        console.log(vm1.reversedMessage);
+        vm1.message = "Goodbye";
+        console.log(vm1.reversedMessage);
+
+        let vm2 = new Vue({
+            el: "#demo",
+            data: {
+                firstName: "Foo",
+                lastName: "Bar"
+            },
+            computed: {
+                fullName: function () {
+                    return this.firstName + " " + this.lastName;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Vue v-for</title>
+  <!-- <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script> -->
+  <script src="js/vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+</head>
+
+<body>
+  <ul id="example-1">
+    使用for in:
+    <br>
+    <li v-for="item in items">
+      {{item.message}}
+    </li>
+    使用for of:
+    <br>
+    <li v-for="item of items">
+      {{item.message}}
+    </li>
+  </ul>
+
+
+  访问父级作用域下的属性。还支持可选的第二个参数，作为当前项的索引。
+  <ul id="example-2">
+    <li v-for="(item,index) in items">
+      {{parentMessage}}- {{index}}- {{item.message}}
+    </li>
+  </ul>
+
+  使用v-for遍历对象的属性
+  <ul id="v-for-object" class="demo">
+    <li v-for="value in object">
+      {{value}}
+    </li>
+    还可以提供第二个参数，作为对象的键名(key):
+    <li v-for="(value,key) in object">
+      {{key}}: {{value}}
+    </li>
+    提供第三个参数作为索引index:
+    <li v-for="(value,key,index) in object">
+      {{index}}.{{key}}: {{value}}
+    </li>
+  </ul>
+
+  <div>
+    试试纯数组的数组变动
+    <ul id="numArr">
+      <li v-for="item in items">
+        {{item}}
+      </li>
+    </ul>
+  </div>
+
+  <div id="changeObj">
+    试试对象改动
+    <input type="text" v-model="change">
+    <p>
+      体重:{{object.weight}}
+    </p>
+    <p>
+      年龄:{{object.age}}
+    </p>
+
+    获取所有的对象属性:
+    <div>
+      添加对象属性：
+      <ul v-for="(value,key) in object">
+        {{key}}: {{value}}
+      </ul>
+      1.0一开始,Object.assign(vm.userProfile,{xxxxx:xxxx})前
+      <ul v-for="(value,key) in object1">
+        {{key}}: {{value}}
+      </ul>
+      1.1 使用Object.assign(vm.userProfile,{xxxxx:xxxx})后
+      <ul v-for="(value,key) in object1" v-if="listAll">
+        {{key}}: {{value}}
+      </ul>
+      2.0一开始,Object.assign(vm.userProfile,{xxxxx:xxxx})前
+      <ul v-for="(value,key) in object2">
+        {{key}}: {{value}}
+      </ul>
+      2.1使用vm.userProfile=Object.assign({},vm.userProfile,{xxxx:xxx})
+      <div v-if="listAll">
+        <ul v-for="(value,key) in object3">
+          {{key}}: {{value}}
+        </ul>
+      </div>
+    </div>
+    <div>
+    </div>
+  </div>
+
+  <div id="evenNumber">
+    显示过滤/排序结果: 有时候我们想要显示一个数组的过滤或排序副本，而不实际改变或重置原始数据。在这种情况下，可以创建返回过滤或排序数组的计算属性。
+    <ul v-for="item in items">
+      <li v-for="n in even(item.numbers)">
+        {{ n }}
+      </li>
+    </ul>
+  </div>
+
+  <div>
+    一段取值范围的v-for
+    <span v-for="n in 10">
+      {{n}}
+    </span>
+  </div>
+  <div id="todoObj">
+    v-for的优先级比v-if更高
+    <li v-for="todo in todos" v-if="!todo.isComplete">
+      {{todo}}
+    </li>
+
+    如果是有条件地跳过循环的执行，那么可以将v-if置于外层元素(或template)上
+    <ul v-if="todos.length>2">
+      <li v-for="todo in todos">
+        {{todo}}
+      </li>
+    </ul>
+  </div>
+  <script>
+    let example1 = new Vue({
+      el: "#example-1",
+      data: {
+        items: [{
+            message: "Wang"
+          },
+          {
+            message: "Ying"
+          },
+          {
+            message: "Jun"
+          },
+          {
+            message: "Yifon"
+          },
+          {
+            message: "June"
+          },
+        ]
+      }
+    });
+    // example1.items[1] = { message: 'Change' };//不是响应的
+    example1.items.length = 2; //不是响应的
+
+    //解决第一类问题
+    //不要直接对数组元素赋值，而是更新
+    example1.items[0].message = "hahah";
+    //Vue.set
+    Vue.set(example1.items, 1, {
+      message: 'Change'
+    });
+
+    //也可以使用vm.$set实例方法，该方法是全局方法Vue.set的一个别名
+    example1.$set(example1.items, 3, {
+      message: "1111"
+    });
+
+    //Array.prototype.splice
+    example1.items.splice(2, 1, {
+      message: '2222'
+    });
+
+    //解决第二类问题,可以使用splice
+    // example1.items.splice(4);//删除index为4后的数组元素，所以length自然也变了
+    // console.log(example1.items.length);
+
+    //试试纯数组
+    let numArr = new Vue({
+      el: "#numArr",
+      data: {
+        items: ['a', 'b', 'c']
+      }
+    });
+    //
+    numArr.items[0] = 'ddd';
+    Vue.set(numArr.items, 0, "why");
+    numArr.items.splice(1, 1, "not");
+
+
+    let example2 = new Vue({
+      el: "#example-2",
+      data: {
+        parentMessage: "parent",
+        items: [{
+            message: "Z"
+          },
+          {
+            message: "Y"
+          },
+          {
+            message: "Shopee"
+          }
+        ]
+      }
+    });
+    let objectExample = new Vue({
+      el: "#v-for-object",
+      data: {
+        object: {
+          firstName: "June",
+          lastName: "Wang",
+          age: 25
+        }
+      }
+    });
+    //Vue不能检测对象属性的添加或者删除
+    objectExample.object.weight = 48.5;
+
+    // console.log(Object.getOwnPropertyNames(objectExample.object));
+    //["firstName", "lastName", "age", "__ob__", "weigth"]
+
+    console.log(Object.getOwnPropertyDescriptor(objectExample.object, "firstName"));
+    //{get: ƒ, set: ƒ, enumerable: true, configurable: true}
+
+    console.log(Object.getOwnPropertyDescriptor(objectExample.object, "weight"));
+    //{value: 48.5, writable: true, enumerable: true, configurable: true}
+
+    //可以使用Vue.set,vm.$set
+    Vue.set(objectExample.object, "salary", 10000);
+
+    objectExample.$set(objectExample.object, "height", 158);
+
+
+    let changeObj = new Vue({
+      el: "#changeObj",
+      data: {
+        object: {
+
+        },
+        object1: {
+          firstName: "June",
+          lastName: "Wang",
+          age: 25
+        },
+        object2: {
+          firstName: "June",
+          lastName: "Wang",
+          age: 25
+        },
+
+        change: "",
+        listAll: false
+      },
+      watch: {
+        change: function (curVal, oldVal) {
+          this.getWeight();
+          this.listAll = true;
+          this.getAll1();
+          this.getAll2();
+        },
+      },
+      methods: {
+        getWeight: _.debounce(
+          function () {
+            this.$set(this.object, "weight", 48.5); //生效
+            // this.object.weight = 48;//不生效
+            // Vue.set(this.object, "weight", 47);//生效
+          }, 3000
+        ),
+        getAll1: function () {
+          // 不要使用
+          Object.assign(this.object1, {
+            father: "h",
+            mother: "y"
+          });
+        },
+        getAll2: function () {
+          //而是使用
+          this.object3 = Object.assign({}, this.object2, {
+            father: "h",
+            mother: "y"
+          })
+        }
+      }
+    });
+    // let numObj1 = new Vue({
+    //     el: "#evenNumber",
+    //     data: {
+    //         numbers: [1, 2, 3, 4, 5, 6]
+    //     },
+    //     computed: {
+    //         evenNumbers: function () {
+    //             return this.numbers.filter(number => {
+    //                 return number % 2 === 0;
+    //             })
+    //         }
+    //     }
+    // });
+
+    //嵌套v-for循环
+    let numObj2 = new Vue({
+      el: "#evenNumber",
+      data: {
+        items: [{
+            numbers: [1, 2, 3, 4, 5, 6]
+          },
+          {
+            numbers: [11, 22, 33, 44, 55, 66]
+          },
+          {
+            numbers: [999, 888, 777, 666, 555, 444]
+          },
+        ]
+      },
+      methods: {
+        even: function (numbers) {
+          console.log(numbers);
+          return numbers.filter(number => {
+            return number % 2 === 0;
+          })
+        }
+      }
+    });
+
+    //v-for优先级比v-if更高
+    let todoObj = new Vue({
+      el: "#todoObj",
+      data: {
+        todos: [{
+            isComplete: false,
+            name: "Wang",
+            length: 10
+          },
+          {
+            isComplete: false,
+            name: "June"
+          }, {
+            isComplete: true,
+            name: "Love"
+          },
+        ]
+      }
+    })
+
+  </script>
+</body>
+
+</html>
+

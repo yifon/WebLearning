@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>观察者</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+</head>
+
+<body>
+    watch属性用于监视vue实例上的数据变动，并相应地改变其它变量的值
+    <div id="app">
+        <input type="text" v-model="firstName">
+        <input type="text" v-model="lastName">
+        <p>我的名字是：{{ fullName }}</p>
+        <input type="text" v-model="number">
+        <p>result:{{result}}</p>
+        类型是对象的变量，当键值发生变化时，为了监听到数据变化，需要设置deep选项为true
+        <input type="text" v-model="fruits.count">
+        <input type="text" v-model="fruits.name">
+        <p>fruits:{{fruitMsg}}</p>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                firstName: 'June',
+                lastName: 'Wang',
+                fullName: 'June Wang',
+                number: 1,
+                result: 1,
+                fruits: {
+                    name: "菠萝",
+                    count: 10
+                },
+                fruitMsg: "10个菠萝"
+            },
+            watch: {
+                firstName: function (curVal, oldVal) {
+                    this.fullName = curVal + " " + this.lastName;
+                },
+                lastName: function (curVal, oldVal) {
+                    this.fullName = this.firstName + " " + curVal;
+                },
+                number: function (curVal, oldVal) {
+                    this.result = curVal * 2 + oldVal * 1;
+                },
+                fruits: {
+                    handler(obj) {
+                        this.fruitMsg = obj.count + "个" + obj.name;
+                    },
+                    //监听对象键值变化
+                    deep: true
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

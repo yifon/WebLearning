@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Watcher</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+</head>
+
+<body>
+    watch属性用于监视vue实例上的数据变动，并相应地改变其它变量的值
+    <div id="watch-example">
+        <p>
+            问一个答案是yes/no的问题:
+            <input type="text" v-model="question">
+        </p>
+        <p>{{answer}}</p>
+    </div>
+    <!-- 对于 ajax 库(ajax libraries)和通用工具方法的集合(collections of general-purpose utility methods)来说， -->
+    <!-- 由于已经存在大量与其相关的生态系统， -->
+    <!-- 因此 Vue 核心无需重新创造，以保持轻量的文件体积。 -->
+    <!-- 同时这也可以使你自由随意地选择自己最熟悉的。 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+    <script>
+        let watchExampleVM = new Vue({
+            el: "#watch-example",
+            data: {
+                question: "",
+                answer: "你要先提出问题，我才能给你答案"
+            },
+            watch: {
+                //只要question发生改变，此函数就会执行
+                question: function (newQuestion, oldQuestion) {
+                    this.answer = "等待输入停止...";
+                    this.getAnswer();
+                }
+            },
+            methods: {
+                getAnswer: _.debounce(
+                    function () {
+                        if (this.question.indexOf('?') === -1) {
+                            this.answer = "问题通常需要包含一个中文问号: ?";
+                            return;
+                        }
+                        this.answer = "思考中...";
+                        let vm = this;
+                        axios.get("https://yesno.wtf/api")
+                            .then(function (response) {
+                                vm.answer = _.capitalize(response.data.answer);//首字母转为大写开头
+                            }).catch((function (error) {
+                                vm.answer = "错误!API无法处理." + error;
+                            }))
+                    },
+                    //防抖，500毫秒内，用户继续输入，则重新计时
+                    500
+                )
+            }
+        })
+
+    </script>
+</body>
+
+</html>

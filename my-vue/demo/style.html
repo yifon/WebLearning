@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue样式绑定</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+    <style>
+        .current {
+            text-decoration: underline;
+        }
+
+        .is_nav {
+            background-color: antiquewhite;
+        }
+
+        .color {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <span class="side" v-bind:class="objClass">当前导航1</span>
+        <span class="side" v-bind:class="comClass">当前导航2</span>
+        <div>
+            表达式返回数组，可以使用中括号[]进行绑定
+            <span class="side" v-bind:class="[currentClass,colorClass]">当前导航3</span>
+        </div>
+        <div>
+            数组里面也可以使用对象来更新class列表
+            <span class="side" v-bind:class="[{current:isCurrent},colorClass]">当前导航4</span>
+        </div>
+        <div>
+            组件
+            <my-component class="color"></my-component>
+        </div>
+        <div>
+            使用对象绑定style
+            <h2 v-bind:style="styleObj">好好加油</h2>
+        </div>
+        <div>
+            使用计算属性来进行绑定
+            <h2 v-bind:style="comObj">减肥</h2>
+        </div>
+        <div>
+            使用数组进行style绑定，有以下几种方法可以选择
+            <div>
+                1.直接在元素中操作
+                <h2 v-bind:style="[{color:'red'},{fontSize:'14px'}]">难道你不惭愧吗</h2>
+            </div>
+            <div>
+                2.使用data属性进行赋值
+                <h2 v-bind:style="arrStyle">鄙视</h2>
+            </div>
+            <div>
+                3.以对象数组的形式绑定
+                <h2 v-bind:style="[colorObj,fontObj]">超级讨厌</h2>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        Vue.component('my-component', {
+            template: '<p class="first">Hello</p>'
+        })
+        new Vue({
+            el: '#app',
+            data: {
+                //用对象来绑定样式
+                objClass: {
+                    'current': true,
+                    'is_nav': false,
+                    'color': true
+                },
+                isColor: true,
+                currentClass: 'current',
+                colorClass: 'color',
+                isCurrent: true,
+                styleObj: {
+                    color: 'red',
+                    fontSize: '14px'
+                },
+                color: 'green',
+                fontSize: '16px',
+                arrStyle: [
+                    { color: 'red' },
+                    { fontSize: '14px' }
+                ],
+                colorObj: { color: 'red' },
+                fontObj: { fontSize: '14px' }
+            },
+            //使用计算属性从缓存中获取值
+            computed: {
+                comClass: function () {
+                    return {
+                        'color': this.isColor
+                    }
+                },
+                comObj: function () {
+                    return {
+                        color: this.color,
+                        fontSize: this.fontSize
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
