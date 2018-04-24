@@ -1,6 +1,9 @@
-# my-vue
 
+# my-vue
 > A Vue.js project
+
+### my-vue demo
+关于官网vue教程的学习，带码
 
 ## Build Setup
 
