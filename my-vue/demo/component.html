@@ -108,7 +108,8 @@
             <p>1.接受一个value prop</p>
             <p>2.在有新的值时触发input事件并将新值作为参数</p>
             <p>例子：一个非常简单的货币输入的自定义控件:</p>
-            <!-- <currency-input v-model="price"></currency-input> -->
+            <currency-input v-model="price"></currency-input>
+            <!-- <currency-input></currency-input> -->
         </div>
     </div>
 
@@ -117,6 +118,73 @@
         <input type="text" ref="inputVal" id="inputVal" />
         <button @click="updateVal">修改</button>
         <p>结果：{{newVal}}</p>
+    </div>
+    <div id="example-6">
+        <p>自定义组件的v-model</p>
+        <my-checkbox v-model="foo" value="some value"></my-checkbox>
+    </div>
+    <div id="example-7">
+        <p>非父子组件的通信:</p>
+        <p>有时候，非父子关系的两个组件之间也需要通信。在简单的场景下，可以使用一个空的Vue实例作为事件总线。</p>
+        <a-component></a-component>
+        <b-component></b-component>
+    </div>
+    <div id="example-8">
+        <p>使用插槽分发内容:</p>
+        <pre>
+        什么是Vue的插槽？
+            props可以将数据从父组件传入子组件，而slot可以将html从父组件传入子组件。
+        编译作用域:
+            父组件模板的内容在父组件作用域内编译;子组件模板的内容在子组件作用域内编译。
+        单个插槽:
+            除非子组件模板包含至少一个slot插口，否则父组件的内容将被丢弃。当子组件模板只有一个没有属性的插槽时，父组件传入的整个内容片段将插入到插槽所在的DOM位置，并替换掉插槽标签本身。
+            最初子slot标签中的任何内容都被视为备用内容。备用内容在子组件的作用域内编译，并且只有在宿主元素为空，且没有要插入的内容时才显示备用内容。
+        </pre>
+        <p>父组件有内容传递给子组件的slot，则会隐藏子组件的slot内容</p>
+        <sigle-slot>
+            <p>初始内容1</p>
+            <p>初始内容2</p>
+        </sigle-slot>
+        <p>父组件没有内容传递给子组件的slot，则会显示子组件的slot内容</p>
+        <sigle-slot>
+        </sigle-slot>
+        <pre>
+        具名插槽:
+            slot元素可以用一个特殊的特性name来进一步配置如何分发内容.多个插槽可以有不同的名字。具名插槽将匹配内容片段中有对应slot特性的元素。
+            仍然可以有一个匿名插槽，它是默认插槽，作为找不到匹配的内容片段的备用插槽。如果没有默认插槽，这些找不到匹配的内容片段将被抛弃。
+        </pre>
+        <specific-slot>
+            <h1 slot="header">这里可能是一个页面标题</h1>
+
+            <p>主要内容的一个段落。</p>
+            <p>另一个主要段落。</p>
+
+            <p slot="footer">这里有一些联系信息</p>
+        </specific-slot>
+        <pre>
+        作用域插槽:
+            作用域插槽是一种特殊类型的插槽，用作一个(能被传递数据的)可重用模板，来代替已经渲染好的元素。
+            在子组件中，只需将数据传递到插槽，就像你将prop传递给组件一样。
+            在父级中，具有特殊特性slot-scope的template元素必须存在，表示它是作用域插槽的模板。slot-scope的值将被用作一个临时变量名，此变量接收从子组件传递过来的prop对象:
+        June[Question]为什么下面例子的输出为:
+        &lt;div class="child"&gt;
+            &lt;p&gt;Hello from parent&lt;/p&gt;
+            &lt;p&gt;hello from child&lt;/p&gt; 
+            &lt;p&gt;&lt;/p&gt;
+            &lt;p&gt;Hello from parent&lt;/p&gt;
+            &lt;p&gt;&lt;/p&gt;
+            &lt;p&gt;try your best&lt;/p&gt;
+        &lt;/div&gt;
+
+        </pre>
+        <scope-slot>
+            <template slot-scope="props">
+                <p>Hello from parent</p>
+                <p>{{props.text}}</p>
+                <p>{{props.june}}</p>
+            </template>
+        </scope-slot>
+    </div>
     </div>
 </body>
 <script type="text/x-template" id="myComponent">
@@ -293,7 +361,7 @@
                 }
             }
         }
-    })
+    });
 
     let example4 = new Vue({
         el: "#example-4",
@@ -309,7 +377,8 @@
                 isComplete: false
             },
             messages: [],
-            bar: "父组件的初始值"//父组件的bar值
+            bar: "父组件的初始值",//父组件的bar值
+            price: 0
         },
         methods: {
             incrementTotal: function () {
@@ -341,7 +410,95 @@
                 //这里是否可以理解成refs节省的是不用每一次都去获取document.getElementById原生对象？
             }
         }
+    });
+
+    //自定义组件的v-model
+    Vue.component("my-checkbox", {
+        model: {
+            prop: "checked",
+            event: "change"
+        },
+        props: {
+            checked: Boolean,
+            value: String
+        }
+    });
+
+    //非父子组件的通信
+    let bus = new Vue();
+    Vue.component("a-component", {
+        template: `<button @click="idSelected">传递组件A的值</button>`,
+        methods: {
+            //June[Question]这里的this指?
+            idSelected: function () {
+                bus.$emit("id-selected", 1);//触发组件A中的事件
+            }
+        }
+    });
+    Vue.component("b-component", {
+        data() {
+            //June[Question]这里的this指?
+            console.log(this)
+            return {
+                value: ""
+            }
+        },
+        template: `<p v-model='value'>组件B接收到组件A的值为:{{value}}</p>`,
+        //June[Question]mounted和methods的区别
+        mounted() {
+            //监听组件A的事件，并接收其传递的数据
+            bus.$on("id-selected", function (id) {
+                //June[Question]这里的this指?为什么value属性拿不到?
+                console.log(this);
+                this.value = id;
+                console.log("组件B接收到组件A的值为:" + id);
+                //如果绑定this上下文的话，this为 o {_uid: 30, _isVue: true, $options: {…}, _renderProxy: o, _self: o, …}
+            }.bind(this));
+            //如果不绑定this上下文的话，value属性拿不到,this为 hn {_uid: 27, _isVue: true, $options: {…}, _renderProxy: hn, _self: hn, …}
+            // });
+        }
+    });
+    let example7 = new Vue({
+        el: "#example-7"
+    });
+    //单个插槽
+    Vue.component('sigle-slot', {
+        template: `<div>
+  <h2>我是子组件的标题</h2>
+  <slot>
+    只有在没有要分发的内容时才会显示。
+  </slot>
+</div>`
+    });
+    //具名插槽
+    Vue.component('specific-slot', {
+        template: `
+        <div class="container">
+  <header>
+    <slot name="header"></slot>
+  </header>
+  <main>
+    <slot></slot>
+  </main>
+  <footer>
+    <slot name="footer"></slot>
+  </footer>
+</div>
+`
+    });
+    //作用域插槽
+    Vue.component("scope-slot", {
+        template: `
+        <div class='child'>
+            <slot text='hello from child'></slot>
+            <slot june='try your best'></slot>
+        </div>
+        `
     })
+    let example8 = new Vue({
+        el: "#example-8"
+    })
+
 
 </script>
 
