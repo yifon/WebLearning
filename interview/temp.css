@@ -1,0 +1,30 @@
+.btn {
+    width: 100px;
+    height: 30px;
+    color: #FFF;
+    border: 1px solid black;
+    background: black;
+    position: relative;
+}
+
+/*css伪类用于向某些选择器添加特殊的效果*/
+
+.btn::after {
+    width: 20px;
+    height: 20px;
+    content: "";
+    right: -10px;
+    top: 5px;
+    position: absolute;
+    display: block;
+    background: #FFF;
+    border-radius: 20px;
+}
+
+.box {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #000;
+    background: green;
+    display: none;
+}

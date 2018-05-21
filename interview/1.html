@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /*两个div元素处于同一个BFC容器下(这里指body元素)，所以第一个div和第二个div的上边距发生了重叠，所以两个盒子之间距离只有100px,而不是200px*/
+
+        /* div {
+            width: 100px;
+            height: 100px;
+            background: lightblue;
+            margin: 100px;
+        } */
+
+        /*如果要避免外边距的重叠，可以将其放在不同的BFC容器中*/
+
+        .container {
+            overflow: hidden;
+        }
+
+        p {
+            width: 100px;
+            height: 100px;
+            background: lightblue;
+            margin: 100px;
+        }
+
+        /* 
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }*/
+        /* .clearfix{
+            display: table; 
+        } */
+        .clearfix{
+            overflow: hidden;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <!-- <div></div>
+    <div></div> -->
+
+    <div class="container">
+        <p></p>
+    </div>
+    <div class="container">
+        <p></p>
+    </div>
+    <div style="border: 1px solid #000;overflow:hidden">
+        <div style="width: 100px;height: 100px;background: #eee;float: left;"></div>
+        <div style="width: 100px;height: 100px;background: #eee;float: left;"></div>
+    </div>
+    <div style="height: 100px;width: 100px;float: left;background: lightblue">我是一个左浮动的元素</div>
+    <div style="width: 200px; height: 200px;background: #eee;overflow:hidden">作曲 : 周杰伦 作词 : 周杰伦 Jay：你住的 巷子里 我租了一间公寓 为了想与你不期而遇 高中三年 我为什么 为什么不好好读书 没考上跟你一样的大学 我找了份工作 离你宿舍很近 当我开始学会做蛋饼 才发现你 不吃早餐 喔 你又擦肩而过
+        你耳机听什么 能不能告诉我 合：躺在你学校的操场看星空 教室里的灯还亮着你没走
+    </div>
+    <div class="clearfix" style="border: 2px solid blue; padding:3px;">
+        <img src="image/1.jpg" style="width:100px;float:left" />
+        <img src="image/1.jpg" style="width:100px;float:left" />
+        <img src="image/1.jpg" style="width:100px;float:left" />
+        <img src="image/1.jpg" style="width:100px" />
+        <img src="image/1.jpg" style="width:100px" />
+        <p></p>
+        <p></p>
+    </div>
+
+</body>
+
+</html>

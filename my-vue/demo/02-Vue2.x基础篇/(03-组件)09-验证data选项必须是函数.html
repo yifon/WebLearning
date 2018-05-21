@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>09-验证data选项必须是函数</title>
+  <script src="js/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <my-btn></my-btn>
+    <my-btn></my-btn>
+    <my-btn></my-btn>
+  </div>
+  <!--注册一个组件-->
+  <template id="my_btn">
+    <button @click="counter+=1">点击的次数:{{counter}}</button>
+  </template>
+  <script>
+    //1.实例化组件
+    //全局
+    Vue.component("my-btn", {
+      template: "#my_btn", //绑定组件
+      data() {
+        return {
+          counter: 0
+        }
+      }
+      /*
+      June[Question]为什么data必须是函数?
+      -在js中产生对象都是靠构造函数产生，而且该对象为新的对象，
+      上述每次调用组件都是产生一个新的组件，所以如果data为函数，则每次的对象则不同
+      */
+
+    });
+    new Vue({
+      el: "#app"
+    })
+
+  </script>
+</body>
+
+</html>
+

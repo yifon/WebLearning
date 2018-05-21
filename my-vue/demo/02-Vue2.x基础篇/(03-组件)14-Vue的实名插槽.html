@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="js/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <my-computer>
+      <div slot='cpu'>Inter core i7</div>
+      <img slot='gpu ' src="img/1.png" width="100" alt="">
+      <div slot='memory'>128G</div>
+      <div slot='hard-drive'>硬盘</div>
+    </my-computer>
+  </div>
+  <template id="my_computer">
+    <div id="main">
+      <!--实名插槽需要有名字-->
+      <slot name='cpu'>这里是插CPU的</slot>
+      <slot name='gpu'>这里是插GPU的</slot>
+      <slot name='memory'>这里是插内存条的</slot>
+      <slot name='hard-drive'>这里是插硬盘的</slot>
+    </div>
+  </template>
+  <script>
+    Vue.component('my-computer', {
+      template: '#my_computer'
+
+    })
+    new Vue({
+      el: "#app"
+    })
+
+  </script>
+</body>
+
+</html>
+

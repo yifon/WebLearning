@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>10-Vue的组件通信</title>
+  <script src="js/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <my-div message="今天要下雨" imgsrc="img/1.png"></my-div>
+    <my-div message="明天天晴" imgsrc="img/2.png"></my-div>
+  </div>
+  <template id="my_div">
+    <div>
+      <h1>{{message}}</h1>
+      <img :src='imgsrc' width='200'>
+    </div>
+  </template>
+  <script>
+    //1.创建组件
+    Vue.component("my-div", {
+      template: `#my_div`,
+      props: ['message', 'imgsrc']
+    })
+    new Vue({
+      el: "#app"
+    });
+    /*
+    组件间的通信:
+    组件实例的作用域是孤立的，这意味着不能并且不应该在子组件的模板内直接引用父组件的数据。但是父子组件之间需要通信：
+    父组件要给子组件传递数据，子组件需要将它内部发生的事情告知给父组件。
+    在vue中，父子组件的关系可以总结为props down,event up.父组件通过props向下传递数据给子组件，子组件通过events给父组件发送消息。
+    prop是父组件用来传递数据的一个自定义属性。子组件需要显示地用props选项声明'prop'
+     */
+
+  </script>
+</body>
+
+</html>
+

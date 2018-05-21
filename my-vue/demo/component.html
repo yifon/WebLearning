@@ -2,136 +2,136 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <title>Vue组件</title>
-    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+  <meta charset="utf-8">
+  <title>Vue组件</title>
+  <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+  <link rel="stylesheet" href="css/dynamicComponent.css">
 </head>
 
 <body>
-    <div id="example-1">
-        <p>example-1全局注册的组件:：</p>
-        <global-component></global-component>
-        <my-component2></my-component2>
-        <p>example-1局部注册的组件:</p>
-        <local-component></local-component>
-        <table>
-            <tr is="local-component"></tr>
-            <!--使用字符串模版则没有限制-->
-            <my-component></my-component>
-        </table>
+  <div id="example-1">
+    <p>example-1全局注册的组件:：</p>
+    <global-component></global-component>
+    <my-component2></my-component2>
+    <p>example-1局部注册的组件:</p>
+    <local-component></local-component>
+    <table>
+      <tr is="local-component"></tr>
+      <!--使用字符串模版则没有限制-->
+      <my-component></my-component>
+    </table>
+  </div>
+  <div id="example-2">
+    <p>example-2调用example-1全局注册的组件: </p>
+    <global-component></global-component>
+    <local-component></local-component>
+  </div>
+  <div id="example-3">
+    <simple-counter></simple-counter>
+    <simple-counter></simple-counter>
+    <simple-counter></simple-counter>
+  </div>
+  <div id="example-4">
+    <p>在Vue中，父子组件的关系可以总结为prop向下传递，事件向上传递。父组件通过prop给子组件下发数据，子组件通过事件给父组件发送消息。</p>
+    <p>使用Prop传递数据：</p>
+    <p>组件实例的作用域是孤立的。这意味着不能(也不应该)在子组件的模板内直接引用父组件的数据。父组件的数据需要通过prop才能下发到子组件中。</p>
+    <p>子组件要显式地用props选项声明它预期的数据：</p>
+    <child message='hello!'></child>
+    <p>HTML特性是不区分大小写的。所以当使用的不是字符串模版时，camelCase(驼峰式命名)的prop需要转换为相对应的kebab-case(短横线分隔式命名)</p>
+    <child2 my-message="June"></child2>
+    <p>动态Prop:</p>
+    <p>与绑定到任何普通的HTML特性相类似，我们可以用v-bind来动态地将prop绑定到父组件的数据。每当父组件的数据变化时，该变化也会传导给子组件：</p>
+    <input v-model="parentMsg">
+    <br>
+    <child2 v-bind:my-message='parentMsg'></child2>
+    <p>如果想要把一个对象的所有属性作为prop进行传递，可以使用不带任何参数的v-bind(即用v-bind而不是v-bind:prop-name)</p>
+    <todo-item v-bind="todo"></todo-item>
+    <p>等价于:</p>
+    <todo-item v-bind:text="todo.text" v-bind:is-complete="todo.isComplete"></todo-item>
+    <p>单项数据流:</p>
+    <p>Prop是单向绑定的:当父组件的属性变化时,将传导给子组件,但是反过来不会。这是为来防止子组件无意间修改了父组件的状态,来避免应用的数据流变得难以理解.</p>
+    <p>1.Prop作为初始值传入后,子组件想把它当作局部数据来用,可以定义一个局部变量,并用prop的值初始化它：</p>
+    <input v-model:parentCounter.number="parentCounter" type="number">父组件的值随着输入框的改变而改变:{{parentCounter}}
+    <p>父组件值改变，子组件也会改变，自组件的值改变，父组件不变：</p>
+    <local-counter :counter="parentCounter"></local-counter>
+    <p>2.定义一个计算属性,处理prop的值并返回：</p>
+    <p>父组件的值随着输入框的改变而改变:</p>
+    <input v-model="parentSize">{{parentSize}}
+    <br>
+    <p>子组件的值:</p>
+    <local-size :size="parentSize"></local-size>
+    <p>Prop验证：</p>
+    输入数字:
+    <input v-model:num="num">{{num}} 输入字符串:
+    <input v-model:str="str">{{str}}
+    <!--June[debug]这部分验证的理解仍然有问题-->
+    <example :num-a="num">
+    </example>
+    <p>
+      自定义事件：
+    </p>
+    <p>
+      使用v-on绑定自定义事件:
+    </p>
+    <div id="counter-event-example">
+      <p>子组件里的v-on监听子组件触发的increment事件，然后调用父组件里的incrementTotal，将total添加1：</p>
+      <p>父组件里的total:{{total}}</p>
+      <button-counter v-on:increment="incrementTotal"></button-counter>
+      <button-counter v-on:increment="incrementTotal"></button-counter>
     </div>
-    <div id="example-2">
-        <p>example-2调用example-1全局注册的组件: </p>
-        <global-component></global-component>
-        <p>example-2调用example-1局部注册的组件:(无法调用到)</p>
-        <local-component></local-component>
+    <p>如何使用载荷(payload):</p>
+    <div id="message-event-example" class="demo">
+      <p v-for="msg in messages">{{msg}}</p>
+      <button-message v-on:message="handleMessage"></button-message>
     </div>
-    <div id="example-3">
-        <simple-counter></simple-counter>
-        <simple-counter></simple-counter>
-        <simple-counter></simple-counter>
+    <div>
+      <p>给组件绑定原生事件:</p>
+      <p>如果想在某个组件的根元素上监听一个原生事件，可以使用v-on的修饰符.native</p>
+      <p>声明.native</p>
+      <native-component v-on:click.native='doTheThing'>
+      </native-component>
+      <p>不声明.native</p>
+      <native-component v-on:click='doTheThing'>
+      </native-component>
     </div>
-    <div id="example-4">
-        <p>在Vue中，父子组件的关系可以总结为prop向下传递，事件向上传递。父组件通过prop给子组件下发数据，子组件通过事件给父组件发送消息。</p>
-        <p>使用Prop传递数据：</p>
-        <p>组件实例的作用域是孤立的。这意味着不能(也不应该)在子组件的模板内直接引用父组件的数据。父组件的数据需要通过prop才能下发到子组件中。</p>
-        <p>子组件要显式地用props选项声明它预期的数据：</p>
-        <child message='hello!'></child>
-        <p>HTML特性是不区分大小写的。所以当使用的不是字符串模版时，camelCase(驼峰式命名)的prop需要转换为相对应的kebab-case(短横线分隔式命名)</p>
-        <child2 my-message="June"></child2>
-        <p>动态Prop:</p>
-        <p>与绑定到任何普通的HTML特性相类似，我们可以用v-bind来动态地将prop绑定到父组件的数据。每当父组件的数据变化时，该变化也会传导给子组件：</p>
-        <input v-model="parentMsg">
-        <br>
-        <child2 v-bind:my-message='parentMsg'></child2>
-        <p>如果想要把一个对象的所有属性作为prop进行传递，可以使用不带任何参数的v-bind(即用v-bind而不是v-bind:prop-name)</p>
-        <todo-item v-bind="todo"></todo-item>
-        <p>等价于:</p>
-        <todo-item v-bind:text="todo.text" v-bind:is-complete="todo.isComplete"></todo-item>
-        <p>单项数据流:</p>
-        <p>Prop是单向绑定的:当父组件的属性变化时,将传导给子组件,但是反过来不会。这是为来防止子组件无意间修改了父组件的状态,来避免应用的数据流变得难以理解.</p>
-        <p>1.Prop作为初始值传入后,子组件想把它当作局部数据来用,可以定义一个局部变量,并用prop的值初始化它：</p>
-        <input v-model:parentCounter.number="parentCounter" type="number">父组件的值随着输入框的改变而改变:{{parentCounter}}
-        <p>父组件值改变，子组件也会改变，自组件的值改变，父组件不变：</p>
-        <local-counter :counter="parentCounter"></local-counter>
-        <p>2.定义一个计算属性,处理prop的值并返回：</p>
-        <p>父组件的值随着输入框的改变而改变:</p>
-        <input v-model="parentSize">{{parentSize}}
-        <br>
-        <p>子组件的值:</p>
-        <local-size :size="parentSize"></local-size>
-        <p>Prop验证：</p>
-        输入数字:
-        <input v-model:num="num">{{num}} 输入字符串:
-        <input v-model:str="str">{{str}}
-        <!--June[debug]这部分验证的理解仍然有问题-->
-        <example :num-a="num">
-        </example>
-        <p>
-            自定义事件：
-        </p>
-        <p>
-            使用v-on绑定自定义事件:
-        </p>
-        <div id="counter-event-example">
-            <p>子组件里的v-on监听子组件触发的increment事件，然后调用父组件里的incrementTotal，将total添加1：</p>
-            <p>父组件里的total:{{total}}</p>
-            <button-counter v-on:increment="incrementTotal"></button-counter>
-            <button-counter v-on:increment="incrementTotal"></button-counter>
-        </div>
-        <p>如何使用载荷(payload):</p>
-        <div id="message-event-example" class="demo">
-            <p v-for="msg in messages">{{msg}}</p>
-            <button-message v-on:message="handleMessage"></button-message>
-        </div>
-        <div>
-            <p>给组件绑定原生事件:</p>
-            <p>如果想在某个组件的根元素上监听一个原生事件，可以使用v-on的修饰符.native</p>
-            <p>声明.native</p>
-            <native-component v-on:click.native='doTheThing'>
-            </native-component>
-            <p>不声明.native</p>
-            <native-component v-on:click='doTheThing'>
-            </native-component>
-        </div>
-        <div>
-            <p>.sync修饰符</p>
-            <p>有时候可能需要对一个prop进行“双向绑定”,当一个子组件改变了一个带.sync的prop的值时，这个变化也会同步到父组件中所绑定的值，这很方便，不过也会破坏了单向数据流。需要做的是让子组件改变父组件状态的代码更容易被区分。</p>
-            <p>当子组件需要更新foo的值时，它需要显示地触发一个更新事件：</p>
-            <sync-component :foo.sync="bar"></sync-component>
-            <p>父组件的bar值:{{bar}}</p>
-        </div>
-        <div>
-            <p>使用自定义事件的表单输入组件:</p>
-            <p>自定义事件可以用来创建自定义的表单输入组件，使用v-model来进行数据双向绑定</p>
-            <p>要让组件的v-model生效：</p>
-            <p>1.接受一个value prop</p>
-            <p>2.在有新的值时触发input事件并将新值作为参数</p>
-            <p>例子：一个非常简单的货币输入的自定义控件:</p>
-            <currency-input v-model="price"></currency-input>
-            <!-- <currency-input></currency-input> -->
-        </div>
+    <div>
+      <p>.sync修饰符</p>
+      <p>有时候可能需要对一个prop进行“双向绑定”,当一个子组件改变了一个带.sync的prop的值时，这个变化也会同步到父组件中所绑定的值，这很方便，不过也会破坏了单向数据流。需要做的是让子组件改变父组件状态的代码更容易被区分。</p>
+      <p>当子组件需要更新foo的值时，它需要显示地触发一个更新事件：</p>
+      <sync-component :foo.sync="bar"></sync-component>
+      <p>父组件的bar值:{{bar}}</p>
     </div>
+    <div>
+      <p>使用自定义事件的表单输入组件:</p>
+      <p>自定义事件可以用来创建自定义的表单输入组件，使用v-model来进行数据双向绑定</p>
+      <p>要让组件的v-model生效：</p>
+      <p>1.接受一个value prop</p>
+      <p>2.在有新的值时触发input事件并将新值作为参数</p>
+      <p>例子：一个非常简单的货币输入的自定义控件:</p>
+      <currency-input v-model="price"></currency-input>
+      <!-- <currency-input></currency-input> -->
+    </div>
+  </div>
 
-    <div id="example-5">
-        <p>如何理解使用$refs可以减少操作DOM节点的消耗?</p>
-        <input type="text" ref="inputVal" id="inputVal" />
-        <button @click="updateVal">修改</button>
-        <p>结果：{{newVal}}</p>
-    </div>
-    <div id="example-6">
-        <p>自定义组件的v-model</p>
-        <my-checkbox v-model="foo" value="some value"></my-checkbox>
-    </div>
-    <div id="example-7">
-        <p>非父子组件的通信:</p>
-        <p>有时候，非父子关系的两个组件之间也需要通信。在简单的场景下，可以使用一个空的Vue实例作为事件总线。</p>
-        <a-component></a-component>
-        <b-component></b-component>
-    </div>
-    <div id="example-8">
-        <p>使用插槽分发内容:</p>
-        <pre>
+  <div id="example-5">
+    <p>如何理解使用$refs可以减少操作DOM节点的消耗?</p>
+    <input type="text" ref="inputVal" id="inputVal" />
+    <button @click="updateVal">修改</button>
+    <p>结果：{{newVal}}</p>
+  </div>
+  <div id="example-6">
+    <p>自定义组件的v-model</p>
+    <my-checkbox v-model="foo" value="some value"></my-checkbox>
+  </div>
+  <div id="example-7">
+    <p>非父子组件的通信:</p>
+    <p>有时候，非父子关系的两个组件之间也需要通信。在简单的场景下，可以使用一个空的Vue实例作为事件总线。</p>
+    <a-component></a-component>
+    <b-component></b-component>
+  </div>
+  <div id="example-8">
+    <p>使用插槽分发内容:</p>
+    <pre>
         什么是Vue的插槽？
             props可以将数据从父组件传入子组件，而slot可以将html从父组件传入子组件。
         编译作用域:
@@ -140,28 +140,28 @@
             除非子组件模板包含至少一个slot插口，否则父组件的内容将被丢弃。当子组件模板只有一个没有属性的插槽时，父组件传入的整个内容片段将插入到插槽所在的DOM位置，并替换掉插槽标签本身。
             最初子slot标签中的任何内容都被视为备用内容。备用内容在子组件的作用域内编译，并且只有在宿主元素为空，且没有要插入的内容时才显示备用内容。
         </pre>
-        <p>父组件有内容传递给子组件的slot，则会隐藏子组件的slot内容</p>
-        <sigle-slot>
-            <p>初始内容1</p>
-            <p>初始内容2</p>
-        </sigle-slot>
-        <p>父组件没有内容传递给子组件的slot，则会显示子组件的slot内容</p>
-        <sigle-slot>
-        </sigle-slot>
-        <pre>
+    <p>父组件有内容传递给子组件的slot，则会隐藏子组件的slot内容</p>
+    <sigle-slot>
+      <p>初始内容1</p>
+      <p>初始内容2</p>
+    </sigle-slot>
+    <p>父组件没有内容传递给子组件的slot，则会显示子组件的slot内容</p>
+    <sigle-slot>
+    </sigle-slot>
+    <pre>
         具名插槽:
             slot元素可以用一个特殊的特性name来进一步配置如何分发内容.多个插槽可以有不同的名字。具名插槽将匹配内容片段中有对应slot特性的元素。
             仍然可以有一个匿名插槽，它是默认插槽，作为找不到匹配的内容片段的备用插槽。如果没有默认插槽，这些找不到匹配的内容片段将被抛弃。
         </pre>
-        <specific-slot>
-            <h1 slot="header">这里可能是一个页面标题</h1>
+    <specific-slot>
+      <h1 slot="header">这里可能是一个页面标题</h1>
 
-            <p>主要内容的一个段落。</p>
-            <p>另一个主要段落。</p>
+      <p>主要内容的一个段落。</p>
+      <p>另一个主要段落。</p>
 
-            <p slot="footer">这里有一些联系信息</p>
-        </specific-slot>
-        <pre>
+      <p slot="footer">这里有一些联系信息</p>
+    </specific-slot>
+    <pre>
         作用域插槽:
             作用域插槽是一种特殊类型的插槽，用作一个(能被传递数据的)可重用模板，来代替已经渲染好的元素。
             在子组件中，只需将数据传递到插槽，就像你将prop传递给组件一样。
@@ -177,302 +177,334 @@
         &lt;/div&gt;
 
         </pre>
-        <scope-slot>
-            <template slot-scope="props">
-                <p>Hello from parent</p>
-                <p>{{props.text}}</p>
-                <p>{{props.june}}</p>
-            </template>
-        </scope-slot>
-    </div>
-    </div>
+    <scope-slot>
+      <template slot-scope="props">
+        <p>Hello from parent</p>
+        <p>{{props.text}}</p>
+        <p>{{props.june}}</p>
+      </template>
+    </scope-slot>
+  </div>
+  <div id="example-9">
+    <p>动态组件</p>
+    <pre>
+              通过使用保留的&lt;component&gt;元素，并对其is特性进行动态绑定，你可以在同一个挂载点动态切换多个组件：
+          </pre>
+    <component v-bind:is="currentView"></component>
+  </div>
+  <div id="dynamic-component-demo">
+    <p>在动态组件上使用keep-alive</p>
+    <pre>
+      之前使用is特性在多标签页面中切换不同的组件，但有时候在组件切换时，想要保持这些组件的状态，以免反复渲染导致的性能问题。
+      为了解决这个问题，可以使用keep-alive元素将其动态组件包裹起来。
+      注意这个 &lt;keep-alive&gt;要求被切换到的组件都有自己的名字，不论是通过组件的 name 选项还是局部/全局注册。
+    </pre>
+    <button v-for="tab in tabs" v-bind:key="tab" v-bind:class="['tab-button', { active: currentTab === tab }]" v-on:click="currentTab = tab">{{ tab }}</button>
+    <keep-alive>
+      <component v-bind:is="currentTabComponent" class="tab"></component>
+    </keep-alive>
+  </div>
+  <div id="async-component-demo">
+    <p>异步组件:</p>
+    <pre>
+      在大型应用中，我们可能需要将应用分割成小的代码块，并且只在需要的时候才从服务器中加载一个模板。为了简化，vue允许你以工厂模式的方式定义你的组件，这个工厂函数会异步解析你的组件定义。
+      vue只在这个组件需要被渲染的时候才会被触发，且会把结果缓存起来供未来重渲染。
+    </pre>
+    
+  </div>
 </body>
 <script type="text/x-template" id="myComponent">
   <div>My component!</div>
 </script>
 <script>
-    //全局注册：
-    Vue.component('global-component', {
-        template: '<div>A global component!</div>'
-    });
-    Vue.component('my-component', {
-        template: '#myComponent'
-    });
-    //data必须是函数
-    Vue.component('my-component2', {
-        template: '<span>{{message}}</span>',
-        data: function () {
-            return message = 'hello';
-        }
-    });
-    let Child = {
-        template: '<div>A local component!</div>'
+  //全局注册：
+  Vue.component('global-component', {
+    template: '<div>A global component!</div>'
+  });
+  Vue.component('my-component', {
+    template: '#myComponent'
+  });
+  //data必须是函数
+  Vue.component('my-component2', {
+    template: '<span>{{message}}</span>',
+    data: function () {
+      return message = 'hello';
     }
-    let example1 = new Vue({
-        el: "#example-1",
-        components: {
-            'local-component': Child
-        }
-    });
-    let example2 = new Vue({
-        el: "#example-2"
-    });
-    Vue.component("simple-counter", {
-        template: "<button v-on:click='counter+=1'>{{counter}}</button>",
-        data: () => {
-            return {
-                counter: 0
-            }; //为每个组件返回全新的数据对象
-        }
-    });
-    let example3 = new Vue({
-        el: "#example-3"
-    });
-    //使用Prop传递数据
-    Vue.component('child', {
-        //声明props
-        props: ['message'],
-        template: '<span>{{message}}</span>'
-    });
-    //驼峰式
-    Vue.component('child2', {
-        //声明props
-        props: ['myMessage'],
-        template: '<p>{{myMessage}}</p>'
-    });
+  });
+  let Child = {
+    template: '<div>A local component!</div>'
+  }
+  let example1 = new Vue({
+    el: "#example-1",
+    components: {
+      'local-component': Child
+    }
+  });
+  let example2 = new Vue({
+    el: "#example-2"
+  });
+  Vue.component("simple-counter", {
+    template: "<button v-on:click='counter+=1'>{{counter}}</button>",
+    data: () => {
+      return {
+        counter: 0
+      }; //为每个组件返回全新的数据对象
+    }
+  });
+  let example3 = new Vue({
+    el: "#example-3"
+  });
+  //使用Prop传递数据
+  Vue.component('child', {
+    //声明props
+    props: ['message'],
+    template: '<span>{{message}}</span>'
+  });
+  //驼峰式
+  Vue.component('child2', {
+    //声明props
+    props: ['myMessage'],
+    template: '<p>{{myMessage}}</p>'
+  });
 
-    Vue.component("local-counter", {
-        props: ['counter'],
-        template: "<button v-on:click='counter+=1'>{{counter}}</button>",
-        data: () => {
-            return {
-                counter: this.counter
-            }; //为每个组件返回全新的数据对象
-        }
-    });
-    Vue.component("local-size", {
-        props: ['size'],
-        template: `<p>{{normalizedSize}}</p>`,
-        computed: {
-            normalizedSize() {
-                return this.size.trim().toLowerCase();
-            }
-        },
-    });
-    //为组件的prop指定验证规则。如果传入的数据不符合要求，Vue会发出警告。
-    Vue.component('example', {
-        props: {
-            //基础类型监测
-            numA: {
-                type: Number,
-            },
-            str: String
-        },
-        template: "<p>结果是：{{numA}}</p>"
-    });
+  Vue.component("local-counter", {
+    props: ['counter'],
+    template: "<button v-on:click='counter+=1'>{{counter}}</button>",
+    data: () => {
+      return {
+        counter: this.counter
+      }; //为每个组件返回全新的数据对象
+    }
+  });
+  Vue.component("local-size", {
+    props: ['size'],
+    template: `<p>{{normalizedSize}}</p>`,
+    computed: {
+      normalizedSize() {
+        return this.size.trim().toLowerCase();
+      }
+    },
+  });
+  //为组件的prop指定验证规则。如果传入的数据不符合要求，Vue会发出警告。
+  Vue.component('example', {
+    props: {
+      //基础类型监测
+      numA: {
+        type: Number,
+      },
+      str: String
+    },
+    template: "<p>结果是：{{numA}}</p>"
+  });
 
-    //自定义事件
-    //使用v-on绑定自定义事件
-    Vue.component("button-counter", {
-        //不能用$on监听子组件释放的事件,而必须在模板里直接用v-on绑定
-        template: "<button v-on:click='incrementCounter'>{{counter}}</button>",
-        data: function () {
-            return { counter: 0 }
-        },
-        methods: {
-            //使用v-on监听点击的动作，然后由incrementCounter函数里触发increment事件
-            //June[Question]为什么不支持改成箭头函数
-            //=>函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象，如果使用箭头函数，讲绑定到parent，即当前执行上下文中的this
-            incrementCounter: function () {
-                this.counter += 1;
-                //使用$emit触发事件
-                this.$emit("increment");
-            }
-        }
-    });
-    //使用payload
-    Vue.component("button-message", {
-        template: `<div>
+  //自定义事件
+  //使用v-on绑定自定义事件
+  Vue.component("button-counter", {
+    //不能用$on监听子组件释放的事件,而必须在模板里直接用v-on绑定
+    template: "<button v-on:click='incrementCounter'>{{counter}}</button>",
+    data: function () {
+      return {
+        counter: 0
+      }
+    },
+    methods: {
+      //使用v-on监听点击的动作，然后由incrementCounter函数里触发increment事件
+      //June[Question]为什么不支持改成箭头函数
+      //=>函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象，如果使用箭头函数，讲绑定到parent，即当前执行上下文中的this
+      incrementCounter: function () {
+        this.counter += 1;
+        //使用$emit触发事件
+        this.$emit("increment");
+      }
+    }
+  });
+  //使用payload
+  Vue.component("button-message", {
+    template: `<div>
         <input type='text' v-model='message' />
         <button v-on:click='handleSendMessage'>Send</button>
         </div>
         `,
-        //June[Question]为什么要用匿名函数返回一个对象，而不能直接定义一个对象呢？
-        //data:{message:'test message'},
-        //==>用function return其实相当于申明了新的变量，如果不用function return则每个组件的data都是内存的同一个地址，一个数据改变，其它也改变了
-        data: function () {
-            return {
-                message: 'test message'
-            }
-        },
-        methods: {
-            handleSendMessage: function () {
-                this.$emit('message', { message: this.message });
-            }
-        }
-    });
-    //给组件绑定原生事件
-    Vue.component("native-component", {
-        //June[Question]为什么写成<p>点击p</p><button>点击button</button>只能识别到第一个元素，而用div则可以
-        //==>template下面只能出现一个根元素
-        template: `<div><p>点击p</p><button>点击button</button></div>`
-    });
-    Vue.component("sync-component", {
-        // template: `<div><input v-model='updateBar'/><p>子组件foo值:{{foo}}</p></div>`,
-        template: `<div>
+    //June[Question]为什么要用匿名函数返回一个对象，而不能直接定义一个对象呢？
+    //data:{message:'test message'},
+    //==>用function return其实相当于申明了新的变量，如果不用function return则每个组件的data都是内存的同一个地址，一个数据改变，其它也改变了
+    data: function () {
+      return {
+        message: 'test message'
+      }
+    },
+    methods: {
+      handleSendMessage: function () {
+        this.$emit('message', {
+          message: this.message
+        });
+      }
+    }
+  });
+  //给组件绑定原生事件
+  Vue.component("native-component", {
+    //June[Question]为什么写成<p>点击p</p><button>点击button</button>只能识别到第一个元素，而用div则可以
+    //==>template下面只能出现一个根元素
+    template: `<div><p>点击p</p><button>点击button</button></div>`
+  });
+  Vue.component("sync-component", {
+    // template: `<div><input v-model='updateBar'/><p>子组件foo值:{{foo}}</p></div>`,
+    template: `<div>
         子组件：<input v-model="foo"/>
         <p>子组件foo值:{{foo}}</p>
         <button @click='updateBar'>确认更新父组件</button>
         </div>`,
-        props: ['foo'],
-        methods: {
-            updateBar() {
-                // console.log(this.foo)
-                this.$emit('update:foo', this.foo);
-            }
-        }
-    });
-    //使用自定义事件的表单输入组件
-    Vue.component("currency-input", {
-        //使用ref属性用于标识一个元素
-        template: `
+    props: ['foo'],
+    methods: {
+      updateBar() {
+        // console.log(this.foo)
+        this.$emit('update:foo', this.foo);
+      }
+    }
+  });
+  //使用自定义事件的表单输入组件
+  Vue.component("currency-input", {
+    //使用ref属性用于标识一个元素
+    template: `
         <span>$<input ref='input' v-bind:value='value' v-on:input='updateValue($event.target.value)'></span>
         `,
-        props: ['value'],
-        methods: {
-            //不是直接更新值，而是使用此方法来对输入值进行格式化和位数限制
-            updateValue: function (value) {
-                let formattedValue = value
-                    //删除两侧的空格符
-                    .trim()
-                    //保留2位小数 slice(start,end):返回一个新的子数组
-                    .slice(
-                        0,
-                        value.indexOf('.') === -1
-                            ? value.length
-                            : value.indexOf('.') + 3
-                    )
-                //如果值尚不合规，则手动覆盖为合规的值
-                if (formattedValue !== value) {
-                    //使用this.$refs.xxx来获取标识的xxx元素，减少获取dom节点的消耗
-                    //June[Question]为什么可以减少获取dom节点的消耗
-                    //==>$refs只在组件渲染完成后才填充，并且它是非响应式的
-                    this.$refs.input.value = formattedValue;
-                }
-            }
+    props: ['value'],
+    methods: {
+      //不是直接更新值，而是使用此方法来对输入值进行格式化和位数限制
+      updateValue: function (value) {
+        let formattedValue = value
+          //删除两侧的空格符
+          .trim()
+          //保留2位小数 slice(start,end):返回一个新的子数组
+          .slice(
+            0,
+            value.indexOf('.') === -1 ?
+            value.length :
+            value.indexOf('.') + 3
+          )
+        //如果值尚不合规，则手动覆盖为合规的值
+        if (formattedValue !== value) {
+          //使用this.$refs.xxx来获取标识的xxx元素，减少获取dom节点的消耗
+          //June[Question]为什么可以减少获取dom节点的消耗
+          //==>$refs只在组件渲染完成后才填充，并且它是非响应式的
+          this.$refs.input.value = formattedValue;
         }
-    });
+      }
+    }
+  });
 
-    let example4 = new Vue({
-        el: "#example-4",
-        data: {
-            parentMsg: 'Message from parent',
-            parentCounter: 0,
-            parentSize: "",
-            num: 0,
-            str: "",
-            total: 0,
-            todo: {
-                text: 'Seek job',
-                isComplete: false
-            },
-            messages: [],
-            bar: "父组件的初始值",//父组件的bar值
-            price: 0
-        },
-        methods: {
-            incrementTotal: function () {
-                this.total += 1;
-            },
-            //June[Question]这里payload是？
-            handleMessage: function (payload) {
-                this.messages.push(payload.message);
-            },
-            doTheThing: function () {
-                console.log("hi");
-            },
-            listenSync: function (payload) {
+  let example4 = new Vue({
+    el: "#example-4",
+    data: {
+      parentMsg: 'Message from parent',
+      parentCounter: 0,
+      parentSize: "",
+      num: 0,
+      str: "",
+      total: 0,
+      todo: {
+        text: 'Seek job',
+        isComplete: false
+      },
+      messages: [],
+      bar: "父组件的初始值", //父组件的bar值
+      price: 0
+    },
+    methods: {
+      incrementTotal: function () {
+        this.total += 1;
+      },
+      //June[Question]这里payload是？
+      handleMessage: function (payload) {
+        this.messages.push(payload.message);
+      },
+      doTheThing: function () {
+        console.log("hi");
+      },
+      listenSync: function (payload) {
 
-            }
-        }
-    });
-    //June[Question]如何理解使用refs可以减少操作DOM节点的消耗
-    let example5 = new Vue({
-        el: "#example-5",
-        data: { newVal: "" },
-        methods: {
-            updateVal: function () {
-                // this.newVal = this.$refs.inputVal.value;
-                //也可以用：
-                let inputVal = document.getElementById("inputVal");
-                this.newVal = inputVal.value;
-                //ref注册了对象的实例，而document.getElementById每次获取的是原生对象，所以refs获取的对象值只是一个实例，写值仍然需要操作DOM节点，
-                //这里是否可以理解成refs节省的是不用每一次都去获取document.getElementById原生对象？
-            }
-        }
-    });
+      }
+    }
+  });
+  //June[Question]如何理解使用refs可以减少操作DOM节点的消耗
+  let example5 = new Vue({
+    el: "#example-5",
+    data: {
+      newVal: ""
+    },
+    methods: {
+      updateVal: function () {
+        // this.newVal = this.$refs.inputVal.value;
+        //也可以用：
+        let inputVal = document.getElementById("inputVal");
+        this.newVal = inputVal.value;
+        //ref注册了对象的实例，而document.getElementById每次获取的是原生对象，所以refs获取的对象值只是一个实例，写值仍然需要操作DOM节点，
+        //这里是否可以理解成refs节省的是不用每一次都去获取document.getElementById原生对象？
+      }
+    }
+  });
 
-    //自定义组件的v-model
-    Vue.component("my-checkbox", {
-        model: {
-            prop: "checked",
-            event: "change"
-        },
-        props: {
-            checked: Boolean,
-            value: String
-        }
-    });
+  //自定义组件的v-model
+  Vue.component("my-checkbox", {
+    model: {
+      prop: "checked",
+      event: "change"
+    },
+    props: {
+      checked: Boolean,
+      value: String
+    }
+  });
 
-    //非父子组件的通信
-    let bus = new Vue();
-    Vue.component("a-component", {
-        template: `<button @click="idSelected">传递组件A的值</button>`,
-        methods: {
-            //June[Question]这里的this指?
-            idSelected: function () {
-                bus.$emit("id-selected", 1);//触发组件A中的事件
-            }
-        }
-    });
-    Vue.component("b-component", {
-        data() {
-            //June[Question]这里的this指?
-            console.log(this)
-            return {
-                value: ""
-            }
-        },
-        template: `<p v-model='value'>组件B接收到组件A的值为:{{value}}</p>`,
-        //June[Question]mounted和methods的区别
-        mounted() {
-            //监听组件A的事件，并接收其传递的数据
-            bus.$on("id-selected", function (id) {
-                //June[Question]这里的this指?为什么value属性拿不到?
-                console.log(this);
-                this.value = id;
-                console.log("组件B接收到组件A的值为:" + id);
-                //如果绑定this上下文的话，this为 o {_uid: 30, _isVue: true, $options: {…}, _renderProxy: o, _self: o, …}
-            }.bind(this));
-            //如果不绑定this上下文的话，value属性拿不到,this为 hn {_uid: 27, _isVue: true, $options: {…}, _renderProxy: hn, _self: hn, …}
-            // });
-        }
-    });
-    let example7 = new Vue({
-        el: "#example-7"
-    });
-    //单个插槽
-    Vue.component('sigle-slot', {
-        template: `<div>
+  //非父子组件的通信
+  let bus = new Vue();
+  Vue.component("a-component", {
+    template: `<button @click="idSelected">传递组件A的值</button>`,
+    methods: {
+      //June[Question]这里的this指?
+      idSelected: function () {
+        bus.$emit("id-selected", 1); //触发组件A中的事件
+      }
+    }
+  });
+  Vue.component("b-component", {
+    data() {
+      //June[Question]这里的this指?
+      // console.log(this)
+      return {
+        value: ""
+      }
+    },
+    template: `<p v-model='value'>组件B接收到组件A的值为:{{value}}</p>`,
+    //June[Question]mounted和methods的区别
+    mounted() {
+      //监听组件A的事件，并接收其传递的数据
+      bus.$on("id-selected", function (id) {
+        //June[Question]这里的this指?为什么value属性拿不到?
+        // console.log(this);
+        this.value = id;
+        console.log("组件B接收到组件A的值为:" + id);
+        //如果绑定this上下文的话，this为 o {_uid: 30, _isVue: true, $options: {…}, _renderProxy: o, _self: o, …}
+      }.bind(this));
+      //如果不绑定this上下文的话，value属性拿不到,this为 hn {_uid: 27, _isVue: true, $options: {…}, _renderProxy: hn, _self: hn, …}
+      // });
+    }
+  });
+  let example7 = new Vue({
+    el: "#example-7"
+  });
+  //单个插槽
+  Vue.component('sigle-slot', {
+    template: `<div>
   <h2>我是子组件的标题</h2>
   <slot>
     只有在没有要分发的内容时才会显示。
   </slot>
 </div>`
-    });
-    //具名插槽
-    Vue.component('specific-slot', {
-        template: `
+  });
+  //具名插槽
+  Vue.component('specific-slot', {
+    template: `
         <div class="container">
   <header>
     <slot name="header"></slot>
@@ -485,21 +517,41 @@
   </footer>
 </div>
 `
-    });
-    //作用域插槽
-    Vue.component("scope-slot", {
-        template: `
+  });
+  //作用域插槽
+  Vue.component("scope-slot", {
+    template: `
         <div class='child'>
             <slot text='hello from child'></slot>
             <slot june='try your best'></slot>
         </div>
         `
-    })
-    let example8 = new Vue({
-        el: "#example-8"
-    })
+  })
+  let example8 = new Vue({
+    el: "#example-8"
+  });
 
+  let example9 = new Vue({
+    el: "#exmaple-9",
+    data: {
+      currentView: 'home'
+    },
+    components: {
+      home: {
+        template: `<p>Welcome home!</p>`
+      },
+      posts: {
+        template: `<p>posts!</p>`
+      },
+      archive: {
+        template: `<p>archive!</p>`
+      }
+    }
+  });
 
 </script>
 
+<script src="js/dynamicComponent.js"></script>
+
 </html>
+

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>14-Vue的常用指令-综合练习</title>
+  <script src="js/vue.min.js"></script>
+  <style>
+    #app {
+      margin: 50px auto;
+      width: 600px;
+    }
+
+    fieldset {
+      border: 1px solid orangered;
+      margin-bottom: 20px;
+    }
+
+    fieldset input {
+      width: 200px;
+      height: 30px;
+      margin: 10px 0;
+    }
+
+    table {
+      width: 600px;
+      border: 2px solid orangered;
+      text-align: center;
+    }
+
+    thead {
+      background-color: orangered;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <!--第一部分-->
+    <fieldset>
+      <legend>拇指哥学生录入系统</legend>
+      <div>
+        <span>姓名：</span>
+        <input type="text" placeholder="请输入姓名" v-model="newStudent.name">
+      </div>
+      <div>
+        <span>年龄：</span>
+        <input type="text" placeholder="请输入年龄" v-model="newStudent.age">
+      </div>
+      <div>
+        <span>性别：</span>
+        <select v-model="newStudent.sex">
+          <option value="男">男</option>
+          <option value="女">女</option>
+        </select>
+      </div>
+      <div>
+        <span>手机：</span>
+        <input type="text" placeholder="请输入手机号码" v-model="newStudent.phone">
+      </div>
+      <div>
+        <button @click="createNewStudent()">创建新用户</button>
+      </div>
+    </fieldset>
+
+    <!--第二部分-->
+    <table>
+      <thead>
+        <tr>
+          <td>姓名</td>
+          <td>性别</td>
+          <td>年龄</td>
+          <td>手机</td>
+          <td>删除</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(p,index) in persons">
+          <td>{{p.name}}</td>
+          <td>{{p.sex}}</td>
+          <td>{{p.age}}</td>
+          <td>{{p.phone}}</td>
+          <td>
+            <button @click="deleteStudent(index)">删除</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <p>计算属性的get方法:</p>
+      <p>初始值:{{name}}</p>
+      <p>翻转值(直接在模板中改):{{name.split("").reverse().join("")}}</p>
+      <p>函数调用:{{reverseStr()}}</p>
+      <!--属性不需要加括号，加括号表示一个方法；直接调用计算属性就是去调用get方法-->
+      <p>计算属性:{{reverse}}</p>
+    </div>
+    <div>
+      <p>计算属性的set方法：</p>
+      <p>get方法:{{fullName}}</p>
+      <p>set方法:</p>
+      <button @click="deal()">调用计算属性的setter方法</button>
+    </div>
+    <div>
+      <p>Vue的全局组件</p>
+      <my-date></my-date>
+      <my-date2></my-date2>
+    </div>
+    <div>
+      <p>Vue的局部组件</p>
+    </div>
+  </div>
+  <script>
+    /*全局组件*/
+    //1.创建组件构造器
+    let profile = Vue.extend({
+      //1.1模板选项
+      template: `
+        <div>
+            <input type='date'>
+            <p>今天已经是冬天了！</p>
+        </div>
+      `
+    });
+    //2.创建一个全局组件
+    Vue.component('my-date', profile); //（组件的名称，构造器）
+
+    /*局部组件*/
+    //1.创建组件构造器
+    let profile2 = Vue.extend({
+      //1.1模板选项
+      template: `
+        <div>
+            <input type='date'>
+            <p>今天好热，适合喝奶茶！</p>
+        </div>
+      `
+    });
+    new Vue({
+      el: "#app",
+      //2.创建一个局部组件
+      components: {
+        'my-date2': profile2
+      },
+      data: {
+        name: "Rose Jack", //测试计算属性
+        persons: [{
+          name: '张三',
+          age: 20,
+          sex: '男',
+          phone: '18826485402'
+        }, {
+          name: '李四',
+          age: 21,
+          sex: '男',
+          phone: '18826485403'
+        }, {
+          name: '王五',
+          age: 23,
+          sex: '女',
+          phone: '18826485404'
+        }],
+        newStudent: {
+          name: "",
+          age: 0,
+          sex: '男',
+          phone: ""
+        },
+        //测试计算属性的setter方法
+        firstName: "Zhang",
+        lastName: "sanfeng"
+      },
+      methods: {
+        //创建一条新纪录
+        createNewStudent() {
+
+          //姓名不能为空
+          if (this.newStudent.name === "") {
+            alert("姓名不能为空");
+            return;
+          }
+
+          //年龄不能小于等于0
+          if (this.newStudent.age <= 0) {
+            alert("年龄不能小于等于0");
+            return;
+          }
+          //手机不能为空
+          if (this.newStudent.phone === "") {
+            alert("手机不能为空");
+            return;
+          }
+
+          //unshift() 方法可向数组的开头添加一个或更多元素，并返回新的长度。unshift() 方法不创建新的创建，而是直接修改原有的数组。
+          this.persons.unshift(this.newStudent); //往数组中添加新数据
+          //清空已经被获取的数据
+          this.newStudent = {
+            name: "",
+            age: 0,
+            sex: '男',
+            phone: ""
+          }
+        },
+        //删除一条学生纪录
+        deleteStudent(index) {
+          this.persons.splice(index, 1); //splice() 方法向/从数组中添加/删除项目，然后返回被删除的项目.该方法会改变原始数组。
+        },
+        //反转name值
+        reverseStr() {
+          return this.name.split("").reverse().join("");
+        },
+        //实现deal方法
+        deal() {
+          this.fullName = "Toekn Lily"; //调用fullName的setter方法
+        }
+      },
+      //计算属性，默认只有get方法，可以保证属性不被污染
+      /*
+      计算属性和Methods的区别：
+      当页面重新渲染(不是刷新)的时候，计算属性不会变化，直接读取缓存使用，适合较大量的计算和改变频率较低的属性；
+      而method，就是当页面重新渲染的适合(页面元素的data变化，页面就会重新渲染)，都会重新调用method.
+      如果不希望有缓存，可以用method取代computed.
+      */
+      computed: {
+        //实现get方法即可
+        reverse() {
+          return this.name.split("").reverse().join("");
+        },
+        //计算属性的setter方法
+        // fullName() {
+        //   return this.firstName + " " + this.lastName;
+        // }
+
+        fullName: {
+          //get方法
+          get() {
+            return this.firstName + " " + this.lastName;
+          },
+          //set方法
+          set(str) {
+            let nameArr = str.split(" "); //打散名字
+            this.firstName = nameArr[0];
+            this.lastName = nameArr[1];
+          }
+        }
+      }
+    })
+
+  </script>
+</body>
+
+</html>
+

@@ -7,7 +7,7 @@ var port = process.env.PORT || 3000;//从命令行中设置port口，默认是30
 app.listen(port);//监听端口
 
 var mongoose = require('mongoose');//引入mongoose模块，来连接本地数据库
-var dbUrl = "mongodb://localhost:12345/staff";
+var dbUrl = "mongodb://localhost:27017/staff";
 mongoose.Promise = global.Promise;//Promise化mongodb的回调操作
 mongoose.connect(dbUrl, { useMongoClient: true });
 

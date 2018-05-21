@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>08-挂载选项data</title>
+  <script src="js/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <my-div></my-div>
+  </div>
+  <!--约束script标签的类型为模板-->
+  <script id="my_div" type="text/template">
+    <!--对外只能有一个出口，所以要用div包起来-->
+    <div>
+      <div>我是韩梅梅</div>
+      <img src='img/2.png' width='200'>
+      <p>{{message}}</p>
+    </div>
+  </script>
+  <script>
+    //1.实例化组件
+    //全局
+    Vue.component("my-div", {
+      template: "#my_div", //绑定组件
+      //   data: {
+      //     message: "努力，奋斗"
+      //   }
+      //在component中想要用data选项，需要以函数的形式
+      data() {
+        return {
+          message: "努力，奋斗"
+        }
+      }
+      /*
+      June[Question]为什么data必须是函数?
+      -在js中产生对象都是靠构造函数产生，而且该对象为新的对象，
+      上述每次调用组件都是产生一个新的组件，所以如果data为函数，则每次的对象则不同
+      */
+
+    });
+    new Vue({
+      el: "#app"
+    })
+
+  </script>
+</body>
+
+</html>
+

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>圣杯布局</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            min-width: 680px;
+            text-align: center;
+        }
+
+        header,
+        footer {
+            width: 100%;
+            background: #bbb;
+        }
+
+        .main {
+            width: 100%;
+            background: khaki;
+            height: 200px;
+            float: left;
+        }
+
+        .left {
+            background: red;
+            height: 200px;
+            width: 200px;
+            float: left;
+            margin-left: -100%;/*需要相对于父元素移动整整一行的宽度才能到main的左边*/
+            position: relative;
+            left: -200px;
+        }
+
+        .right {
+            background: powderblue;
+            height: 200px;
+            width: 200px;
+            float: left;
+            margin-left: -200px;
+            position: relative;
+            left: 200px;
+        }
+        .bd{
+            overflow: hidden;
+            padding-left: 200px;
+            padding-right: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>圣杯布局</header>
+    <div class="bd">
+        <div class="main text">main main main main main main main main main main main main main main main main main main main main main main main main</div>
+        <div class="left text">left</div>
+        <div class="right text">right</div>
+    </div>
+    <footer>footer</footer>
+</body>
+
+</html>

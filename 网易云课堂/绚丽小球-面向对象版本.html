@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>绚丽小球-面向对象版本</title>
+    <style>
+        #canvas {
+            margin: 100px auto;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/underscore.js/1.9.0/underscore-min.js"></script>
+</head>
+
+<body>
+    <canvas id="canvas">当前浏览器不支持canvas</canvas>
+
+    <script>
+        //1.获取当前的画布
+        const canvas = document.getElementById("canvas");
+        //2.获取画布的上下文
+        const ctx = canvas.getContext("2d");
+        canvas.width = 1000;
+        canvas.height = 600;
+        canvas.style.backgroundColor = "#eee";
+
+        //2.小球类
+        class Ball {
+            //位置，颜色
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.radius = 40; //半径固定
+            }
+            //绘制小球
+            render() {
+                ctx.save(); //保存上下文
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2); //x,y,radius,startAngle,endAngle,anticlockwise
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+        //3.会移动的小球类
+        //移动的小球，继承不会移动的小球
+        class MoveBall extends Ball {
+            constructor(x, y, color) {
+                super(x, y, color);
+
+                //量的变化,随机数
+                this.dX = _.random(-5, 5); //往左或者右
+                this.dY = _.random(-5, 5); //往上或者下
+                this.dR = _.random(1, 3); //半径取一个随机数
+            }
+            //绘制出来后需要移动
+            upDate() {
+                this.x += this.dX;
+                this.y += this.dY;
+                this.radius -= this.dR; //希望小球越来越小
+                if (this.radius < 0) {
+                    this.radius = 0; //半径小于0是看不到
+                }
+            }
+
+        }
+        //4.实例化小球
+        //随机取颜色
+        let ballArr = [];
+        let colorArr = ['red', 'green', 'blue', 'yellow', 'purple', 'prink', 'orange'];
+
+        //5.监听鼠标的移动
+        canvas.addEventListener("mousemove", function (e) {
+            //鼠标移动的时候创建小球
+            let moveBall = new MoveBall(e.offsetX, e.offsetY, colorArr[_.random(0, colorArr.length - 1)]);
+            ballArr.push(moveBall); //装到数组里
+        });
+
+        //6.开启定时器
+        setInterval(function () {
+            //清屏
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            //绘制
+            for (let i = 0; i < ballArr.length; i++) {
+                ballArr[i].render(); //绘制
+                ballArr[i].upDate(); //移动
+            }
+        }, 50); //每隔50ms刷新一次
+    </script>
+</body>
+
+</html>

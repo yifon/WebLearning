@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>居中</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .container1 {
+            text-align: center;
+            background: palegoldenrod;
+            height: 50px;
+            line-height: 50px;
+            /*垂直居中*/
+        }
+
+        .container1 span {
+            border: 1px solid #000000;
+        }
+
+        .container2 {
+            background: palegreen;
+        }
+
+        .container2 div {
+            border: 1px solid #000000;
+            width: 150px;
+            margin: auto;
+        }
+
+        .container3 {
+            position: relative;
+            border: 1px solid gray;
+            height: 300px;
+            background: rgb(87, 139, 190);
+        }
+
+        .container3 div {
+            position: absolute;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            top: 50%;
+            margin-top: -50px;
+            margin-left: -50px;
+            border: 1px solid #000000;
+        }
+
+        .container4 {
+            position: relative;
+            border: 1px solid gray;
+            height: 300px;
+            background: rgb(87, 139, 190);
+        }
+
+        .container4 div {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            border: 1px solid #000000;
+            transform: translate(-50%, -50%);
+        }
+
+        .container5 {
+            position: relative;
+            border: 1px solid gray;
+            height: 300px;
+            background: rgb(87, 139, 190);
+        }
+
+        .container5 div {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            border: 1px solid #000000;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container1">
+        <span>回忆像个说书的人</span>
+        <span>用充满乡音的口吻</span>
+    </div>
+    <div class="container2">
+        <div>跳过水坑　绕过小村</div>
+        <div>等相遇的缘分</div>
+    </div>
+    <div class="container3">
+        <div>你用泥巴捏一座城</div>
+        <!-- <div>说将来要娶我进门</div> -->
+    </div>
+    <div class="container4">
+        <div>转多少身 过几次门 虚掷青春</div>
+        <!-- <div>小小的誓言 还不稳</div> -->
+    </div>
+    <div class="container5">
+        <div>小小的泪水 还在撑</div>
+        <!-- <div>稚嫩的唇 在说离分</div> -->
+    </div>
+</body>
+
+</html>

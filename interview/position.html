@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>position</title>
+</head>
+
+<body>
+    <div>
+        <p>第一段文字</p>
+        <p>第二段文字</p>
+        <!--relative会导致自身位置的相对变化，而不会影响其他元素的位置、大小-->
+        <p style="position:relative;left:50px;top:50px">第三段文字</p>
+        <p>第四段文字</p>
+    </div>
+    <div>
+        <p>第一段文字</p>
+        <p>第二段文字</p>
+        <p style="background: yellow;position:absolute">第三段文字</p>
+        <p>第四段文字</p>
+    </div>
+</body>
+
+</html>

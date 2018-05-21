@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>05-Vue中的父子组件</title>
+  <script src="js/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <parent></parent>
+  </div>
+  <script>
+    //1.子组件构造器
+    let child1 = Vue.extend({
+      template: `<img src='img/1.png' width='200'>`
+    });
+    let child2 = Vue.extend({
+      template: `<p>努力，奋斗！</p>`
+    });
+    //2.父组件构造器
+    Vue.component("parent", {
+      components: {
+        'my-child1': child1,
+        'my-child2': child2
+      },
+      template: `
+        <div>
+            <my-child1></my-child1>
+            <my-child2></my-child2>
+        </div>
+      `
+    })
+    new Vue({
+      el: "#app",
+      data: {
+        msg: "天气不错"
+      }
+
+    })
+
+  </script>
+</body>
+
+</html>
+

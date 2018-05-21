@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>处理边界情况</title>
+    <script src="js/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="example-1">
+        <p>访问元素 & 组件</p>
+        <p>访问根实例</p>
+        <p>这是父组件中的foo:{{foo}}</p>
+        <child1></child1>
+        <p>访问父级组件实例</p>
+        <pre>
+            和 $root 类似，$parent 属性可以用来从一个子组件访问父组件的实例。它提供了一种机会，可以在后期随时触达父级组件，以替代将数据以 prop 的方式传入子组件的方式。
+        </pre>
+    </div>
+    <div id="example-2">
+        <p>访问子组件实例或子元素</p>
+        <pre>尽管存在 prop 和事件，有的时候你仍可能需要在 JavaScript 里直接访问一个子组件。为了达到这个目的，你可以通过 ref 特性为这个子组件赋予一个 ID 引用。</pre>
+    </div>
+</body>
+<script>
+    Vue.component('child1', {
+        template: `<div><button @click='setFoo'>点击</button><p>在这里：{{getFoo()}}</p></div>`,
+        methods: {
+            getFoo: function () {
+                // 获取根组件的数据
+                this.$root.foo;
+                console.log(this.$root.foo);
+            },
+            setFoo: function () {
+                // 写入根组件的数据
+                this.$root.foo = 2;
+            },
+            getBar: function () {
+                // 访问根组件的计算属性
+                this.$root.bar;
+                // 调用根组件的方法
+                // this.$root.baz();
+            }
+        }
+
+    });
+    // Vue 根实例
+    let example1 = new Vue({
+        el: "#example-1",
+        data: {
+            foo: 1
+        },
+        computed: {
+            bar: function () { /* ... */
+                console.log("hi, this is the bar computed");
+            }
+        },
+        methods: {
+            baz: function () { /* ... */
+                console.log("hi, this is the bar methods")
+            }
+        }
+    })
+</script>
+
+</html>

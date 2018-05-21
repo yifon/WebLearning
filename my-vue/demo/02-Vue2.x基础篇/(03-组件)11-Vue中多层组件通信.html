@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>11-Vue中多层组件通信</title>
+  <script src="js/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <!--将数据传递给父组件，需要加':'动态接收-->
+    <my-parent :imgtitle='title' :imgsrc='img'></my-parent>
+  </div>
+  <template id="my_img">
+    <img :src='imgsrc' width='200'>
+  </template>
+  <template id="my_title">
+    <h2>{{title}}</h2>
+  </template>
+  <template id="my_parent">
+    <div>
+      <!--将数据传递给子组件-->
+      <child1 :imgsrc='imgsrc'></child1>
+      <child2 :title="imgtitle"></child2>
+    </div>
+  </template>
+  <script>
+    //1.子组件的实例
+    let child1 = Vue.extend({
+      template: '#my_img',
+      props: ['imgsrc']
+    });
+    let child2 = Vue.extend({
+      template: '#my_title',
+      props: ['title']
+    });
+    //2.注册父组件
+    Vue.component('my-parent', {
+      props: ['imgtitle', 'imgsrc'],
+      components: {
+        'child1': child1,
+        'child2': child2
+      },
+      //绑定
+      template: '#my_parent'
+    })
+
+    new Vue({
+      el: "#app",
+      data: {
+        title: '唯品会',
+        img: 'img/2.png'
+      }
+    });
+
+  </script>
+</body>
+
+</html>
+

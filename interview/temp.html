@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>testing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="temp.css">
+</head>
+
+<body>
+    <ul id="ul">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+    <a href="#">a</a>
+    <a href="#">b</a>
+    <a href="#">c</a>
+    <div>
+
+        <button id="btn" class="btn">button</button>
+        <div id="box" class="box">box</div>
+
+        <div id="divBody">
+            <div id="div1">
+                <p id="p1">激活</p>
+                <p id="p2">取消</p>
+                <p id="p3">取消</p>
+                <p id="p4">取消</p>
+            </div>
+            <div id="div2">
+                <p id="p5">取消</p>
+                <p id="p6">取消</p>
+            </div>
+        </div>
+    </div>
+    <div id="divA">
+        <a href="#" id="a1">a1</a>
+        <a href="#">a2</a>
+        <a href="#">a3</a>
+        <a href="#">a4</a>
+    </div>
+    <input type="text" value="Hello" onblur="test()">
+
+    <script>
+        function test() {
+            const input = document.querySelector('input');
+            console.log(input.getAttribute('value')); // Hello
+            console.log(input.value); // Hello
+        }
+        window.onload = function () {
+
+            const input = document.querySelector('input');
+            console.log(input.getAttribute('value')); // Hello
+            console.log(input.value); // Hello
+
+            function test() {
+                const input = document.querySelector('input');
+                console.log(input.getAttribute('value')); // Hello
+                console.log(input.value); // Hello
+            }
+
+            // var ul = document.getElementById('ul');
+            // ul.onclick = function (e) {
+            //     e = window.event ? window.event : e;
+            //     var liContent = e.target ? e.target : e.srcElement;
+            //     alert(liContent.innerHTML);
+            // }
+
+            // var a = document.getElementsByTagName('a');
+            // for (var i = 0; i < a.length; i++) {
+            //     a[i].onclick = function () {
+            //         alert(i);
+            //     }
+            // }
+            // for (var i = 0; i < a.length; i++) {
+            //     (function () {
+            //         var temp = i;
+            //         a[i].onclick = function () {
+            //             alert(temp);
+            //         }
+            //     })()
+            // }
+
+            // for (let i = 0; i < a.length; i++) {
+            //     a[i].onclick = function () {
+            //         alert(i);
+            //     }
+            // }
+
+            //点击button,box显示；点击其它地方，box隐藏
+            // var btn = document.getElementById("btn");
+            // var box = document.getElementById("box");
+            // btn.onclick = function (e) {
+            //     alert(1);
+            //     box.style.display = "block";
+            //     //阻止冒泡
+            //     if (e && e.stopPropagation) {
+            //         e.stopPropagation();//非IE
+            //         console.log(1)
+            //     } else {
+            //         window.event.cancelBubble = true;
+            //         console.log(2)
+            //     }
+            // }
+            // document.onclick = function (e) {
+            //     box.style.display = "none";
+            //     // alert(2);
+            // }
+
+            // var divBody = document.getElementById("divBody");
+            // var p1 = document.getElementById("p1");
+            // divBody.onclick = function (e) {
+            //     alert("取消");
+            // }
+            // p1.onclick = function (e) {
+            //     e.stopPropagation();
+            //     alert("激活");
+            // }
+
+            var divA = document.getElementById("divA");
+            //使用代理，bindEvent多一个"a"参数
+            bindEvent(divA, "click", "a", function (e) {
+                console.log(this.innerHTML);
+            })
+
+            function bindEvent(elem, type, selector, fn) {
+                elem.addEventListener(type, function (e) {
+                    var target;
+                    //有selector,即说明需要事件代理
+                    if (selector) {
+                        target = e.target;
+                        if (target.matches(selector)) {
+                            fn.call(target, e);
+                        }
+                    } else {
+                        fn(e);
+                    }
+                })
+            }
+        }
+    </script>
+</body>
+
+</html>
