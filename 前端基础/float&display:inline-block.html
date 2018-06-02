@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>float和display:inline-block的区别</title>
+    <style>
+        .outBox {
+            border: 1px solid #000;
+            width: 900px;
+        }
+
+        .inBox {
+            width: 20%;
+            background-color: aqua;
+            border: 1px solid coral;
+            height: 100px;
+        }
+
+        .inBox1,
+        .inBox3 {
+            display: inline-block;
+        }
+
+        .inBox2 {
+            float: left;
+        }
+        /*设置父元素inline-block对象间隙为负值*/
+
+        /* Safari 等不支持字体大小为 0 的浏览器, N 根据父级字体调节*/
+
+        @media screen and (-webkit-min-device-pixel-ratio: 0) {
+            .inlineBox {
+                letter-spacing: -5px;
+            }
+        }
+
+        /*子元素重置回正常值*/
+
+        .inBox3 {
+            letter-spacing: normal;
+            word-spacing: normal;
+            vertical-align: top
+        }
+
+
+        .floatBox {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <p>display:inline-block:</p>
+    <pre>
+        1.默认有间隙
+        2.水平排列一行，即使元素高度不一，也会以高度最大的元素高度为行高，即使后面的元素高度更小，也不会上浮补位
+        3.父盒子高度会相应撑高
+    </pre>
+
+    <div class="outBox">
+        <div class="inBox inBox1">小盒子</div>
+        <div class="inBox inBox1" style="height: 200px">小盒子(高一点)</div>
+        <div class="inBox inBox1">小盒子</div>
+        <div class="inBox inBox1">小盒子</div>
+        <div class="inBox inBox1">小盒子</div>
+        <div class="inBox inBox1">小盒子</div>
+    </div>
+    <p>float:</p>
+    <pre>
+        1.默认无间隙
+        2.水平排列一行，如果前面的元素高度更大，后面的元素则会浮动补位
+        3.父元素高度塌陷(可以使用overflow:hidden触发BFC)
+    </pre>
+    <div class="outBox floatBox">
+        <div class="inBox inBox2">小盒子</div>
+        <div class="inBox inBox2" style="height: 200px">小盒子(高一点)</div>
+        <div class="inBox inBox2">小盒子</div>
+        <div class="inBox inBox2">小盒子</div>
+        <div class="inBox inBox2">小盒子</div>
+        <div class="inBox inBox2">小盒子</div>
+    </div>
+    <p>去掉display:inline-block的间隙:</p>
+    <pre>
+        inline-block 产生的空隙与父级元素继承或者设定的 font-family、font-size 有关，通常情况下，12px 大小的 tahoma 字体，inline-block 后元素间产生的空隙（间隙）大约是 5px；
+        letter-spacing : normal | length （检索或设置对象中的文字之间的间隔）
+        word-spacing : normal | length（检索或设置对象中的单词之间插入的空隔）
+        Firefox 中 letter-spacing 负值的绝对值大于空隙大小后，会导致元素整体位置向右偏移；
+        Safari 中 letter-spacing 负值的绝对值大于空隙大小后，内部会发生重叠。
+
+    </pre>
+    <div class="outBox inlineBox">
+        <div class="inBox inBox3">小盒子</div>
+        <div class="inBox inBox3" style="height: 200px">小盒子(高一点)</div>
+        <div class="inBox inBox3">小盒子</div>
+        <div class="inBox inBox3">小盒子</div>
+        <div class="inBox inBox3">小盒子</div>
+        <div class="inBox inBox3">小盒子</div>
+    </div>
+
+</body>
+
+</html>
