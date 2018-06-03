@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>兼容IE和DOM标准下的事件监听器</title>
+</head>
+
+<body>
+    <div id="parent2">
+        <div id="parent1">
+            <p id="mylink1">点我(不阻止冒泡)</p>
+        </div>
+    </div>
+    <div id="parent4">
+        <div id="parent3">
+            <p id="mylink2">点我(阻止冒泡)</p>
+        </div>
+    </div>
+    <div>
+        <p id="mylink3">
+            <a href="http://www.baidu.com">点我(不阻止默认行为，此处为跳转行为)</a>
+        </p>
+    </div>
+    <div>
+        <p id="mylink4">
+            <a href="http://www.baidu.com">点我(阻止默认行为，此处为跳转行为)</a>
+        </p>
+    </div>
+    <script>
+        var EventUtil = {
+            //注册监听器
+            addHandler: function (element, type, handler) {
+                //DOM标准事件监听器
+                if (element.addEventListener) {
+                    element.addEventListener(type, handler, false);
+                }
+                //IE事件监听器
+                else if (element.attachEvent) {
+                    element.attachEvent("on" + type, handler);
+                } else {
+                    element["on" + type] = handler;
+                }
+            },
+            //移除监听器
+            removeHandler: function (element, type, handler) {
+                //DOM标准事件监听器
+                if (element.removeEventListener) {
+                    element.removeEventListener(type, handler, false);
+                }
+                //IE事件监听器
+                else if (element.detachEvent) {
+                    element.detachEvent("on" + type, handler);
+                } else {
+                    element["on" + type] = null;
+                }
+            },
+            //获取事件本身的引用
+            getEvent: function (event) {
+                return event ? event : window.event;
+            },
+            //获取该事件的目标元素的引用
+            getTarget: function (event) {
+                return event.target || event.srcElement;
+            },
+            //在某一个阶段阻止事件的进一步冒泡，如parent1节点阻止事件进一步向上冒泡到parent2节点
+            stopPropagation: function (event) {
+                //DOM标准
+                if (event.stopPropagation) {
+                    event.stopPropagation();
+                } else {
+                    event.cancelBubble = true;
+                }
+            },
+            //在某一个阶段阻止事件的默认行为
+            preventDefault: function (event) {
+                if (event.preventDefault) {
+                    event.preventDefault();
+                } else {
+                    event.returnValue = false;
+                }
+            }
+        }
+        var mylink1 = document.getElementById("mylink1");
+        //处理事件
+        var handler = function (event) {
+            console.log(this); //<p id="mylink">点我</p>
+            alert("点到啦，this是:" + this);
+        }
+        EventUtil.addHandler(mylink1, 'click', handler);
+
+        var mylink2 = document.getElementById("mylink2");
+        /**
+         * 设置两个parent来监测冒泡行为，以及停止事件的进一步冒泡
+         * parent1负责处理p的事件冒泡，而且处理完后阻止事件向上继续冒泡，所以parent2就算注册了事件监听器，也无法接收到p的点击行为
+         */
+        var parent1 = document.getElementById("parent1");
+        var parent2 = document.getElementById("parent2");
+
+        //不阻止冒泡的情况下，parent1,parent2都可以监听到事件     
+        EventUtil.addHandler(parent1, 'click', handler);
+        EventUtil.addHandler(parent2, 'click', handler);
+
+        /**
+         * 在parent1阻止冒泡的情况下,检测到parent2事件无法监听到
+         */
+
+        //处理事件
+        var handler2 = function (event) {
+            console.log(this); //<p id="mylink">点我</p>
+            event = EventUtil.getEvent(event);
+            EventUtil.stopPropagation(event);
+            alert("这是点击事件冒泡到parent1节点，并且parent1节点阻止了继续冒泡，this是:" + this);
+        }
+        EventUtil.addHandler(mylink2, 'click', handler);
+        EventUtil.addHandler(parent3, 'click', handler2);
+        EventUtil.addHandler(parent4, 'click', handler);
+
+        //不阻止默认行为的话，点击a链接将会跳转页面
+        var mylink3 = document.getElementById("mylink3");
+        EventUtil.addHandler(mylink3, 'click', handler);
+
+        //阻止默认行为的话，点击a链接将不会跳转页面
+        var mylink4 = document.getElementById("mylink4");
+        var handler3 = function (event) {
+            event = EventUtil.getEvent(event);
+            EventUtil.preventDefault(event);
+            alert("a节点阻止了默认行为，this是:" + this);
+        }
+        EventUtil.addHandler(mylink4, 'click', handler3);
+    </script>
+</body>
+
+</html>

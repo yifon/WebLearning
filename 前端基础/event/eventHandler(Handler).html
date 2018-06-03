@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件句柄</title>
+</head>
+
+<body>
+    <div>
+        <p id="mylink">点我</p>
+    </div>
+    <script>
+        var link = document.getElementById("mylink");
+        //优点:this就是当前元素
+        mylink.onclick = function () {
+            console.log(this); //<p id="mylink">点我</p>
+            alert("点到啦，this是:" + this);
+        }
+        //缺点:一个事件只能对应一个事件句柄，后面的句柄会覆盖前面的
+        mylink.onclick = function () {
+            alert("再点");
+        }
+    </script>
+</body>
+
+</html>

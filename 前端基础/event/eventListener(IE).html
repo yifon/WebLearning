@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>IE下的事件监听器</title>
+</head>
+
+<body>
+    <div>
+        <p id="mylink">点我</p>
+    </div>
+    <script>
+        var link = document.getElementById("mylink");
+        //第三个参数注明该处理函数是在事件传递中的捕获阶段还是冒泡阶段被调用，默认为false，冒泡
+        mylink.attachEvent('onclick', function () {
+            console.log(this); //<p id="mylink">点我</p>
+            alert("点到啦，this是:" + this);
+        })
+        //优点:一个事件可以用多个事件监听函数监听，不会被覆盖
+        mylink.attachEvent('onclick', function () {
+            alert("再点！");
+        })
+    </script>
+</body>
+
+</html>
