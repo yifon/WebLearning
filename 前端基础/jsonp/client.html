@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jsonp实现跨域</title>
+</head>
+
+<body>
+    <script>
+        /*回调函数的方法必须是全局的*/
+        function test(data) {
+            alert(data.name);
+        }
+        //动态创建script标签,并请求
+        function addScriptTag(src) {
+            var script = document.createElement('script');
+            script.setAttribute('type', 'text/javascript');
+            script.src = src;
+            document.body.appendChild(script);
+        }
+        //在onload后，跨域请求
+        window.onload = function () {
+            addScriptTag('http://localhost:8080/jsonp?callback=test');
+        }
+    </script>
+
+</body>
+
+</html>
