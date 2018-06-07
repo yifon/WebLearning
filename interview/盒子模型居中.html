@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>盒子模型居中</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        /*未知A元素宽高，垂直居中*/
+
+        .box {
+            position: relative;
+            background-color: red;
+            width: 100%;
+            box-sizing: border-box;
+            padding-top: calc(25% - 5px);
+            padding-bottom: calc(25% - 5px);
+        }
+
+        .Abox {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            background-color: greenyellow;
+        }
+
+        /*A元素距左右屏各10px*/
+
+        .Abox {
+            margin-left: 10px;
+            margin-right: 10px;
+            width: calc(100% - 20px);
+        }
+
+        /*A元素里的文字font-size:20px;水平居中*/
+
+        .Abox {
+            text-align: center;
+            font-size: 20px;
+        }
+
+        /*A元素的高度始终是其宽度的50%;
+        Abox为标准盒子模型，即width+border+padding+margin为box的宽度,25%的padding-top等比例压缩width,1/4 padding-top,1/4 padding-bottom,再减去1/2 margin-left(5px), 即得出1/2 width作为height
+       A元素里的字体垂直居中
+        */
+
+        .Abox {
+            padding-top: calc(25% - 5px);
+            padding-bottom: calc(25% - 5px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div id="Abox" class="Abox">A元素垂直居中 A元素距离屏幕左右各边各10px A元素里的文字font—size:20px,水平垂直居中 A元素的高度始终是A元素宽度的50% </div>
+    </div>
+</body>
+
+</html>

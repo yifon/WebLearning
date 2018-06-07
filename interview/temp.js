@@ -591,7 +591,7 @@
     async function async1() {
         console.log("async1 start"); //2
         await async2(); //执行了这一句，输出async2后，await会让出当前线程，将后面的代码加到任务队列中
-        console.log("async1 end");
+        console.log("async1 end"); //7
     }
     async function async2() {
         console.log('async2'); //3
@@ -961,7 +961,7 @@
         if (n === 1) return total;
         return factorial(n - 1, n * total);
     }
-    factorial(5, 1) // 120
+    factorial(5, 1) // 120 f(5,1)->f(4,5x1)->f(3,4x5)->f(2,3x20)->f(1,2x60)==>120
     // 停止计时，输出时间
     console.timeEnd('testing'); //0.04296875ms
 } {
@@ -1207,12 +1207,26 @@
 
         //构造函数指向错误
         console.log(newObj.d.constructor, oldObj.d.constructor); //[Function:Object] [Function:Person]
-        } {
-            const oldObj = {};
+    } {
+        const oldObj = {};
 
-            oldObj.a = oldObj;
+        oldObj.a = oldObj;
 
-            const newObj = JSON.parse(JSON.stringify(oldObj));
-            console.log(newObj.a, oldObj.a); // TypeError: Converting circular structure to JSON
-        }
+        const newObj = JSON.parse(JSON.stringify(oldObj));
+        console.log(newObj.a, oldObj.a); // TypeError: Converting circular structure to JSON
+    }
+} {
+
+    const obj = [
+        1, 2, 3, 3, {
+            a: 1
+        },
+        false, '1', true
+    ];
+    const tmp = {};
+    tmp[JSON.stringify(obj[4])] = 1; //将对象作为key存储到对象中,如果不反序列化对象，则key值会变成[Object Object]
+    for (prop in tmp) {
+        console.log(prop); //key值变成了[object Object]而不是{"a":1}
+        console.log(tmp[prop]); //1
+    }
 }

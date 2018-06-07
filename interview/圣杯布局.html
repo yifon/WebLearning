@@ -1,3 +1,4 @@
+<!--圣杯布局采用的是padding给子面板腾出空间-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,11 +31,12 @@
             float: left;
         }
 
+        
         .left {
             background: red;
             height: 200px;
             width: 200px;
-            float: left;
+            float: left; 
             margin-left: -100%;/*需要相对于父元素移动整整一行的宽度才能到main的左边*/
             position: relative;
             left: -200px;
@@ -42,18 +44,18 @@
 
         .right {
             background: powderblue;
-            height: 200px;
+            height: 200px; 
             width: 200px;
-            float: left;
+            float: left; 
             margin-left: -200px;
             position: relative;
-            left: 200px;
+            left: 200px; 
         }
         .bd{
             overflow: hidden;
             padding-left: 200px;
             padding-right: 200px;
-        }
+        } 
     </style>
 </head>
 

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>盒子模型居中</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .box {
+            position: relative;
+            background-color: palegoldenrod;
+            width: 100%;
+            box-sizing: border-box;
+            padding-top: calc(25% - 5px);
+            padding-bottom: calc(25% - 5px);
+        }
+
+        .Abox {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            background-color: plum;
+            margin-left: 10px;
+            margin-right: 10px;
+            width: calc(100% - 20px);
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .inner {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div id="Abox" class="Abox">
+            <div class="inner">
+                A元素垂直居中 A元素距离屏幕左右各边各10px A元素里的文字font—size:20px,水平垂直居中 A元素的高度始终是A元素宽度的50%
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
