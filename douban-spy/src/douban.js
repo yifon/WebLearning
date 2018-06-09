@@ -18,7 +18,10 @@ const mapLimit = require('async/mapLimit');
  * 将要抓取的页面整理到一个数组里面
  */
 let ep = new eventproxy(); //实例化eventproxy
-let baseUrl = 'https://www.douban.com/group/beijingzufang/discussion?start='; //url不变的部分
+// let baseUrl = 'https://www.douban.com/group/beijingzufang/discussion?start='; //url不变的部分
+// let baseUrl = 'https://www.douban.com/group/106955/discussion?start='; //深圳租房
+// let baseUrl = 'https://www.douban.com/group/szsh/discussion?start='; //深圳租房
+let baseUrl = 'https://www.douban.com/group/futianzufang/discussion?start＝';//深圳福田租房
 let pageUrls = []; // 要抓取的页面数组
 
 let page = 20; //抓取页面数量
@@ -44,6 +47,7 @@ exports.start = () => {
         superagent.get(pageItem.url)
             //模拟浏览器
             .set('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36')
+            .set('Cookie', 'bid=fAQfJ-6ikoY; ll="118281"; _vwo_uuid_v2=537270C4E579E3C4573DFE266C7B1B7B|3d0ac69f6fb0b4b19fabc3947cc68b1f; viewed="5266847_3590768_4886879"; __utmc=30149280; ap=1; __utmz=30149280.1527603691.31.28.utmcsr=link.juejin.im|utmccn=(referral)|utmcmd=referral|utmcct=/; ps=y; dbcl2="120236393:XSYAAyEQRVY"; ck=T5G5; push_noty_num=0; push_doumail_num=0; __utmv=30149280.12023; __ads_session=yNq5UH7yGgk2LTYTXgA=; ct=y; __utma=30149280.1557863103.1515227691.1527861120.1527867134.34; __utmt=1; __utmb=30149280.30.5.1527867557781')
             //获取到数据后
             .end((err, pres) => {
                 let $ = cheerio.load(pres.text); //将页面数据用cheerio处理，生成一个类jQuery对象
@@ -72,10 +76,9 @@ exports.start = () => {
                     // console.log(data)
                 }
                 //一个页面的数据处理完成后，要调用callback等待执行下一组
-                // setTimeout(() => {
-                callback(null, pageItem.url);
-                // callback(null);
-                // }, delay);
+                setTimeout(() => {
+                    callback(null, pageItem.url);
+                }, delay);
             })
 
         // })
@@ -106,15 +109,17 @@ exports.start = () => {
     //ep.after('事件名称',数量,事件达到指定数量后的callback()),总共有20*25(页面数*每页数据量)个ep.emit事件都被捕获到以后,才会执行ep.after里面的回调函数
     ep.after('preparePage', pageUrls.length * page, data => {
         //传入不想要出现的关键字，用'|'隔开，比如排除一些位置,排除中介常用短语
-        let filterWords = /押一付一|短租|月付|蛋壳|有房出租|6号线|六号线/;
+        // let filterWords = /找室友|月付|蛋壳|有房出租|合租|宝安|求租/;
+        // let filterWords = / /;
         //传入需要筛选的关键词,如没有,可设置为空格
-        // let keyWords = /西二旗/;
-        let keyWords = / /;
+        let keyWords = /转租/;
+        //|大门坊|福星路|赤尾|转租/;
+        // let keyWords = / /;
 
         //[先遍历找出中介]先统计每个人的发帖数,并以对象的属性保存,这里利用对象属性名不能重复的特性实现计数
         data.forEach(item => {
             authorMap[item.author] = authorMap[item.author] ? ++authorMap[item.author] : 1;
-            if (authorMap[item.author] > 4) {
+            if (authorMap[item.author] > 10) {
                 intermediary.push(item.author); //如果发现某个人在同一个页面中的发帖数超过5条，则认为是中介
             }
         });
@@ -123,22 +128,22 @@ exports.start = () => {
 
         //[再遍历过滤掉中介和不想要的关键字帖子]
         data.forEach(item => {
-            if (item.markSum > 100) {
+            if (item.markSum > 300) {
                 console.log('评论数过多，丢弃');
                 return;
             }
-            if (filterWords.test(item.title)) {
-                console.log('标题带有不希望出现的词语');
-                return;
-            }
-            if (intermediary.includes(item.author)) {
-                console.log('发帖数过多，怀疑是中介,丢弃');
-                return;
-            }
+            // if (filterWords.test(item.title)) {
+            //     console.log('标题带有不希望出现的词语');
+            //     return;
+            // }
+            // if (intermediary.includes(item.author)) {
+                // console.log('发帖数过多，怀疑是中介,丢弃');
+                // return;
+            // }
             //只有经过上面的层层检测，才会来到最后一步
-            if (keyWords.test(item.title)) {
+            // if (keyWords.test(item.title)) {
                 result.push(item);
-            }
+            // }
         })
 
         /**
@@ -168,7 +173,6 @@ exports.start = () => {
             `;
         //拼接有效数据html
         let content = ``;
-        console.log("结果：" + result)
         result.forEach(item => {
             content += `<a class='listItem' href='${item.url}' target='_blank'>${item.title}
                 __<span class='markSum'>${item.markSum}</span>

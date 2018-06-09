@@ -1,0 +1,30 @@
+doctype
+html
+    head
+        meta(charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1,minimum-scale=1,user-scalable=no")
+        title 模拟小白鼠A端客人
+    body
+        div
+            p 模拟客人登陆后保存了cookie
+            div
+                p 登陆框:
+                label(for="name") 用户名:
+                input#name
+                label(for="password") 密码:
+                input#password(type="password")
+                input#login(type="button" value="登陆")
+
+        div
+            input#findName(type="button" value="搜索当前实时的用户名") 
+            p 当前用户名字为:
+            p #{actualName}
+
+        div
+            p 模拟存在XSS攻击风险的输入框:
+            p 请输入你要显示的数据
+            textarea#xss(name="", cols="30", rows="10")
+            input#confirm(type="button" value="确认")
+            #result 显示输出结果:
+            #changeImg 改变图片
+                img#changeMe(style='width:100px;boder:1px solid #000')
+        script(type='text/javascript' src='/aClient.js')
