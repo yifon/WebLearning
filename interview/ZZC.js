@@ -5,7 +5,7 @@
 {
     /**
      * 1.让输出结果，fn()部分没问题，arguments[0](),其实arguments第一个参数是fn,
-     * 所以fn()实际上还是让输出this.lenght,但此时的this是arguments,所以长度始终为参数个数
+     * 所以fn()实际上还是让输出this.length,但此时的this是arguments,所以长度始终为参数个数
      */
     var length = 10;
     function fn() {
@@ -20,6 +20,21 @@
     }
     test.callFn(fn, 5);//10,2
 }
+{
+    var length = 10;
+    function fn() {
+        console.log(this.length);
+    }
+    var test = {
+        length: 5,
+        callFn: function (fn) {
+            fn();//求结果
+            arguments[0]();
+        }
+    }
+    test.callFn(fn, 5);//求结果
+}
+
 {
     /**
      * 2.三列布局，左右贴边，宽为200px，中间列宽度自适应，且间隔左右两列各10px.
@@ -56,6 +71,7 @@
 {
     /**
      * 8.假设同一个租租车页面，但A,B,C三个国家访问速度差异很大，你觉得会是什么造成的，怎么做优化？
+     * cdn
      */
 }
 {
