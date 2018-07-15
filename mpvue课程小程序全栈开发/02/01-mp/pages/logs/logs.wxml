@@ -1,0 +1,7 @@
+<view class="container log-list">
+    <!-- wx:for绑定一个数组，即可使用数组中各项的数据重复渲染该组件,index,item -->
+    <!-- wx:for-item可以指定数组当前元素的变量名 -->
+    <block wx:for="{{logs}}" wx:for-item="log">
+        <text class="log-item">{{index+1}}.{{log}}</text>
+    </block>
+</view>

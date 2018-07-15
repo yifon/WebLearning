@@ -1,0 +1,19 @@
+<!-- view:视图容器 -->
+<view class="container">
+    <view class="userinfo">
+        <!-- 用户点击该按钮时，会返回获取到的用户信息 -->
+        <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+            获取头像昵称
+        </button>
+        <block wx:else>
+            <!-- background-size="cover",把背景图像扩展至足够大，以使背景图像完全覆盖背景区域。 -->
+            <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover" />
+            <image bindtap="bindViewTap" class="userinfo-avatar1" src="{{userInfo.avatarUrl}}" background-size="cover" />
+            <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+        </block>
+    </view>
+    <view class="usermotto">
+        <!-- text:文本 -->
+        <text class="user-motto">{{motto}}</text>
+    </view>
+</view>
