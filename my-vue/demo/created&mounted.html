@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Vue中created和mounted区别</title>
+  <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="example1">
+    <demo1></demo1>
+  </div>
+
+  <script>
+    Vue.component("demo1", {
+      data: function () {
+        return {
+          name: "",
+          age: "",
+          city: ""
+        }
+      },
+      template: "<ul><li id='name'>{{name}}</li><li id='age'>{{age}}</li><li id='city'>{{city}}</li></ul>",
+      //created可以对属性进行初始化，但是此时模板还没有渲染成html,所以不能获取dom值
+      created: function () {
+        this.name = "jay";
+        this.age = 35;
+        this.city = "台湾";
+        let name = document.getElementById("name");
+        console.log(name.innerHTML); //TypeError: Cannot read property 'innerHTML' of null
+      },
+      //模板已经渲染成html，所以可以调用dom节点
+      mounted: function () {
+        let name = document.getElementById("name");
+        console.log(name.innerHTML); //jay
+      }
+    })
+    const vm = new Vue({
+      el: '#example1',
+    })
+  </script>
+</body>
+
+</html>

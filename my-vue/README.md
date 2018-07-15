@@ -5,6 +5,11 @@
 ### my-vue demo
 关于官网vue教程的学习，带码
 
+
+### created和mounted的区别例子
+demo\created&mounted.html
+
+
 ## Build Setup
 
 ``` bash
