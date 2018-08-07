@@ -610,4 +610,46 @@
         return result;
     }
     console.log(sum4('june', 10, 20, 30, 50)); //110
+} {
+    const name = "june";
+    console.log(`hello ${name}!!!
+    hello world`);
+} {
+    const arr = [1, 2, 3, 4];
+    arr.forEach(v => {
+        console.log(v); //1 2 3 4
+    });
+    console.log(arr.map(v => v * 2)); //(4)[2,4,6,8]
+    console.log(arr.every(v => v > 0)); //true
+    console.log(arr.some(v => v > 3)); //true
+    console.log(arr.filter(v => v <= 3)); //(3)[1,2,3]
+} {
+    //数组去重
+    let arr1 = [1, 2, 3, 4, 2, 3];
+    let arr2 = [4, 3, 6, 8];
+    //并集
+    console.log(arr1.concat(arr2)); //[1, 2, 3, 4, 2, 3, 4, 3, 6, 8]
+    //es6
+    console.log([...new Set([...arr1, ...arr2])]); //[1, 2, 3, 4, 6, 8]
+    //淘宝首页到底有多少种标签
+    // document.querySelectorAll('*'); //获取标签个数，可重复，返回类型为nodelist
+    // new Set([...document.querySelectorAll('*')].map(v => v.nodeName)).size;
+
+    const obj1 = {
+        name: "june",
+        age: 26
+    };
+    const obj2 = {
+        name: "yifon",
+        sex: "female"
+    }
+    //object遍历
+    Object.keys(obj1).forEach(v => {
+        console.log(v, obj1[v]); //name june //age 26
+    });
+    console.log({ ...obj1,
+        ...obj2,
+        job: "engineer",
+        age: 25
+    }); //{name: "june", age: 25,sex: "female", job: "engineer"}
 }
